@@ -66,7 +66,7 @@ a{color:inherit} img{display:block;max-width:100%;height:auto} button{font-famil
 
 /* TYPE — 9 styles · scaled to the Black Tomato reference, 13 Aug */
 .display1{font-size:72px;line-height:1.04;font-weight:700;letter-spacing:-.03em}
-h1,.h1{font-size:58px;line-height:1.06;font-weight:600;letter-spacing:-.02em}
+h1,.h1{font-size:68px;line-height:1.05;font-weight:600;letter-spacing:-.022em}
 h2,.h2{font-size:42px;line-height:1.1;font-weight:600;letter-spacing:-.015em}
 h3,.h3{font-size:25px;line-height:1.22;font-weight:600;letter-spacing:-.012em}
 h4,.h4{font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.008em}
@@ -183,7 +183,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .eyebrow{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sun);
   display:flex;align-items:center;gap:12px;margin-bottom:28px}
 .eyebrow::before{content:"";width:48px;height:2px;background:var(--sun);flex-shrink:0}
-.hero h1{font-size:62px;line-height:1.06;font-weight:700;letter-spacing:-.028em;max-width:18ch}
+.hero h1{font-size:70px;line-height:1.05;font-weight:700;letter-spacing:-.028em;max-width:17ch}
 .hero.short h1{font-size:40px;max-width:22ch}
 .hero .sub{font-size:16.5px;line-height:1.55;color:rgba(255,255,255,.92);max-width:54ch;margin-top:18px}
 /* R4: hero metrics in the band-stats style — orange left rule, label over value */
@@ -198,7 +198,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .intent{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
   padding:48px;max-width:860px;margin:0 auto;box-shadow:var(--e3);
   transition:box-shadow var(--t-move),transform var(--t-move)}
-.intent:hover{box-shadow:0 14px 40px rgba(243,107,33,.30),var(--e2);transform:translateY(-4px) scale(1.008)}
+.intent:hover{box-shadow:0 24px 64px rgba(243,107,33,.38),0 6px 18px rgba(243,107,33,.18);
+  transform:translateY(-7px) scale(1.015)}
 .intent h2{font-size:30px;text-align:center}
 .intent .sub{text-align:center;color:var(--ink700);margin-top:12px}
 .intent form{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
@@ -224,9 +225,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* SECTIONSHELL */
 /* R4: a fine orange rule opens every section (reference: hairline + heading) */
 section{padding:var(--sec-pad) 0;border-top:0;position:relative}
-main section::before{content:"";display:block;position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:min(var(--maxw),calc(100% - 2*var(--pad)));height:1px;background:var(--orange500);opacity:.55}
-main section.notop::before{display:none}
+/* R6: horizontal rules replaced by the journey pipe in the left gutter */
 /* R5: the default arrow, slightly bigger, in orange */
 html,body,a,button,[role="tab"],.zmini{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="30" viewBox="0 0 26 30"><path d="M3 2 L3 24 L9 19 L13 28 L17 26 L13 17 L21 17 Z" fill="%23F36B21" stroke="white" stroke-width="1.6" stroke-linejoin="round"/></svg>') 3 2, auto}
 section.notop{border-top:0}
@@ -457,21 +456,21 @@ section.tint-moss,section.tint-clay,section.tint-river,section.tint-sun,section.
 .worldgrid .v{font-size:21px;font-weight:700;letter-spacing:-.01em;padding-bottom:22px;margin-top:6px}
 
 /* FOOTER — light. No dark bands anywhere. */
-footer{background:var(--sage600);color:#fff;padding:80px 0 44px;position:relative;z-index:1}
+footer{background:var(--teal100);color:var(--ink900);padding:80px 0 44px;position:relative;z-index:1}
 .fgrid2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
-footer h3{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FFE1CE;line-height:1.4}
-footer .ink700{color:rgba(255,255,255,.72)}
+footer h3{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal700);line-height:1.4}
+footer .ink700{color:var(--ink700)}
 footer ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:12px}
 footer ul a,.tlink{text-decoration:none;font-size:16px;color:var(--ink700);position:relative;display:inline-block}
-footer ul a,footer .tlink,footer .social a,footer p{color:rgba(255,255,255,.88)}
+footer ul a,footer .tlink,footer .social a,footer p{color:var(--ink900)}
 footer ul a::after,.tlink::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:100%;
   background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
-footer ul a:hover,footer .tlink:hover,footer .social a:hover{color:var(--sun)}
+footer ul a:hover,footer .tlink:hover,footer .social a:hover{color:var(--orange500)}
 .tlink:hover{color:var(--teal600)}
 footer ul a:hover::after,.tlink:hover::after{transform:scaleX(1)}
 footer .flogo img{height:40px;width:auto}
-.fbase{margin-top:64px;padding-top:32px;border-top:1px solid rgba(255,255,255,.16);display:flex;
-  justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:15px;color:rgba(255,255,255,.62)}
+.fbase{margin-top:64px;padding-top:32px;border-top:1px solid var(--teal200);display:flex;
+  justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:15px;color:var(--ink500)}
 .social{display:flex;gap:16px;margin-top:24px}
 .social a{font-size:15px;color:var(--ink700);text-decoration:none;position:relative}
 .social a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:100%;background:currentColor;
@@ -576,34 +575,40 @@ footer .flogo img{height:40px;width:auto}
 .intent{position:relative}
 .intent form{position:relative}
 .intent form .btn{position:relative;z-index:2}
-.zubi{position:absolute;right:28px;bottom:64px;width:74px;pointer-events:auto;opacity:0;z-index:1}
+.zubi{position:absolute;right:34px;bottom:112px;width:74px;pointer-events:auto;opacity:0;z-index:3}
 .zubi img{width:74px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
-.zubi .cloud{position:absolute;right:54px;left:auto;top:-40px;background:var(--paper);border:1px solid var(--lineStrong);
+.zubi .cloud{position:absolute;right:60px;left:auto;top:6px;background:var(--paper);border:1px solid var(--lineStrong);
   border-radius:16px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--ink900);white-space:nowrap;
   box-shadow:var(--e1)}
-.zubi .cloud::after{content:"";position:absolute;right:18px;left:auto;bottom:-6px;width:10px;height:10px;background:var(--paper);
-  border-left:1px solid var(--lineStrong);border-bottom:1px solid var(--lineStrong);transform:rotate(-45deg)}
+.zubi .cloud::after{content:"";position:absolute;right:-6px;top:14px;width:10px;height:10px;background:var(--paper);
+  border-right:1px solid var(--lineStrong);border-top:1px solid var(--lineStrong);transform:rotate(45deg)}
 @media (max-width:640px){.zubi{display:none}}
 
 /* ZUBI RECOMMENDED — mini list left (auto-cycles), big linked preview right */
 .zrec{display:grid;grid-template-columns:330px minmax(0,1fr);gap:32px;margin-top:48px;align-items:stretch}
 .zlist{display:flex;flex-direction:column;gap:16px}
-/* Folder-file cards — three pages of the book (Mosby's Files reference) */
-.zmini.folder{position:relative;display:block;text-align:left;background:var(--paper);
-  border:1.5px solid var(--lineSoft);border-radius:6px 14px 14px 14px;padding:12px;cursor:pointer;flex:1;
-  margin-top:22px;transition:box-shadow var(--t-move),transform var(--t-move),border-color var(--t-colour)}
-.zmini .ftab{position:absolute;top:-21px;left:14px;padding:4px 16px 3px;border-radius:8px 8px 0 0;
+/* Folder-file cards — CLOSED files (mosbyfiles reference); the hovered or
+   selected one opens, revealing its page */
+.zmini.folder{position:relative;display:block;text-align:left;
+  border:0;border-radius:0 12px 12px 12px;padding:14px;cursor:pointer;flex:0 0 auto;
+  margin-top:26px;overflow:hidden;
+  transition:box-shadow var(--t-move),transform var(--t-move)}
+.f-teal{background:var(--teal200)} .f-orange{background:#FBD3B8} .f-sage{background:var(--sage200)}
+.zmini .ftab{position:absolute;top:-22px;left:0;padding:5px 18px 3px;border-radius:10px 10px 0 0;
   font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal900)}
-.f-teal .ftab{background:var(--teal200)} .f-teal{border-color:var(--teal200)}
-.f-orange .ftab{background:#FBD3B8} .f-orange{border-color:#FBD3B8}
-.f-sage .ftab{background:var(--sage200)} .f-sage{border-color:var(--sage200)}
-.zmini.folder img{width:100%;height:74px;object-fit:cover;border-radius:8px}
-.zmini .t{display:block;font-size:16px;font-weight:600;line-height:1.3;margin-top:10px}
+.f-teal .ftab{background:var(--teal200)} .f-orange .ftab{background:#FBD3B8} .f-sage .ftab{background:var(--sage200)}
+.zmini .finner{display:block;background:var(--paper);border-radius:8px;overflow:hidden;
+  max-height:0;opacity:0;transition:max-height .45s cubic-bezier(.3,.7,.3,1),opacity .3s}
+.zmini.folder img{width:100%;height:74px;object-fit:cover;display:block}
+.zmini .finfo{display:block;padding:10px 12px 12px}
+.zmini .t{display:block;font-size:16px;font-weight:600;line-height:1.3}
 .zmini .m{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500);margin-top:3px}
+.zmini .fname{display:block;font-size:16px;font-weight:700;color:var(--teal900);padding:2px 2px 4px}
 .zmini.folder:nth-child(1){transform:rotate(-1.2deg)}
 .zmini.folder:nth-child(3){transform:rotate(1.2deg)}
-.zmini.folder:hover{transform:rotate(0) translateY(-3px);box-shadow:0 10px 26px rgba(243,107,33,.28);border-color:var(--orange500)}
-.zmini[aria-selected="true"]{border-color:var(--orange500);box-shadow:0 6px 18px rgba(243,107,33,.2);transform:rotate(0)}
+.zmini.folder:hover{transform:rotate(0) translateY(-3px);box-shadow:0 10px 26px rgba(243,107,33,.32)}
+.zmini:hover .finner,.zmini[aria-selected="true"] .finner{max-height:180px;opacity:1}
+.zmini[aria-selected="true"]{box-shadow:0 6px 18px rgba(243,107,33,.22);transform:rotate(0)}
 .zprev{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:460px;
   border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:#fff;
   box-shadow:0 6px 20px rgba(243,107,33,.16)}
@@ -644,16 +649,22 @@ footer .flogo img{height:40px;width:auto}
 @media (max-width:640px){.fgrid-hero{grid-template-columns:1fr}.awards{grid-template-columns:1fr}}
 
 /* MAP — hover a marker, the journey card answers */
-.mapgrid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:40px;align-items:center;margin-top:40px}
+.mapgrid{display:grid;grid-template-columns:3fr 2fr;gap:48px;align-items:center;margin-top:40px}
+.mapregions{display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.mapregions button{background:var(--paper);border:1.5px solid var(--lineStrong);border-radius:999px;
+  padding:9px 22px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink700);
+  cursor:pointer;transition:border-color var(--t-colour),box-shadow var(--t-move),color var(--t-colour)}
+.mapregions button:hover,.mapregions button[aria-selected="true"]{border-color:var(--orange500);
+  color:var(--ink900);box-shadow:0 6px 18px rgba(243,107,33,.24)}
 .mapcard{display:block;background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
   overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--e1);
   transition:box-shadow var(--t-move),transform var(--t-move)}
 .mapcard:hover{box-shadow:0 10px 26px rgba(243,107,33,.28);transform:translateY(-3px)}
-.mapcard img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.mapcard .mbody{padding:18px 20px 20px}
-.mapcard .meta{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
-.mapcard h3{font-size:21px;margin-top:6px}
-.mapcard p{font-size:15px;color:var(--ink700);margin-top:6px}
+.mapcard img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.mapcard .mbody{padding:24px 28px 26px}
+.mapcard .meta{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
+.mapcard h3{font-size:28px;margin-top:8px}
+.mapcard p{font-size:16.5px;color:var(--ink700);margin-top:8px}
 .maphint{font-size:14px;margin-top:14px;text-align:center}
 .mapwrap svg{width:100%;height:auto;max-height:560px;display:block;margin:0 auto}
 #mapstates path{fill:var(--sage200);stroke:var(--paper);stroke-width:.8;transition:fill var(--t-colour)}
@@ -680,6 +691,17 @@ footer .flogo img{height:40px;width:auto}
 .so-cta{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
 .so-cta:hover{transform:translate(-50%,-50%) translateY(-2px)}
 .stepout+footer{padding-top:56px}
+
+/* R6: the journey pipe — one orange line in the left gutter, drawing itself
+   as you scroll, with a stop at every section. Lives in background space only. */
+.pipe{position:absolute;left:26px;top:0;bottom:0;width:3px;z-index:0;pointer-events:none}
+.pipe .track{position:absolute;inset:0;background:rgba(243,107,33,.16);border-radius:2px}
+.pipe .fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--orange500);border-radius:2px}
+.pipe .stop{position:absolute;left:50%;width:13px;height:13px;border-radius:50%;background:var(--paper);
+  border:3px solid rgba(243,107,33,.35);transform:translate(-50%,-50%);transition:border-color .3s,background .3s}
+.pipe .stop.lit{border-color:var(--orange500);background:var(--orange500)}
+main{position:relative}
+@media (max-width:1080px){.pipe{display:none}}
 
 /* Scroll-reveal — headings and cards drift up as they arrive */
 .rvl{opacity:0;transform:translateY(28px)}
@@ -799,6 +821,7 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </nav>
 <main id="main">
+<div class="pipe" aria-hidden="true"><span class="track"></span><span class="fill" id="pipefill"></span></div>
 <header class="hero" id="hero">
   <img class="slide on" src="hero-home.webp" alt="The road ahead through a windscreen on a Himalayan pass, a passenger watching the valley." fetchpriority="high" width="2400" height="1350">
   <img class="slide" src="hero-2.webp" alt="Quad bikes raising dust on a desert track under a stormy sky." loading="lazy" width="2400" height="1547">
@@ -844,7 +867,7 @@ footer .flogo img{height:40px;width:auto}
 <section id="explore" class="tint-moss">
   <div class="wrap" style="text-align:center">
     <div class="ccol" style="max-width:100%">
-  <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">01 &middot; Start with your people</span></div><h2>Who&rsquo;s <span class="acc">travelling</span>?</h2>
+  <h2>Who&rsquo;s <span class="acc">travelling</span>?</h2>
   <p class="lead ink700" style="max-width:62ch;margin:16px auto 0">Five ways in. Pick the one that sounds like your group and we will show you what fits &mdash; pacing, drive lengths, and what we would not recommend.</p>
   <div class="tabrow" role="tablist" aria-label="Explore by">
     <button class="chip" role="tab" aria-selected="true" aria-controls="p-travellers" id="t-travellers">By travellers</button>
@@ -915,24 +938,27 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </section><section id="journeys">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">02 &middot; Let Zubi pick</span></div><h2 style="text-align:center">Zubi <span class="acc">Recommended</span></h2>
+    <h2 style="text-align:center">Zubi <span class="acc">Recommended</span></h2>
     <p class="lead ink700" style="text-align:center;max-width:60ch;margin:16px auto 0"><span class="ph">Subheading pending &mdash; one line on how Zubi picks these three.</span></p>
     <div class="zrec">
       <div class="zlist" role="tablist" aria-label="Zubi recommended journeys">
         <button class="zmini folder f-teal" role="tab" aria-selected="true" data-idx="0">
           <span class="ftab">01 &middot; Ladakh</span>
-          <img src="j-ladakh.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Ladakh by Road</span><span class="m">9 nights &middot; Moderate</span></span>
+          <span class="fname">Ladakh by Road</span>
+          <span class="finner"><img src="j-ladakh.webp" alt="" loading="lazy" width="800" height="600">
+          <span class="finfo"><span class="t">Ladakh by Road</span><span class="m">9 nights &middot; Moderate</span></span></span>
         </button>
         <button class="zmini folder f-orange" role="tab" aria-selected="false" data-idx="1">
           <span class="ftab">02 &middot; Kashmir</span>
-          <img src="j-kashmir.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Kashmir in Tulip Season</span><span class="m">6 nights &middot; Gentle</span></span>
+          <span class="fname">Kashmir in Tulip Season</span>
+          <span class="finner"><img src="j-kashmir.webp" alt="" loading="lazy" width="800" height="600">
+          <span class="finfo"><span class="t">Kashmir in Tulip Season</span><span class="m">6 nights &middot; Gentle</span></span></span>
         </button>
         <button class="zmini folder f-sage" role="tab" aria-selected="false" data-idx="2">
           <span class="ftab">03 &middot; Kerala</span>
-          <img src="j-kerala.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Kerala Backwaters, Slowly</span><span class="m">7 nights &middot; Gentle</span></span>
+          <span class="fname">Kerala Backwaters, Slowly</span>
+          <span class="finner"><img src="j-kerala.webp" alt="" loading="lazy" width="800" height="600">
+          <span class="finfo"><span class="t">Kerala Backwaters, Slowly</span><span class="m">7 nights &middot; Gentle</span></span></span>
         </button>
       </div>
       <a class="zprev" id="zprev" href="j-ladakh-by-road.html">
@@ -967,7 +993,7 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </section><section id="map" class="tint-sky">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">03 &middot; Find it on the map</span></div><h2 style="text-align:center">Where will you <span class="acc">go</span>?</h2>
+    <h2 style="text-align:center">Where will you <span class="acc">go</span>?</h2>
     <p class="lead ink700" style="text-align:center;max-width:56ch;margin:14px auto 0">Hover the map. Every marker is a journey we have already designed and escorted.</p>
     <div class="mapgrid">
       <div class="mapcards" id="mapcards">
@@ -980,12 +1006,14 @@ footer .flogo img{height:40px;width:auto}
           </div>
         </a>
         <p class="maphint ink700" id="maphint">Hovering <strong id="maphint-region">Ladakh</strong></p>
+        <p class="mt24" style="text-align:center"><a class="btn btn-secondary" href="journeys.html">View all destinations <span class="arw" aria-hidden="true">&rarr;</span></a></p>
       </div>
       <div class="mapwrap" id="mapwrap">
+        <div class="mapregions" id="mapregions" role="tablist" aria-label="Regions"></div>
         <svg id="indiamap" viewBox="0 0 612 696" role="img" aria-label="Map of India with Zubilant journey locations"><g id="mapstates"></g><g id="mappins"></g></svg>
       </div>
     </div>
-    <p class="mt32" style="text-align:center"><a class="btn btn-secondary" href="journeys.html">View all destinations <span class="arw" aria-hidden="true">&rarr;</span></a></p>
+    
   </div>
 </section><section id="founder" class="tint-moss">
   <div class="wrap">
@@ -993,7 +1021,7 @@ footer .flogo img{height:40px;width:auto}
       <div class="ffig"><img src="founder.webp" alt="Sachin Mehta, founder of Zubilant." loading="lazy" width="760" height="930"></div>
       <div>
         <div class="label ink500">The founder</div>
-        <div class="eyebrow" style="color:var(--orange500);margin-bottom:6px"><span style="font-weight:700">05 &middot; Meet the founder</span></div><h2 class="mt8">You can trust <span class="acc">me</span>.</h2>
+        <h2 class="mt8">You can trust <span class="acc">me</span>.</h2>
         <p class="lead ink700 mt16" style="max-width:52ch">Zubilant&rsquo;s founder serves as <strong>Travel and Tourism Domain Coordinator at UN/CEFACT</strong>, the United Nations body that sets global standards for travel and trade data.</p>
         <p class="mt24"><a class="tlink" href="about.html">The full story &rarr;</a></p>
       </div>
@@ -1020,7 +1048,7 @@ footer .flogo img{height:40px;width:auto}
   <div class="wrap">
     <div class="fgrid2">
       <div>
-        <div class="flogo"><img src="logo-reversed.png" alt="Zubilant" width="807" height="212"></div>
+        <div class="flogo"><img src="logo.png" alt="Zubilant" width="807" height="212"></div>
         <p class="ink700 mt16" style="max-width:36ch">Travel designed around experiences, not packages. A division of Stuti Tourism Pvt. Ltd., designing journeys since 2009.</p>
         <p class="mt24"><a class="tlink" href="tel:+918108117770">+91 81081 17770</a> &middot; also WhatsApp</p>
         <p class="mt8"><a class="tlink" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a></p>
@@ -1070,6 +1098,16 @@ footer .flogo img{height:40px;width:auto}
     if(hero) nav.classList.toggle('scrolled', y>trigger);
     var h=document.documentElement.scrollHeight-window.innerHeight;
     if(bar) bar.style.width=(h>0?Math.min(100,(y/h)*100):0)+'%';
+    /* the journey pipe draws to the point the reader has reached */
+    var pf=document.getElementById('pipefill');
+    if(pf){
+      var mainEl=document.getElementById('main');
+      var reached=y+window.innerHeight*0.6-mainEl.offsetTop;
+      pf.style.height=Math.max(0,Math.min(mainEl.offsetHeight,reached))+'px';
+      document.querySelectorAll('.pipe .stop').forEach(function(s){
+        s.classList.toggle('lit', parseFloat(s.style.top)<=reached);
+      });
+    }
   }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
@@ -1246,10 +1284,14 @@ footer .flogo img{height:40px;width:auto}
     setInterval(function(){ if(!zuser&&!document.hidden) zshow((zsel+1)%ZREC.length); },4000);
   }
 
-  /* INDIA MAP — accurate state geometry (india.svg, CC-BY @svg-maps/india).
-     Data-driven: each journey names its state id plus an optional offset;
-     pins anchor themselves to the state's geometry at runtime, so adding a
-     journey is one line here — the map finds it. */
+  /* MAP — region-driven and data-driven.
+     REGIONS: one entry per region tab, each with its accurate map file
+     (viewBox read from the file itself). Journeys carry region+state — the
+     tab row, map and cards all populate from this data. Add an outbound
+     journey with {region:'Dubai', map:'uae.svg', st:'...'} and its tab, map
+     and card appear with no other change. Today only India has confirmed
+     journeys (outbound list is with Sachin), so only India renders. */
+  var REGIONS={'India':{map:'india.svg',viewBox:'0 0 612 696'}};
   var PINS=[
     {st:'jk',dx:26,dy:-6, r:'Ladakh',   href:'j-ladakh-by-road.html',        img:'j-ladakh.webp',   meta:'Ladakh · 9 nights · Moderate',   title:'Ladakh by Road',              desc:'Nine days over the high passes to Nubra and Pangong.'},
     {st:'jk',dx:-24,dy:6, r:'Kashmir',  href:'j-kashmir-tulip-season.html',  img:'j-kashmir.webp',  meta:'Kashmir · 6 nights · Gentle',    title:'Kashmir in Tulip Season',     desc:'Srinagar, Gulmarg and Pahalgam when the tulips are out.'},
@@ -1262,7 +1304,9 @@ footer .flogo img{height:40px;width:auto}
     {st:'kl',dx:0,dy:0,   r:'Kerala',   href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp', meta:'Kerala · 7 nights · Gentle',     title:'Kerala Backwaters, Slowly',   desc:'Kochi through Alleppey to Kumarakom and the hills.'},
     {st:'an',dx:-4,dy:-20,r:'Andaman',  href:'j-andaman-unhurried.html',     img:'j-andaman.webp',  meta:'Andaman · 6 nights · Gentle',    title:'Andaman, Unhurried',          desc:'The only window we will sell it in.'}
   ];
+  PINS.forEach(function(p){p.region=p.region||'India';});
   var pinsG=document.getElementById('mappins'), statesG=document.getElementById('mapstates');
+  var curRegion='India';
   function showPin(i,viaHover){
     var d=PINS[i];
     document.querySelectorAll('.mappin').forEach(function(p,j){p.classList.toggle('on',j===i);});
@@ -1277,10 +1321,18 @@ footer .flogo img{height:40px;width:auto}
       gsap.fromTo('#mapcard',{scale:.97,opacity:.7},{scale:1,opacity:1,duration:.35,ease:'power2.out'});
     }
   }
-  if(pinsG){
-    fetch('india.svg').then(function(r){return r.text();}).then(function(txt){
+  function loadRegion(name){
+    var reg=REGIONS[name]; if(!reg) return;
+    curRegion=name;
+    document.querySelectorAll('#mapregions button').forEach(function(b){
+      b.setAttribute('aria-selected',String(b.dataset.region===name));});
+    fetch(reg.map).then(function(r){return r.text();}).then(function(txt){
       var doc=new DOMParser().parseFromString(txt,'image/svg+xml');
+      var src=doc.documentElement;
+      var im=document.getElementById('indiamap');
+      if(src.getAttribute('viewBox')) im.setAttribute('viewBox',src.getAttribute('viewBox'));
       var SVGNS='http://www.w3.org/2000/svg';
+      statesG.innerHTML=''; pinsG.innerHTML='';
       doc.querySelectorAll('path').forEach(function(p){
         var np=document.createElementNS(SVGNS,'path');
         np.setAttribute('d',p.getAttribute('d'));
@@ -1288,6 +1340,7 @@ footer .flogo img{height:40px;width:auto}
         statesG.appendChild(np);
       });
       PINS.forEach(function(d,i){
+        if(d.region!==name) return;
         var sp=document.getElementById('st-'+d.st);
         if(!sp) return;
         var b=sp.getBBox();
@@ -1303,13 +1356,47 @@ footer .flogo img{height:40px;width:auto}
         g.addEventListener('click',function(){window.location.href=d.href;});
         pinsG.appendChild(g);
       });
-      var mi=0, mHover=false;
-      var im=document.getElementById('indiamap');
-      im.addEventListener('pointerenter',function(){mHover=true;});
-      im.addEventListener('pointerleave',function(){mHover=false;});
-      setInterval(function(){ if(!mHover&&!document.hidden){ mi=(mi+1)%PINS.length; showPin(mi,false);} },3500);
     }).catch(function(){ /* map is decorative; the card still works via its link */ });
   }
+  if(pinsG){
+    /* Region tabs render from the journey data — a region appears the moment
+       a journey claims it and its map file exists */
+    var regbar=document.getElementById('mapregions');
+    Object.keys(REGIONS).forEach(function(name){
+      if(!PINS.some(function(p){return p.region===name;})) return;
+      var b=document.createElement('button');
+      b.textContent=name; b.dataset.region=name; b.setAttribute('role','tab');
+      b.setAttribute('aria-selected',String(name===curRegion));
+      b.addEventListener('click',function(){loadRegion(name);});
+      regbar.appendChild(b);
+    });
+    loadRegion('India');
+    var mi=0, mHover=false;
+    var im=document.getElementById('indiamap');
+    im.addEventListener('pointerenter',function(){mHover=true;});
+    im.addEventListener('pointerleave',function(){mHover=false;});
+    setInterval(function(){
+      if(mHover||document.hidden) return;
+      var idxs=PINS.map(function(p,i){return p.region===curRegion?i:-1;}).filter(function(i){return i>-1;});
+      if(!idxs.length) return;
+      mi=(mi+1)%idxs.length; showPin(idxs[mi],false);
+    },3500);
+  }
+
+  /* Journey pipe stops — one per section, placed after layout settles */
+  function buildStops(){
+    var pipe=document.querySelector('.pipe'); if(!pipe) return;
+    pipe.querySelectorAll('.stop').forEach(function(s){s.remove();});
+    var mainTop=document.getElementById('main').offsetTop;
+    document.querySelectorAll('main section, .intent-band').forEach(function(sec){
+      var s=document.createElement('span'); s.className='stop';
+      s.style.top=(sec.getBoundingClientRect().top+window.scrollY-mainTop+40)+'px';
+      pipe.appendChild(s);
+    });
+    onScroll();
+  }
+  window.addEventListener('load',function(){setTimeout(buildStops,400);});
+  window.addEventListener('resize',function(){setTimeout(buildStops,300);});
 
   /* Testimonial arrows */
   var TESTS=[
