@@ -66,7 +66,7 @@ a{color:inherit} img{display:block;max-width:100%;height:auto} button{font-famil
 
 /* TYPE — 9 styles · scaled to the Black Tomato reference, 13 Aug */
 .display1{font-size:72px;line-height:1.04;font-weight:700;letter-spacing:-.03em}
-h1,.h1{font-size:68px;line-height:1.05;font-weight:600;letter-spacing:-.022em}
+h1,.h1{font-size:76px;line-height:1.04;font-weight:600;letter-spacing:-.024em}
 h2,.h2{font-size:42px;line-height:1.1;font-weight:600;letter-spacing:-.015em}
 h3,.h3{font-size:25px;line-height:1.22;font-weight:600;letter-spacing:-.012em}
 h4,.h4{font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.008em}
@@ -121,28 +121,34 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .skip{position:absolute;left:-9999px;top:0;background:var(--paper);padding:12px 20px;z-index:200}
 .skip:focus{left:16px;top:16px}
 
-/* NAV — R5: Contiki-style experience. A calm, solid white bar the full width,
-   logo left, links centred, phone + CTA right. Shadow arrives on scroll. */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);
-  transition:box-shadow var(--t-move)}
-.nav.scrolled{box-shadow:0 2px 14px rgba(22,33,31,.10)}
-.nav .in{max-width:1360px;margin:0 auto;padding:0 32px;height:70px;
+/* NAV — R7: back to the floating pill, frosted over the hero, solid after.
+   Contiki's calm spacing kept: logo left, links centred, phone + CTA right. */
+.nav{position:fixed;top:16px;left:0;right:0;z-index:100;transition:top var(--t-move)}
+.nav .in{max-width:1320px;margin:0 auto;padding:0 24px 0 28px;height:66px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
-  width:100%;border-radius:0;border:0;background:transparent}
+  width:calc(100% - 48px);border-radius:999px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(0,39,43,.32);
+  backdrop-filter:saturate(120%) blur(10px);-webkit-backdrop-filter:saturate(120%) blur(10px);
+  transition:background var(--t-colour),border-color var(--t-colour),box-shadow var(--t-move)}
+.nav.scrolled{top:10px}
+.nav.scrolled .in{background:var(--paper);border-color:var(--lineSoft);box-shadow:0 4px 18px rgba(22,33,31,.12)}
+.nav.scrolled .navlinks a,.nav.scrolled .navtel{color:var(--ink900)}
+.nav.scrolled .burger i{background:var(--ink900)}
 .navlinks{margin:0 auto}
 .brand{display:inline-flex;align-items:center;min-height:44px}
 .brand img{height:32px;width:auto}
-.brand .lg-rev{display:none}.brand .lg-col{display:block}
+.brand .lg-rev{display:block}.brand .lg-col{display:none}
+.nav.scrolled .brand .lg-rev{display:none}.nav.scrolled .brand .lg-col{display:block}
 .navlinks{display:flex;align-items:center;gap:22px;list-style:none}
 .navlinks>li{position:relative}
-.navlinks a{font-size:15px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:var(--ink900);white-space:nowrap;
+.navlinks a{font-size:15px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:#fff;white-space:nowrap;
   padding:12px 0;display:inline-flex;align-items:center;min-height:44px;position:relative;transition:color var(--t-colour)}
 .navlinks a::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;
   background:var(--orange500);transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
 .navlinks a:hover::after{transform:scaleX(1)}
 .navlinks a[aria-current="page"]::after{transform:scaleX(1)}
 .navright{display:flex;align-items:center;gap:20px;flex:0 0 auto}
-.navtel{font-size:14px;font-weight:600;text-decoration:none;color:var(--ink900);white-space:nowrap;
+.navtel{font-size:14px;font-weight:600;text-decoration:none;color:#fff;white-space:nowrap;
   display:inline-flex;align-items:center;min-height:44px;position:relative}
 .navtel::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;background:var(--orange500);
   transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
@@ -164,7 +170,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .dd .sep{height:1px;background:var(--lineSoft);margin:8px 12px}
 .burger{display:none;width:48px;height:48px;border:1px solid var(--lineStrong);border-radius:var(--r-input);
   background:transparent;align-items:center;justify-content:center;cursor:pointer}
-.burger i{display:block;width:20px;height:2px;background:var(--ink900);position:relative;transition:background var(--t-colour)}
+.burger i{display:block;width:20px;height:2px;background:#fff;position:relative;transition:background var(--t-colour)}
 .burger i::before,.burger i::after{content:"";position:absolute;left:0;width:20px;height:2px;background:inherit}
 .burger i::before{top:-7px}.burger i::after{top:7px}
 .nav.scrolled .burger i,.nav.solid .burger i{background:var(--ink900)}
@@ -585,7 +591,8 @@ footer .flogo img{height:40px;width:auto}
 @media (max-width:640px){.zubi{display:none}}
 
 /* ZUBI RECOMMENDED — mini list left (auto-cycles), big linked preview right */
-.zrec{display:grid;grid-template-columns:330px minmax(0,1fr);gap:32px;margin-top:48px;align-items:stretch}
+#journeys{--sec-pad:48px}
+.zrec{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;margin-top:32px;align-items:stretch}
 .zlist{display:flex;flex-direction:column;gap:16px}
 /* Folder-file cards — CLOSED files (mosbyfiles reference); the hovered or
    selected one opens, revealing its page */
@@ -609,14 +616,14 @@ footer .flogo img{height:40px;width:auto}
 .zmini.folder:hover{transform:rotate(0) translateY(-3px);box-shadow:0 10px 26px rgba(243,107,33,.32)}
 .zmini:hover .finner,.zmini[aria-selected="true"] .finner{max-height:180px;opacity:1}
 .zmini[aria-selected="true"]{box-shadow:0 6px 18px rgba(243,107,33,.22);transform:rotate(0)}
-.zprev{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:460px;
+.zprev{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:400px;
   border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:#fff;
   box-shadow:0 6px 20px rgba(243,107,33,.16)}
 .zprev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s ease}
 .zprev::after{content:"";position:absolute;inset:0;
   background:linear-gradient(to top,rgba(0,39,43,.88) 0%,rgba(0,39,43,.55) 24%,rgba(0,39,43,.12) 50%,rgba(0,39,43,0) 68%)}
 .zprev .body{position:relative;z-index:2;padding:32px;text-shadow:0 1px 4px rgba(0,20,22,.45)}
-.zprev h3{font-size:30px;color:#fff}
+.zprev h3{font-size:26px;color:#fff}
 .zprev p{color:rgba(255,255,255,.95);margin-top:8px;max-width:60ch}
 .zprev .from{margin-top:14px;font-weight:700}
 @media (max-width:1080px){.zrec{grid-template-columns:1fr}.zprev{min-height:360px}}
@@ -649,8 +656,12 @@ footer .flogo img{height:40px;width:auto}
 @media (max-width:640px){.fgrid-hero{grid-template-columns:1fr}.awards{grid-template-columns:1fr}}
 
 /* MAP — hover a marker, the journey card answers */
-.mapgrid{display:grid;grid-template-columns:3fr 2fr;gap:48px;align-items:center;margin-top:40px}
-.mapregions{display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+#map{--sec-pad:48px}
+.mapgrid{display:grid;grid-template-columns:3fr 2fr;gap:40px;align-items:center;margin-top:24px}
+.mapregions{display:flex;gap:12px;justify-content:center;margin-top:4px;flex-wrap:wrap}
+.mapregions button.soon{opacity:.65;cursor:default;border-style:dashed}
+.mapregions button.soon small{font-size:9px;letter-spacing:.08em;color:var(--orange600);display:inline-block;margin-left:4px}
+.mapregions button.soon:hover{border-color:var(--lineStrong);box-shadow:none;color:var(--ink700)}
 .mapregions button{background:var(--paper);border:1.5px solid var(--lineStrong);border-radius:999px;
   padding:9px 22px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink700);
   cursor:pointer;transition:border-color var(--t-colour),box-shadow var(--t-move),color var(--t-colour)}
@@ -660,13 +671,13 @@ footer .flogo img{height:40px;width:auto}
   overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--e1);
   transition:box-shadow var(--t-move),transform var(--t-move)}
 .mapcard:hover{box-shadow:0 10px 26px rgba(243,107,33,.28);transform:translateY(-3px)}
-.mapcard img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.mapcard .mbody{padding:24px 28px 26px}
-.mapcard .meta{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
-.mapcard h3{font-size:28px;margin-top:8px}
-.mapcard p{font-size:16.5px;color:var(--ink700);margin-top:8px}
+.mapcard img{width:100%;aspect-ratio:16/8;object-fit:cover}
+.mapcard .mbody{padding:18px 22px 20px}
+.mapcard .meta{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
+.mapcard h3{font-size:24px;margin-top:6px}
+.mapcard p{font-size:15.5px;color:var(--ink700);margin-top:6px}
 .maphint{font-size:14px;margin-top:14px;text-align:center}
-.mapwrap svg{width:100%;height:auto;max-height:560px;display:block;margin:0 auto}
+.mapwrap svg{width:100%;height:auto;max-height:440px;display:block;margin:0 auto}
 #mapstates path{fill:var(--sage200);stroke:var(--paper);stroke-width:.8;transition:fill var(--t-colour)}
 #mapstates path.lit{fill:var(--sage100)}
 #mapstates path.active{fill:var(--teal200)}
@@ -841,8 +852,7 @@ main{position:relative}
   </div>
 </header>
 <div class="intent-band"><div class="wrap"><div class="intent">
-  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Hi, I&rsquo;m Zubi!</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
-  <h2 class="h3">What&rsquo;s on your mind?</h2>
+  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Click me for suggestions</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
   <p class="sub">Tell us in a line. A person reads every one of these &mdash; no chatbot, no auto-reply.</p>
   <form action="plan-your-journey.html" method="get">
     <label class="skip" for="intent">Describe the journey you have in mind</label>
@@ -976,17 +986,13 @@ main{position:relative}
 </section><section id="stories">
   <div class="wrap">
     <h2>Stories from the <span class="acc">road</span>.</h2>
-    <p class="lead ink700" style="margin-top:12px;max-width:56ch">4.9 out of 5, across 123 Google reviews. Quoted verbatim, nothing paraphrased.</p>
+    <p class="lead ink700" style="margin-top:12px;max-width:56ch">4.9 stars on Google. Quoted verbatim, nothing paraphrased.</p>
     <div class="tstory">
       <div class="tquote">
         <span class="mark">&ldquo;</span>
         <blockquote id="tq-text">Sachin from Zubilant did an excellent job organizing a tour of the Badami and Hampi area for us. From a comfortable car and driver to hotels, sites and guide. We had a wonderful experience on our first trip to India.</blockquote>
         <div class="who"><b id="tq-name">Rhina Todd</b><span id="tq-meta">7 months ago &middot; Google review</span></div>
-        <div class="tarrows">
-          <button class="harr" id="tq-prev" aria-label="Previous testimonial">&larr;</button>
-          <button class="harr" id="tq-next" aria-label="Next testimonial">&rarr;</button>
-        </div>
-        <p class="mt24"><a class="tlink" href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">All 123 reviews on Google &rarr;</a></p>
+        <p class="mt24"><a class="tlink" href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews on Google &rarr;</a></p>
       </div>
       <div class="timg"><span class="ph" style="padding:16px;text-align:center">Placeholder image &mdash; traveller photo awaiting Sachin</span></div>
     </div>
@@ -1005,7 +1011,6 @@ main{position:relative}
             <p id="mapcard-desc">Nine days over the high passes to Nubra and Pangong.</p>
           </div>
         </a>
-        <p class="maphint ink700" id="maphint">Hovering <strong id="maphint-region">Ladakh</strong></p>
         <p class="mt24" style="text-align:center"><a class="btn btn-secondary" href="journeys.html">View all destinations <span class="arw" aria-hidden="true">&rarr;</span></a></p>
       </div>
       <div class="mapwrap" id="mapwrap">
@@ -1316,7 +1321,7 @@ main{position:relative}
     document.getElementById('mapcard-meta').textContent=d.meta;
     document.getElementById('mapcard-title').textContent=d.title;
     document.getElementById('mapcard-desc').textContent=d.desc;
-    document.getElementById('maphint-region').textContent=d.r;
+    var hint=document.getElementById('maphint-region'); if(hint) hint.textContent=d.r;
     if(window.gsap&&!reduced&&viaHover){
       gsap.fromTo('#mapcard',{scale:.97,opacity:.7},{scale:1,opacity:1,duration:.35,ease:'power2.out'});
     }
@@ -1370,6 +1375,16 @@ main{position:relative}
       b.addEventListener('click',function(){loadRegion(name);});
       regbar.appendChild(b);
     });
+    /* Placeholder tabs — outbound names await Sachin's list; visibly "soon" */
+    ['Dubai','Bali','Vietnam'].forEach(function(name){
+      var b=document.createElement('button');
+      b.className='soon'; b.disabled=true;
+      b.innerHTML=name+' <small>soon</small>';
+      regbar.appendChild(b);
+    });
+    if(window.gsap && !reduced){
+      gsap.to('#mapregions button',{y:-5,duration:1.6,ease:'sine.inOut',yoyo:true,repeat:-1,stagger:.28});
+    }
     loadRegion('India');
     var mi=0, mHover=false;
     var im=document.getElementById('indiamap');
@@ -1395,8 +1410,16 @@ main{position:relative}
     });
     onScroll();
   }
-  window.addEventListener('load',function(){setTimeout(buildStops,400);});
-  window.addEventListener('resize',function(){setTimeout(buildStops,300);});
+  window.addEventListener('load',function(){setTimeout(function(){
+    buildStops();
+    /* R7: async layout (map fetch, pipe stops) shifts the page after the
+       scroll triggers are measured — refresh them or the bag spin, the
+       Step Outside spin and the count-ups fire at the wrong places. */
+    if(window.ScrollTrigger) ScrollTrigger.refresh();
+  },600);});
+  window.addEventListener('resize',function(){setTimeout(function(){
+    buildStops(); if(window.ScrollTrigger) ScrollTrigger.refresh();
+  },300);});
 
   /* Testimonial arrows */
   var TESTS=[
@@ -1414,6 +1437,10 @@ main{position:relative}
   }
   if(tqp){tqp.addEventListener('click',function(){tqshow(tqi-1);});}
   if(tqn){tqn.addEventListener('click',function(){tqshow(tqi+1);});}
+  /* R7: arrows removed — quotes rotate themselves */
+  if(document.getElementById('tq-text')){
+    setInterval(function(){ if(!document.hidden) tqshow(tqi+1); },5000);
+  }
 
   /* Journey index filter */
   var fchips=document.querySelectorAll('.chip[data-filter]');
@@ -1486,8 +1513,18 @@ main{position:relative}
     if(zubi){
       gsap.set(zubi,{opacity:1,y:70});
       gsap.to(zubi,{y:0,duration:.8,ease:'back.out(1.6)',
-        scrollTrigger:{trigger:'.intent',start:'top 78%',once:true},
-        onComplete:function(){ gsap.to(zubi,{y:-9,duration:.9,ease:'sine.inOut',yoyo:true,repeat:-1}); }});
+        scrollTrigger:{trigger:'.intent',start:'top 78%',once:true}});
+      /* R7: Zubi holds still; he bobs only while the box is hovered */
+      var zbob=null, intentBox=document.querySelector('.intent');
+      if(intentBox){
+        intentBox.addEventListener('pointerenter',function(){
+          if(!zbob) zbob=gsap.to(zubi,{y:-9,duration:.7,ease:'sine.inOut',yoyo:true,repeat:-1});
+          else zbob.play();
+        });
+        intentBox.addEventListener('pointerleave',function(){
+          if(zbob){zbob.pause(); gsap.to(zubi,{y:0,duration:.4,ease:'power2.out'});}
+        });
+      }
     }
 
     /* Step Outside — the oval spins with scroll, like the bag */
@@ -1515,8 +1552,7 @@ main{position:relative}
       gsap.from(kids,{y:30,opacity:0,duration:.8,ease:'power3.out',stagger:.09,
         scrollTrigger:{trigger:sec,start:'top 76%',once:true}});
     });
-    gsap.to('.hero .slide',{yPercent:12,ease:'none',
-      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.6}});
+    /* R7: hero parallax removed — it opened a band above the image */
     document.querySelectorAll('.pcard,.howcard,.mapcard').forEach(function(card){
       card.addEventListener('pointermove',function(e){
         var r=card.getBoundingClientRect();
