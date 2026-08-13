@@ -31,7 +31,7 @@
   --t-wash:620ms ease;
   --maxw:1200px; --pad:80px;
   --r-card:16px; --r-btn:12px; --r-input:8px; --r-marker:4px;
-  --sec-pad:128px;
+  --sec-pad:72px;
   /* CEO ruling, 12 Aug: the Part D bans are lifted. Elevation, gradients and a
      dark band are now permitted. The four rules kept are accessibility, not
      taste: AA contrast, 16px minimum body on phone, 44px tap targets, and
@@ -69,15 +69,15 @@ body{font-family:Overpass,system-ui,-apple-system,sans-serif;color:var(--ink900)
 a{color:inherit} img{display:block;max-width:100%;height:auto} button{font-family:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
 
-/* TYPE — 9 styles */
-.display1{font-size:96px;line-height:1.02;font-weight:700;letter-spacing:-.035em}
-h1,.h1{font-size:60px;line-height:1.05;font-weight:600;letter-spacing:-.025em}
-h2,.h2{font-size:44px;line-height:1.1;font-weight:600;letter-spacing:-.02em}
-h3,.h3{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.015em}
-h4,.h4{font-size:21px;line-height:1.35;font-weight:600;letter-spacing:-.01em}
-.label{font-size:14px;line-height:1.4;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-.lead{font-size:20px;line-height:1.55}
-p{font-size:17px;line-height:1.65}
+/* TYPE — 9 styles · scaled to the Black Tomato reference, 13 Aug */
+.display1{font-size:64px;line-height:1.05;font-weight:700;letter-spacing:-.03em}
+h1,.h1{font-size:48px;line-height:1.08;font-weight:600;letter-spacing:-.02em}
+h2,.h2{font-size:36px;line-height:1.12;font-weight:600;letter-spacing:-.015em}
+h3,.h3{font-size:25px;line-height:1.22;font-weight:600;letter-spacing:-.012em}
+h4,.h4{font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.008em}
+.label{font-size:13px;line-height:1.4;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.lead{font-size:18px;line-height:1.55}
+p{font-size:16px;line-height:1.6}
 .ink700{color:var(--ink700)} .ink500{color:var(--ink500)}
 .mt8{margin-top:8px}.mt16{margin-top:16px}.mt24{margin-top:24px}.mt32{margin-top:32px}.mt48{margin-top:48px}.mt64{margin-top:64px}
 
@@ -89,15 +89,19 @@ p{font-size:17px;line-height:1.65}
   letter-spacing:.14em;text-transform:uppercase;color:var(--orange600);margin-bottom:8px}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;
-  padding:14px 28px;border-radius:var(--r-btn);font-size:19px;font-weight:700;line-height:1;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;
+  padding:12px 24px;border-radius:var(--r-btn);font-size:19px;font-weight:700;line-height:1;
   text-decoration:none;border:1px solid transparent;cursor:pointer;position:relative;overflow:hidden;
-  white-space:nowrap;transition:background var(--t-colour),border-color var(--t-colour),color var(--t-colour)}
-.btn-primary{background:linear-gradient(135deg,var(--orange500) 0%,var(--orange600) 100%);color:#fff;
+  white-space:nowrap;transition:background var(--t-colour),border-color var(--t-colour),color var(--t-colour),
+  transform var(--t-move),box-shadow var(--t-move)}
+/* gsap.com-style primary hover: darker fill wipes up from the baseline, button lifts */
+.btn-primary{color:#fff;
+  background:linear-gradient(var(--orange600),var(--orange600)) no-repeat left bottom/100% 0%,var(--orange500);
+  transition:background-size 320ms cubic-bezier(.2,.7,.3,1),transform var(--t-move),box-shadow var(--t-move);
   box-shadow:0 2px 6px rgba(232,95,20,.28),0 10px 24px rgba(232,95,20,.22)}
 .btn-primary .arw{transition:transform var(--t-move)}
-.btn-primary:hover{background:linear-gradient(135deg,var(--orange600) 0%,#D65510 100%);
-  box-shadow:0 3px 8px rgba(232,95,20,.34),0 16px 34px rgba(232,95,20,.26)}
+.btn-primary:hover{background-size:100% 100%,auto;transform:translateY(-2px);
+  box-shadow:0 4px 10px rgba(232,95,20,.34),0 18px 38px rgba(232,95,20,.28)}
 .btn-primary:hover .arw{transform:translateX(5px)}
 .btn-secondary{border-color:var(--lineStrong);color:var(--ink900);background:transparent}
 .btn-secondary::before{content:"";position:absolute;inset:0;background:var(--teal50);transform:scaleX(0);
@@ -116,31 +120,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* NAV */
 .nav{position:fixed;top:20px;left:0;right:0;z-index:100;transition:top var(--t-move)}
-.nav .in{max-width:var(--maxw);margin:0 auto;padding:0 28px 0 32px;height:76px;
+.nav .in{max-width:var(--maxw);margin:0 auto;padding:0 24px 0 28px;height:64px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
   width:calc(100% - 2*var(--pad));border-radius:var(--r-btn);
   border:1px solid rgba(255,255,255,.22);background:rgba(0,39,43,.30);
   backdrop-filter:saturate(120%) blur(10px);-webkit-backdrop-filter:saturate(120%) blur(10px);
   transition:background var(--t-colour),border-color var(--t-colour)}
 .brand{display:inline-flex;align-items:center;min-height:44px}
-.brand img{height:38px;width:auto}
+.brand img{height:32px;width:auto}
 .brand .lg-rev{display:block}.brand .lg-col{display:none}
 .nav.scrolled .brand .lg-rev{display:none}.nav.scrolled .brand .lg-col{display:block}
 .navlinks{display:flex;align-items:center;gap:22px;list-style:none}
 .navlinks>li{position:relative}
-.navlinks a{font-size:16px;font-weight:500;text-decoration:none;color:#fff;white-space:nowrap;
+.navlinks a{font-size:14px;font-weight:600;letter-spacing:.04em;text-decoration:none;color:#fff;white-space:nowrap;
   padding:12px 0;display:inline-flex;align-items:center;min-height:44px;position:relative;transition:color var(--t-colour)}
 .navlinks a::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;
   background:var(--orange500);transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
 .navlinks a:hover::after{transform:scaleX(1)}
 .navlinks a[aria-current="page"]::after{transform:scaleX(1)}
 .navright{display:flex;align-items:center;gap:20px;flex:0 0 auto}
-.navtel{font-size:16px;font-weight:600;text-decoration:none;color:#fff;white-space:nowrap;
+.navtel{font-size:14px;font-weight:600;text-decoration:none;color:#fff;white-space:nowrap;
   display:inline-flex;align-items:center;min-height:44px;position:relative}
 .navtel::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;background:var(--orange500);
   transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
 .navtel:hover::after{transform:scaleX(1)}
-.nav .btn{min-height:48px;padding:12px 22px}
+.nav .btn{min-height:44px;padding:10px 18px}
 .nav.scrolled .in{background:var(--paper);border-color:var(--lineSoft)}
 .nav.scrolled{top:12px}
 .nav.scrolled .navlinks a,.nav.scrolled .navtel{color:var(--ink900)}
@@ -164,20 +168,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .nav.scrolled .burger i,.nav.solid .burger i{background:var(--ink900)}
 
 /* HERO */
-.hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;isolation:isolate}
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden}
 .hero.short{min-height:64vh}
-.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero>img,.hero .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero .slide{opacity:0;transition:opacity 1100ms ease;will-change:opacity,transform}
+.hero .slide.on{opacity:1}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;
   background:linear-gradient(103deg,rgba(31,77,58,.90) 0%,rgba(0,84,92,.62) 38%,rgba(14,124,134,.26) 72%,rgba(143,191,212,.10) 100%),
              linear-gradient(to top,rgba(0,39,43,.55) 0%,rgba(0,39,43,0) 42%)}
-.hero .in{max-width:var(--maxw);margin:0 auto;padding:170px var(--pad) 96px;width:100%;color:#fff}
+.hero .in{max-width:var(--maxw);margin:0 auto;padding:150px var(--pad) 84px;width:100%;color:#fff}
 .hero.short .in{padding:170px var(--pad) 64px}
 .eyebrow{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sun);
   display:flex;align-items:center;gap:12px;margin-bottom:28px}
 .eyebrow::before{content:"";width:48px;height:2px;background:var(--sun);flex-shrink:0}
-.hero h1{font-size:96px;line-height:1.02;font-weight:700;letter-spacing:-.035em;max-width:16ch}
-.hero.short h1{font-size:60px;max-width:20ch}
-.hero .sub{font-size:20px;line-height:1.55;color:rgba(255,255,255,.92);max-width:54ch;margin-top:24px}
+.hero h1{font-size:64px;line-height:1.05;font-weight:700;letter-spacing:-.03em;max-width:18ch}
+.hero.short h1{font-size:48px;max-width:20ch}
+.hero .sub{font-size:18px;line-height:1.55;color:rgba(255,255,255,.92);max-width:54ch;margin-top:20px}
 .trust{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .trust span{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:10px 18px;
   border:1px solid rgba(255,255,255,.34);border-radius:var(--r-input);font-size:16px;font-weight:600;color:#fff}
@@ -273,13 +279,14 @@ section.notop{border-top:0}
 .pcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
   transition:transform 520ms cubic-bezier(.2,.7,.3,1)}
 .pcard::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,var(--wash,rgba(31,77,58,.93)) 0%,rgba(0,39,43,.42) 46%,rgba(0,39,43,.06) 100%)}
+  background:linear-gradient(to top,var(--wash,rgba(31,77,58,.97)) 0%,var(--wash,rgba(31,77,58,.88)) 30%,rgba(0,39,43,.48) 58%,rgba(0,39,43,.06) 100%)}
+.pcard .body{text-shadow:0 1px 3px rgba(0,20,22,.35)}
 .pcard:hover{box-shadow:var(--e3);transform:translateY(-6px)}
 .pcard:hover img{transform:scale(1.07)}
 .pcard .body{position:relative;z-index:2;padding:26px}
 .pcard .meta{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.84)}
 .pcard h3{font-size:24px;margin-top:8px;color:#fff}
-.pcard p{font-size:14.5px;color:rgba(255,255,255,.88);margin-top:8px;line-height:1.5}
+.pcard p{font-size:15px;color:rgba(255,255,255,.95);margin-top:8px;line-height:1.5}
 .pcard .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;
   padding-top:14px;border-top:1px solid rgba(255,255,255,.30);font-size:15px;font-weight:600}
 .pcard .arw{transition:transform var(--t-move)}
@@ -310,11 +317,13 @@ section.tint-forest .mcol .num,section.tint-forest .mcol .lab{color:var(--sun)}
 section.tint-forest .mcol .note{color:rgba(255,255,255,.78);border-top-color:rgba(255,255,255,.22)}
 section.tint-forest .lead,section.tint-forest p{color:rgba(255,255,255,.88)}
 section.tint-forest .acc{color:var(--sun)}
-section.tint-moss{background:var(--moss100);border-top:0}
-section.tint-clay{background:var(--clay100);border-top:0}
-section.tint-river{background:var(--river100);border-top:0}
-section.tint-sun{background:var(--sun100);border-top:0}
-section.tint-sky{background:var(--sky100);border-top:0}
+/* 13 Aug: light-palette ruling — section grounds use only paper, sand,
+   teal/50-200, sage/100-200. The old nature tints map onto those. */
+section.tint-moss{background:var(--sage100);border-top:0}
+section.tint-clay{background:var(--teal50);border-top:0}
+section.tint-river{background:var(--sage200);border-top:0}
+section.tint-sun{background:var(--sand);border-top:0}
+section.tint-sky{background:var(--teal100);border-top:0}
 
 /* BANDS */
 .bandlist{border-top:1px solid var(--lineSoft);margin-top:48px}
@@ -437,9 +446,9 @@ section.tint-sky{background:var(--sky100);border-top:0}
 .worldgrid .v{font-size:21px;font-weight:700;letter-spacing:-.01em;padding-bottom:22px;margin-top:6px}
 
 /* FOOTER — light. No dark bands anywhere. */
-footer{background:var(--forest);color:#fff;padding:96px 0 48px;position:relative;z-index:1}
+footer{background:var(--sage600);color:#fff;padding:80px 0 44px;position:relative;z-index:1}
 .fgrid2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
-footer h3{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);line-height:1.4}
+footer h3{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FFE1CE;line-height:1.4}
 footer .ink700{color:rgba(255,255,255,.72)}
 footer ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:12px}
 footer ul a,.tlink{text-decoration:none;font-size:16px;color:var(--ink700);position:relative;display:inline-block}
@@ -498,6 +507,51 @@ footer .flogo img{height:40px;width:auto}
   padding:12px 16px;border-radius:var(--r-input);font-size:12px;line-height:1.5;font-weight:600;letter-spacing:.06em}
 .flagbar b{color:var(--orange500);font-weight:700}
 .flagbar span{display:block}
+
+/* EXPLORE TABS — the "Start Your Journey" reference: centred heading,
+   uppercase letter-spaced text tabs, orange underline on the active one */
+.tabrow{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
+.tabrow .chip,.tabrow button{background:none;border:0;border-radius:0;padding:10px 2px;min-height:44px;
+  font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink700);
+  cursor:pointer;position:relative;transition:color var(--t-colour)}
+.tabrow button::before,.tabrow button::after{display:none}
+.tabrow button::after{content:"";display:block;position:absolute;left:0;bottom:6px;height:2px;width:100%;
+  background:var(--orange500);transform:scaleX(0);transform-origin:left;transition:transform var(--t-move);
+  opacity:1;inset:auto 0 6px 0;border:0;border-radius:0}
+.tabrow button:hover{color:var(--ink900)}
+.tabrow button:hover::after{transform:scaleX(1)}
+.tabrow button[aria-selected="true"]{color:var(--ink900);font-weight:700}
+.tabrow button[aria-selected="true"]::after{transform:scaleX(1)}
+
+/* METRICS — pinned GSAP section. Count-ups on the left, the symbol
+   animating on the right; scrub tied to scroll so people stop and look. */
+.metrics{border-top:0;padding:0;background:var(--teal50)}
+.metrics .pinwrap{min-height:100vh;display:flex;align-items:center}
+.metrics .in{max-width:var(--maxw);margin:0 auto;padding:64px var(--pad);width:100%;
+  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:64px;align-items:center}
+.mstats{display:flex;flex-direction:column;gap:36px;margin-top:36px}
+.mstat{border-left:3px solid var(--orange500);padding-left:24px}
+.mstat:nth-child(2){border-left-color:var(--teal600)}
+.mstat:nth-child(3){border-left-color:var(--sage600)}
+.mstat k{display:block;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink500)}
+.mstat v{display:block;font-size:56px;font-weight:700;letter-spacing:-.025em;line-height:1.05;margin-top:8px;
+  font-variant-numeric:tabular-nums;color:var(--teal900)}
+.mstat em{display:block;font-style:normal;font-size:15px;color:var(--ink700);margin-top:8px;max-width:44ch}
+.msym{display:flex;align-items:center;justify-content:center}
+.msym img{width:280px;height:auto;will-change:transform}
+@media (max-width:1080px){.metrics .in{grid-template-columns:1fr;gap:40px}.msym img{width:200px}.mstat v{font-size:44px}}
+@media (max-width:640px){.mstat v{font-size:36px}.metrics .pinwrap{min-height:auto;padding:48px 0}}
+
+/* ZUBI — the mascot on the enquiry card, PostHog-style */
+.intent{position:relative}
+.zubi{position:absolute;left:44px;top:96px;width:84px;pointer-events:none;opacity:0}
+.zubi img{width:84px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
+.zubi .cloud{position:absolute;left:56px;top:-40px;background:var(--paper);border:1px solid var(--lineStrong);
+  border-radius:16px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--ink900);white-space:nowrap;
+  box-shadow:var(--e1)}
+.zubi .cloud::after{content:"";position:absolute;left:18px;bottom:-6px;width:10px;height:10px;background:var(--paper);
+  border-left:1px solid var(--lineStrong);border-bottom:1px solid var(--lineStrong);transform:rotate(-45deg)}
+@media (max-width:640px){.zubi{display:none}}
 
 /* TABLET 810 */
 @media (max-width:1080px){
@@ -622,14 +676,15 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </nav>
 <main id="main">
-<header class="hero">
-  <img src="hero-home.webp" alt="The road ahead through a windscreen on a Himalayan pass, a passenger watching the valley." fetchpriority="high" width="2400" height="1350">
+<header class="hero" id="hero">
+  <img class="slide on" src="hero-home.webp" alt="The road ahead through a windscreen on a Himalayan pass, a passenger watching the valley." fetchpriority="high" width="2400" height="1350">
+  <img class="slide" src="hero-2.webp" alt="Quad bikes raising dust on a desert track under a stormy sky." loading="lazy" width="2400" height="1547">
+  <img class="slide" src="hero-3.webp" alt="Mist drifting through a dark evergreen forest." loading="lazy" width="2400" height="1442">
   <div class="in">
     <div class="eyebrow">Stuti Tourism &middot; designing journeys since 2009</div>
     <h1>Travel designed around <span class="acc">experiences</span>, not packages.</h1>
     <p class="sub">Curated journeys for families, friends, teams and institutions seeking stories worth bringing home.</p>
     <div class="trust">
-      <span>Seventeen years, since 2009</span>
       <span>800,000+ travellers</span>
       <span>UN/CEFACT travel &amp; tourism coordinator</span>
     </div>
@@ -640,6 +695,7 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </header>
 <div class="intent-band"><div class="wrap"><div class="intent">
+  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Hello you</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
   <h2 class="h3">What&rsquo;s on your mind?</h2>
   <p class="sub">Tell us in a line. A person reads every one of these &mdash; no chatbot, no auto-reply.</p>
   <form action="plan-your-journey.html" method="get">
@@ -648,12 +704,19 @@ footer .flogo img{height:40px;width:auto}
     <button type="submit" class="btn btn-primary">Find <span class="arw" aria-hidden="true">&rarr;</span></button>
   </form>
 </div></div></div>
-<div class="wrap"><div class="proof">
-  <div><k>Designing since</k><v>2009</v><em>Seventeen years as Stuti Tourism Pvt. Ltd.</em></div>
-  <div><k>Travellers served</k><v>800,000+</v><em>Families, schools and companies, across India and beyond.</em></div>
-  <div><k>Institutions</k><v>70+</v><em>Schools, colleges and companies who send us their people.</em></div>
-  <div><k>Standards work</k><v>UN/CEFACT</v><em>Our founder is Travel &amp; Tourism Domain Coordinator at the United Nations body that sets global standards for travel and trade data.</em></div>
-</div></div>
+<section class="metrics notop" id="metrics" aria-label="The record">
+  <div class="pinwrap"><div class="in">
+    <div>
+      <div class="label ink500">The record</div>
+      <div class="mstats">
+        <div class="mstat"><k>Designing since</k><v><span class="cnt" data-from="2011" data-to="2009" data-fmt="plain">2009</span></v><em>As Stuti Tourism Pvt. Ltd.</em></div>
+        <div class="mstat"><k>Travellers served</k><v><span class="cnt" data-from="399999" data-to="800000" data-fmt="in">8,00,000</span>+</v><em>Families, schools and companies, across India and beyond.</em></div>
+        <div class="mstat"><k>Standards work</k><v>UN/CEFACT</v><em>Our founder is Travel &amp; Tourism Domain Coordinator at the United Nations body that sets global standards for travel and trade data.</em></div>
+      </div>
+    </div>
+    <div class="msym"><img id="msymbol" src="symbol.webp" alt="" width="1062" height="1132" loading="lazy"></div>
+  </div></div>
+</section>
 <section id="explore" class="tint-moss">
   <div class="wrap shell">
     <div class="mcol"><span class="num">&sect; 01</span><div class="lab">Explore by</div>
@@ -661,7 +724,7 @@ footer .flogo img{height:40px;width:auto}
     <div class="ccol">
   <h2>Who&rsquo;s <span class="acc">travelling</span>?</h2>
   <p class="lead">Five ways in. Pick the one that sounds like your group and we will show you what fits &mdash; pacing, drive lengths, and what we would not recommend.</p>
-  <div class="chips" role="tablist" aria-label="Explore by">
+  <div class="tabrow" role="tablist" aria-label="Explore by">
     <button class="chip" role="tab" aria-selected="true" aria-controls="p-travellers" id="t-travellers">By travellers</button>
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-interests" id="t-interests">By interests</button>
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-month" id="t-month">By month</button>
@@ -863,7 +926,7 @@ footer .flogo img{height:40px;width:auto}
   <div class="instwall"><span>Jamnabai Narsee</span><span>Campion</span><span>Pearl Academy</span><span>Japanese Indian School</span><span>MICA Ahmedabad</span><span>Narsee Monjee</span><span>Sir JJ School of Architecture</span><span>HVB Global Academy</span><span>Chatrabhuj Narsee</span><span>St Mary&rsquo;s ICSE &amp; ISC</span><span>Amulak Amichand International</span><span>Avalon School</span><span>Bhausaheeb Hirey College of Architecture</span></div>
   <p class="mt32"><a class="tlink" href="educational-expeditions.html">Safety and logistics, in detail &rarr;</a></p></div>
   </div>
-</section><section id="founder" class="tint-forest">
+</section><section id="founder" class="tint-moss">
   <div class="wrap shell">
     <div class="mcol"><span class="num">&sect; 07</span><div class="lab">The founder</div>
       <div class="note">The UN/CEFACT role is stated exactly &mdash; never as &ldquo;works with the United Nations&rdquo;.</div></div>
@@ -934,6 +997,8 @@ footer .flogo img{height:40px;width:auto}
     </div>
   </div>
 </footer>
+<script defer src="gsap.min.js"></script>
+<script defer src="ScrollTrigger.min.js"></script>
 <script>
 (function(){
   var nav=document.getElementById('nav'), bar=document.getElementById('sbar'),
@@ -952,12 +1017,14 @@ footer .flogo img{height:40px;width:auto}
   /* The colour wash. Stronger amplitude than the first build so the change is
      actually legible, while every tone stays inside the 21-token set and every
      card stays paper — contrast never depends on scroll position. */
-  var CYCLE=[['--sand','--moss','--sky'],
-             ['--moss100','--forest700','--moss'],
-             ['--sky100','--river','--sky'],
-             ['--sun100','--terra','--sun'],
-             ['--clay100','--clay','--terra'],
-             ['--river100','--river','--moss']];
+  /* 13 Aug light-palette ruling: grounds cycle through the approved light
+     surfaces only — paper, sand, teal/50-200, sage/100-200. */
+  var CYCLE=[['--sand','--sage200','--teal200'],
+             ['--sage100','--sage200','--teal100'],
+             ['--teal50','--teal200','--sage200'],
+             ['--paper','--sage100','--teal100'],
+             ['--teal100','--teal200','--sage200'],
+             ['--sage200','--sage100','--teal100']];
   var cs=getComputedStyle(document.documentElement);
   function tok(n){return cs.getPropertyValue(n).trim();}
   function paint(i){
@@ -1030,6 +1097,70 @@ footer .flogo img{height:40px;width:auto}
       }
     });
   }
+  /* HERO ROTATION — the Jitter "Destination" pattern: crossfade every 3s,
+     slow Ken Burns zoom on the active slide. Pauses when the tab is hidden. */
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.hero .slide'));
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(slides.length>1 && !reduced){
+    var cur=0;
+    setInterval(function(){
+      if(document.hidden) return;
+      slides[cur].classList.remove('on');
+      cur=(cur+1)%slides.length;
+      var s=slides[cur]; s.classList.add('on');
+      if(window.gsap) gsap.fromTo(s,{scale:1.08},{scale:1,duration:3.2,ease:'power1.out',overwrite:true});
+    },3000);
+  }
+
+  /* GSAP layer — hero entrance, Zubi, pinned metrics. All guarded: if the CDN
+     fails or reduced motion is set, the page is complete without it. */
+  function inr(n){ n=Math.round(n); var s=String(n), l=s.length;
+    if(l<=3) return s;
+    var head=s.slice(0,l-3), tail=s.slice(l-3), parts=[];
+    while(head.length>2){ parts.unshift(head.slice(-2)); head=head.slice(0,-2); }
+    if(head) parts.unshift(head);
+    return parts.join(',')+','+tail; }
+  window.addEventListener('load',function(){
+    if(!window.gsap || reduced) return;
+    if(window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+    /* Hero entrance — eyebrow, title, sub, chips, buttons stagger up */
+    gsap.from('.hero .eyebrow, .hero h1, .hero .sub, .hero .trust, .hero .btnrow',
+      {y:36,opacity:0,duration:.9,ease:'power3.out',stagger:.12,clearProps:'all'});
+    gsap.fromTo('.hero .slide.on',{scale:1.08},{scale:1,duration:3.2,ease:'power1.out'});
+
+    if(!window.ScrollTrigger) return;
+
+    /* Zubi comes up from behind the enquiry card, then idles with a bounce */
+    var zubi=document.getElementById('zubi');
+    if(zubi){
+      gsap.set(zubi,{opacity:1,y:70});
+      gsap.to(zubi,{y:0,duration:.8,ease:'back.out(1.6)',
+        scrollTrigger:{trigger:'.intent',start:'top 78%',once:true},
+        onComplete:function(){ gsap.to(zubi,{y:-10,duration:.9,ease:'sine.inOut',yoyo:true,repeat:-1}); }});
+    }
+
+    /* Metrics — pin + scrub. Numbers roll 2011→2009 and 3,99,999→8,00,000+
+       while the symbol turns beside them. */
+    var pin=document.querySelector('.metrics .pinwrap');
+    if(pin && window.innerWidth>1080){
+      var tl=gsap.timeline({scrollTrigger:{trigger:pin,start:'top top',end:'+=120%',scrub:1,pin:true}});
+      document.querySelectorAll('.metrics .cnt').forEach(function(el){
+        var o={v:parseFloat(el.dataset.from)}, to=parseFloat(el.dataset.to), fmt=el.dataset.fmt;
+        tl.to(o,{v:to,duration:1,ease:'none',
+          onUpdate:function(){ el.textContent = fmt==='in' ? inr(o.v) : String(Math.round(o.v)); }},0);
+      });
+      tl.fromTo('#msymbol',{rotate:-10,y:40,scale:.92},{rotate:10,y:-40,scale:1,ease:'none',duration:1},0);
+    }else{
+      /* Mobile / tablet: plain one-shot count-up when it scrolls into view */
+      document.querySelectorAll('.metrics .cnt').forEach(function(el){
+        var o={v:parseFloat(el.dataset.from)}, to=parseFloat(el.dataset.to), fmt=el.dataset.fmt;
+        gsap.to(o,{v:to,duration:1.6,ease:'power1.out',
+          scrollTrigger:{trigger:el,start:'top 85%',once:true},
+          onUpdate:function(){ el.textContent = fmt==='in' ? inr(o.v) : String(Math.round(o.v)); }});
+      });
+    }
+  });
 })();
 </script>
 </body>
