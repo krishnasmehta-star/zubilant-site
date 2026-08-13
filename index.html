@@ -65,9 +65,9 @@ a{color:inherit} img{display:block;max-width:100%;height:auto} button{font-famil
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
 
 /* TYPE — 9 styles · scaled to the Black Tomato reference, 13 Aug */
-.display1{font-size:64px;line-height:1.05;font-weight:700;letter-spacing:-.03em}
-h1,.h1{font-size:48px;line-height:1.08;font-weight:600;letter-spacing:-.02em}
-h2,.h2{font-size:36px;line-height:1.12;font-weight:600;letter-spacing:-.015em}
+.display1{font-size:72px;line-height:1.04;font-weight:700;letter-spacing:-.03em}
+h1,.h1{font-size:58px;line-height:1.06;font-weight:600;letter-spacing:-.02em}
+h2,.h2{font-size:42px;line-height:1.1;font-weight:600;letter-spacing:-.015em}
 h3,.h3{font-size:25px;line-height:1.22;font-weight:600;letter-spacing:-.012em}
 h4,.h4{font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.008em}
 .label{font-size:13px;line-height:1.4;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
@@ -92,7 +92,7 @@ p{font-size:16px;line-height:1.6}
 /* gsap.com primary: black pill at rest; an orange circle scales up from the
    bottom on hover. Pseudo-element layers so text needs no wrapping:
    ::after = black ground (z -2), ::before = orange circle (z -1). */
-.btn-primary{color:#fff;background:none;box-shadow:0 2px 8px rgba(22,33,31,.22)}
+.btn-primary{color:#fff;background:none;box-shadow:0 2px 8px rgba(22,33,31,.22);isolation:isolate}
 .btn-primary::after{content:"";position:absolute;inset:0;background:var(--teal900);
   z-index:-2;border-radius:inherit}
 .btn-primary::before{content:"";position:absolute;left:50%;bottom:-60%;width:250%;aspect-ratio:1/1;
@@ -121,28 +121,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .skip{position:absolute;left:-9999px;top:0;background:var(--paper);padding:12px 20px;z-index:200}
 .skip:focus{left:16px;top:16px}
 
-/* NAV */
-.nav{position:fixed;top:20px;left:0;right:0;z-index:100;transition:top var(--t-move)}
-.nav .in{max-width:var(--maxw);margin:0 auto;padding:0 24px 0 28px;height:64px;
+/* NAV — R5: Contiki-style experience. A calm, solid white bar the full width,
+   logo left, links centred, phone + CTA right. Shadow arrives on scroll. */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);
+  transition:box-shadow var(--t-move)}
+.nav.scrolled{box-shadow:0 2px 14px rgba(22,33,31,.10)}
+.nav .in{max-width:1360px;margin:0 auto;padding:0 32px;height:70px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
-  width:calc(100% - 2*var(--pad));border-radius:var(--r-btn);
-  border:1px solid rgba(255,255,255,.22);background:rgba(0,39,43,.30);
-  backdrop-filter:saturate(120%) blur(10px);-webkit-backdrop-filter:saturate(120%) blur(10px);
-  transition:background var(--t-colour),border-color var(--t-colour)}
+  width:100%;border-radius:0;border:0;background:transparent}
+.navlinks{margin:0 auto}
 .brand{display:inline-flex;align-items:center;min-height:44px}
 .brand img{height:32px;width:auto}
-.brand .lg-rev{display:block}.brand .lg-col{display:none}
-.nav.scrolled .brand .lg-rev{display:none}.nav.scrolled .brand .lg-col{display:block}
+.brand .lg-rev{display:none}.brand .lg-col{display:block}
 .navlinks{display:flex;align-items:center;gap:22px;list-style:none}
 .navlinks>li{position:relative}
-.navlinks a{font-size:14px;font-weight:600;letter-spacing:.04em;text-decoration:none;color:#fff;white-space:nowrap;
+.navlinks a{font-size:15px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:var(--ink900);white-space:nowrap;
   padding:12px 0;display:inline-flex;align-items:center;min-height:44px;position:relative;transition:color var(--t-colour)}
 .navlinks a::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;
   background:var(--orange500);transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
 .navlinks a:hover::after{transform:scaleX(1)}
 .navlinks a[aria-current="page"]::after{transform:scaleX(1)}
 .navright{display:flex;align-items:center;gap:20px;flex:0 0 auto}
-.navtel{font-size:14px;font-weight:600;text-decoration:none;color:#fff;white-space:nowrap;
+.navtel{font-size:14px;font-weight:600;text-decoration:none;color:var(--ink900);white-space:nowrap;
   display:inline-flex;align-items:center;min-height:44px;position:relative}
 .navtel::after{content:"";position:absolute;left:0;bottom:8px;height:2px;width:100%;background:var(--orange500);
   transform:scaleX(0);transform-origin:left;transition:transform var(--t-move)}
@@ -162,10 +162,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .dd a::after{left:12px;bottom:8px;width:calc(100% - 24px);height:1px;background:var(--teal600)}
 .dd a:hover{color:var(--teal600)!important}
 .dd .sep{height:1px;background:var(--lineSoft);margin:8px 12px}
-.burger{display:none;width:48px;height:48px;border:1px solid rgba(255,255,255,.4);border-radius:var(--r-input);
+.burger{display:none;width:48px;height:48px;border:1px solid var(--lineStrong);border-radius:var(--r-input);
   background:transparent;align-items:center;justify-content:center;cursor:pointer}
-.nav.scrolled .burger,.nav.solid .burger{border-color:var(--lineStrong)}
-.burger i{display:block;width:20px;height:2px;background:#fff;position:relative;transition:background var(--t-colour)}
+.burger i{display:block;width:20px;height:2px;background:var(--ink900);position:relative;transition:background var(--t-colour)}
 .burger i::before,.burger i::after{content:"";position:absolute;left:0;width:20px;height:2px;background:inherit}
 .burger i::before{top:-7px}.burger i::after{top:7px}
 .nav.scrolled .burger i,.nav.solid .burger i{background:var(--ink900)}
@@ -179,12 +178,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;
   background:linear-gradient(103deg,rgba(31,77,58,.90) 0%,rgba(0,84,92,.62) 38%,rgba(14,124,134,.26) 72%,rgba(143,191,212,.10) 100%),
              linear-gradient(to top,rgba(0,39,43,.55) 0%,rgba(0,39,43,0) 42%)}
-.hero .in{max-width:var(--maxw);margin:0 auto;padding:150px var(--pad) 84px;width:100%;color:#fff}
+.hero .in{max-width:var(--maxw);margin:0 auto;padding:160px var(--pad) 84px;width:100%;color:#fff}
 .hero.short .in{padding:170px var(--pad) 64px}
 .eyebrow{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sun);
   display:flex;align-items:center;gap:12px;margin-bottom:28px}
 .eyebrow::before{content:"";width:48px;height:2px;background:var(--sun);flex-shrink:0}
-.hero h1{font-size:50px;line-height:1.08;font-weight:700;letter-spacing:-.025em;max-width:20ch}
+.hero h1{font-size:62px;line-height:1.06;font-weight:700;letter-spacing:-.028em;max-width:18ch}
 .hero.short h1{font-size:40px;max-width:22ch}
 .hero .sub{font-size:16.5px;line-height:1.55;color:rgba(255,255,255,.92);max-width:54ch;margin-top:18px}
 /* R4: hero metrics in the band-stats style — orange left rule, label over value */
@@ -197,7 +196,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* INTENT */
 .intent-band{position:relative;margin-top:-64px;z-index:2}
 .intent{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
-  padding:48px;max-width:860px;margin:0 auto;box-shadow:var(--e3)}
+  padding:48px;max-width:860px;margin:0 auto;box-shadow:var(--e3);
+  transition:box-shadow var(--t-move),transform var(--t-move)}
+.intent:hover{box-shadow:0 14px 40px rgba(243,107,33,.30),var(--e2);transform:translateY(-4px) scale(1.008)}
 .intent h2{font-size:30px;text-align:center}
 .intent .sub{text-align:center;color:var(--ink700);margin-top:12px}
 .intent form{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
@@ -226,9 +227,8 @@ section{padding:var(--sec-pad) 0;border-top:0;position:relative}
 main section::before{content:"";display:block;position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:min(var(--maxw),calc(100% - 2*var(--pad)));height:1px;background:var(--orange500);opacity:.55}
 main section.notop::before{display:none}
-/* R4: bigger orange cursor */
-html{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="11" cy="11" r="9" fill="%23F36B21" fill-opacity="0.9" stroke="white" stroke-width="1.6"/></svg>') 11 11, auto}
-a,button,[role="tab"],input,textarea,select,.zmini{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><circle cx="15" cy="15" r="12" fill="none" stroke="%23F36B21" stroke-width="2.6"/><circle cx="15" cy="15" r="4.5" fill="%23F36B21"/></svg>') 15 15, pointer}
+/* R5: the default arrow, slightly bigger, in orange */
+html,body,a,button,[role="tab"],.zmini{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="30" viewBox="0 0 26 30"><path d="M3 2 L3 24 L9 19 L13 28 L17 26 L13 17 L21 17 Z" fill="%23F36B21" stroke="white" stroke-width="1.6" stroke-linejoin="round"/></svg>') 3 2, auto}
 section.notop{border-top:0}
 .shell{display:grid;grid-template-columns:180px 1fr;gap:48px;align-items:start}
 .mcol .num{display:block;font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--ink500);margin-bottom:8px}
@@ -524,7 +524,13 @@ footer .flogo img{height:40px;width:auto}
   padding:4px 4px 16px;margin-top:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .hscroll::-webkit-scrollbar{display:none}
 .hscroll .pcard{flex:0 0 264px;min-height:400px;scroll-snap-align:start}
-.harrows{display:flex;gap:12px;justify-content:flex-end;margin-top:28px}
+/* R5: arrows sit at the sides of the rows, only when there is overflow */
+.cararea{position:relative}
+.harrows{display:contents}
+.harr{position:absolute;top:50%;transform:translateY(-50%);z-index:5;box-shadow:var(--e2)}
+.harr[data-dir="-1"]{left:-14px}
+.harr[data-dir="1"]{right:-14px}
+.harr[hidden]{display:none}
 .harr{width:44px;height:44px;border-radius:50%;border:1px solid var(--lineStrong);background:var(--paper);
   font-size:18px;line-height:1;cursor:pointer;color:var(--ink900);
   transition:border-color var(--t-colour),color var(--t-colour),background var(--t-colour)}
@@ -539,17 +545,12 @@ footer .flogo img{height:40px;width:auto}
   font-size:13.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink700);
   cursor:pointer;position:relative;
   transition:color var(--t-colour),border-color var(--t-colour),box-shadow var(--t-move),transform var(--t-move)}
-.tabrow button::before{display:none}
-.tabrow button::after{content:"";display:block;position:absolute;left:26px;right:26px;bottom:10px;height:2px;
-  width:auto;background:var(--orange500);transform:scaleX(0);transform-origin:center;
-  transition:transform var(--t-move);opacity:1;border:0;border-radius:2px}
+.tabrow button::before,.tabrow button::after{display:none}
 .tabrow button:hover{color:var(--ink900);border-color:var(--orange500);transform:translateY(-2px);
   box-shadow:0 8px 22px rgba(243,107,33,.30)}
-.tabrow button:hover::after{transform:scaleX(1)}
 .tabrow button[aria-selected="true"],.tabrow button[aria-selected="true"]:hover{
   background:var(--paper);border:1.5px solid var(--orange500);color:var(--ink900);font-weight:700;
   box-shadow:0 6px 18px rgba(243,107,33,.26)}
-.tabrow button[aria-selected="true"]::after{transform:scaleX(1)}
 
 /* METRICS — "Why Zubilant" strip. Numbers count up the moment the section
    lands in view; the bag spins fully with scroll, gsap.com windmill style. */
@@ -575,7 +576,7 @@ footer .flogo img{height:40px;width:auto}
 .intent{position:relative}
 .intent form{position:relative}
 .intent form .btn{position:relative;z-index:2}
-.zubi{position:absolute;right:28px;bottom:30px;width:74px;pointer-events:none;opacity:0;z-index:1}
+.zubi{position:absolute;right:28px;bottom:64px;width:74px;pointer-events:auto;opacity:0;z-index:1}
 .zubi img{width:74px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
 .zubi .cloud{position:absolute;right:54px;left:auto;top:-40px;background:var(--paper);border:1px solid var(--lineStrong);
   border-radius:16px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--ink900);white-space:nowrap;
@@ -587,14 +588,22 @@ footer .flogo img{height:40px;width:auto}
 /* ZUBI RECOMMENDED — mini list left (auto-cycles), big linked preview right */
 .zrec{display:grid;grid-template-columns:330px minmax(0,1fr);gap:32px;margin-top:48px;align-items:stretch}
 .zlist{display:flex;flex-direction:column;gap:16px}
-.zmini{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:var(--paper);
-  border:1px solid var(--lineSoft);border-radius:var(--r-card);padding:10px;cursor:pointer;text-align:left;
-  transition:box-shadow var(--t-move),transform var(--t-move),border-color var(--t-colour);flex:1}
-.zmini img{width:96px;height:76px;object-fit:cover;border-radius:10px}
-.zmini .t{display:block;font-size:17px;font-weight:600;line-height:1.3}
-.zmini .m{display:block;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500);margin-top:4px}
-.zmini:hover{box-shadow:0 10px 26px rgba(243,107,33,.28);transform:translateY(-2px);border-color:var(--orange500)}
-.zmini[aria-selected="true"]{border-color:var(--orange500);box-shadow:0 6px 18px rgba(243,107,33,.2)}
+/* Folder-file cards — three pages of the book (Mosby's Files reference) */
+.zmini.folder{position:relative;display:block;text-align:left;background:var(--paper);
+  border:1.5px solid var(--lineSoft);border-radius:6px 14px 14px 14px;padding:12px;cursor:pointer;flex:1;
+  margin-top:22px;transition:box-shadow var(--t-move),transform var(--t-move),border-color var(--t-colour)}
+.zmini .ftab{position:absolute;top:-21px;left:14px;padding:4px 16px 3px;border-radius:8px 8px 0 0;
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal900)}
+.f-teal .ftab{background:var(--teal200)} .f-teal{border-color:var(--teal200)}
+.f-orange .ftab{background:#FBD3B8} .f-orange{border-color:#FBD3B8}
+.f-sage .ftab{background:var(--sage200)} .f-sage{border-color:var(--sage200)}
+.zmini.folder img{width:100%;height:74px;object-fit:cover;border-radius:8px}
+.zmini .t{display:block;font-size:16px;font-weight:600;line-height:1.3;margin-top:10px}
+.zmini .m{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500);margin-top:3px}
+.zmini.folder:nth-child(1){transform:rotate(-1.2deg)}
+.zmini.folder:nth-child(3){transform:rotate(1.2deg)}
+.zmini.folder:hover{transform:rotate(0) translateY(-3px);box-shadow:0 10px 26px rgba(243,107,33,.28);border-color:var(--orange500)}
+.zmini[aria-selected="true"]{border-color:var(--orange500);box-shadow:0 6px 18px rgba(243,107,33,.2);transform:rotate(0)}
 .zprev{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:460px;
   border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:#fff;
   box-shadow:0 6px 20px rgba(243,107,33,.16)}
@@ -646,24 +655,27 @@ footer .flogo img{height:40px;width:auto}
 .mapcard h3{font-size:21px;margin-top:6px}
 .mapcard p{font-size:15px;color:var(--ink700);margin-top:6px}
 .maphint{font-size:14px;margin-top:14px;text-align:center}
-.mapwrap svg{width:100%;height:auto;max-height:520px;display:block;margin:0 auto}
-.landmass{fill:var(--sage200);stroke:var(--sage600);stroke-width:1.5;opacity:.9}
+.mapwrap svg{width:100%;height:auto;max-height:560px;display:block;margin:0 auto}
+#mapstates path{fill:var(--sage200);stroke:var(--paper);stroke-width:.8;transition:fill var(--t-colour)}
+#mapstates path.lit{fill:var(--sage100)}
+#mapstates path.active{fill:var(--teal200)}
 .mappin{cursor:pointer}
 .mappin circle.core{fill:var(--orange500);stroke:#fff;stroke-width:2;transition:r .2s}
 .mappin circle.pulse{fill:none;stroke:var(--orange500);stroke-width:1.5;opacity:.7;
   animation:pinpulse 2.2s ease-out infinite}
 .mappin.on circle.core{fill:var(--teal600)}
-.mappin text{font-size:11px;font-weight:700;fill:var(--ink700);letter-spacing:.04em}
-@keyframes pinpulse{0%{r:7;opacity:.7}100%{r:20;opacity:0}}
+.mappin text{font-size:12px;font-weight:700;fill:var(--ink900);letter-spacing:.04em;paint-order:stroke;stroke:#fff;stroke-width:3px}
+@keyframes pinpulse{0%{r:8;opacity:.7}100%{r:24;opacity:0}}
 @media (max-width:1080px){.mapgrid{grid-template-columns:1fr}}
 
-/* STEP OUTSIDE — big type, oval image, CTA in the middle */
-.stepout{background:var(--sage600);color:#FFF6EC;padding:64px 0 40px;text-align:center;overflow:hidden}
+/* STEP OUTSIDE — pastel teal, huge type, a big oval that spins with scroll */
+.stepout{background:var(--teal100);color:var(--teal900);padding:72px 0 48px;text-align:center;overflow:hidden}
 .stepout::before{display:none}
 .so-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
-.so-word{font-size:clamp(64px,11vw,150px);line-height:.95;font-weight:700;letter-spacing:-.03em}
-.so-oval{position:relative;width:min(560px,80%);margin:-14px auto;aspect-ratio:16/8;border-radius:50%;
-  overflow:hidden;box-shadow:0 18px 50px rgba(0,20,10,.35)}
+.so-word{font-size:clamp(72px,12vw,170px);line-height:.95;font-weight:700;letter-spacing:-.03em}
+.so-stage{position:relative;width:min(720px,86%);margin:-18px auto;aspect-ratio:16/8}
+.so-oval{width:100%;height:100%;border-radius:50%;overflow:hidden;
+  box-shadow:0 18px 50px rgba(0,40,44,.28);will-change:transform}
 .so-oval img{width:100%;height:100%;object-fit:cover}
 .so-cta{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
 .so-cta:hover{transform:translate(-50%,-50%) translateY(-2px)}
@@ -832,7 +844,7 @@ footer .flogo img{height:40px;width:auto}
 <section id="explore" class="tint-moss">
   <div class="wrap" style="text-align:center">
     <div class="ccol" style="max-width:100%">
-  <h2>Who&rsquo;s <span class="acc">travelling</span>?</h2>
+  <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">01 &middot; Start with your people</span></div><h2>Who&rsquo;s <span class="acc">travelling</span>?</h2>
   <p class="lead ink700" style="max-width:62ch;margin:16px auto 0">Five ways in. Pick the one that sounds like your group and we will show you what fits &mdash; pacing, drive lengths, and what we would not recommend.</p>
   <div class="tabrow" role="tablist" aria-label="Explore by">
     <button class="chip" role="tab" aria-selected="true" aria-controls="p-travellers" id="t-travellers">By travellers</button>
@@ -840,8 +852,8 @@ footer .flogo img{height:40px;width:auto}
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-month" id="t-month">By month</button>
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-trending" id="t-trending">Trending</button>
   </div>
-  <div class="harrows"><button class="harr" data-dir="-1" aria-label="Scroll cards left">&larr;</button><button class="harr" data-dir="1" aria-label="Scroll cards right">&rarr;</button></div>
-  <div class="hscroll" id="p-travellers" role="tabpanel" aria-labelledby="t-travellers"><a class="pcard w-forest" href="family-holidays.html">
+  
+  <div class="cararea"><div class="harrows"><button class="harr" data-dir="-1" aria-label="Scroll cards left">&larr;</button><button class="harr" data-dir="1" aria-label="Scroll cards right">&rarr;</button></div><div class="hscroll" id="p-travellers" role="tabpanel" aria-labelledby="t-travellers"><a class="pcard w-forest" href="family-holidays.html">
       <img src="c-family.webp" alt="Family travel" loading="lazy" width="760" height="1013">
       <div class="body"><div class="meta">Explore by traveller</div><h3>Family travel</h3><p>Paced for grandparents and eight-year-olds in the same group.</p>
       <div class="foot"><span>5 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-moss" href="experiences.html">
@@ -898,26 +910,29 @@ footer .flogo img{height:40px;width:auto}
       <div class="foot"><span>6 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-river" href="j-kerala-backwaters-slowly.html">
       <img src="j-kerala.webp" alt="Kerala Backwaters, Slowly" loading="lazy" width="800" height="600">
       <div class="body"><div class="meta">Placeholder &middot; awaiting data</div><h3>Kerala Backwaters, Slowly</h3><p>Trending ranking needs three months of enquiry data.</p>
-      <div class="foot"><span>7 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div>
+      <div class="foot"><span>7 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div></div>
   </div>
   </div>
 </section><section id="journeys">
   <div class="wrap">
-    <h2 style="text-align:center">Zubi <span class="acc">Recommended</span></h2>
+    <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">02 &middot; Let Zubi pick</span></div><h2 style="text-align:center">Zubi <span class="acc">Recommended</span></h2>
     <p class="lead ink700" style="text-align:center;max-width:60ch;margin:16px auto 0"><span class="ph">Subheading pending &mdash; one line on how Zubi picks these three.</span></p>
     <div class="zrec">
       <div class="zlist" role="tablist" aria-label="Zubi recommended journeys">
-        <button class="zmini" role="tab" aria-selected="true" data-idx="0">
+        <button class="zmini folder f-teal" role="tab" aria-selected="true" data-idx="0">
+          <span class="ftab">01 &middot; Ladakh</span>
           <img src="j-ladakh.webp" alt="" loading="lazy" width="800" height="600">
-          <span><span class="t">Ladakh by Road</span><span class="m">9 nights &middot; Moderate</span></span>
+          <span class="finfo"><span class="t">Ladakh by Road</span><span class="m">9 nights &middot; Moderate</span></span>
         </button>
-        <button class="zmini" role="tab" aria-selected="false" data-idx="1">
+        <button class="zmini folder f-orange" role="tab" aria-selected="false" data-idx="1">
+          <span class="ftab">02 &middot; Kashmir</span>
           <img src="j-kashmir.webp" alt="" loading="lazy" width="800" height="600">
-          <span><span class="t">Kashmir in Tulip Season</span><span class="m">6 nights &middot; Gentle</span></span>
+          <span class="finfo"><span class="t">Kashmir in Tulip Season</span><span class="m">6 nights &middot; Gentle</span></span>
         </button>
-        <button class="zmini" role="tab" aria-selected="false" data-idx="2">
+        <button class="zmini folder f-sage" role="tab" aria-selected="false" data-idx="2">
+          <span class="ftab">03 &middot; Kerala</span>
           <img src="j-kerala.webp" alt="" loading="lazy" width="800" height="600">
-          <span><span class="t">Kerala Backwaters, Slowly</span><span class="m">7 nights &middot; Gentle</span></span>
+          <span class="finfo"><span class="t">Kerala Backwaters, Slowly</span><span class="m">7 nights &middot; Gentle</span></span>
         </button>
       </div>
       <a class="zprev" id="zprev" href="j-ladakh-by-road.html">
@@ -931,27 +946,6 @@ footer .flogo img{height:40px;width:auto}
       </a>
     </div>
   <p class="mt32" style="text-align:center"><a class="tlink" href="journeys.html">All ten journeys, with filters &rarr;</a></p>
-  </div>
-</section><section id="how" class="tint-sun how-strip">
-  <div class="wrap">
-    <h2 style="text-align:center">How we <span class="acc">work</span></h2>
-    <div class="howgrid">
-      <a class="howcard" href="plan-your-journey.html">
-        <span class="howbird"><img src="zubi-watching.webp" alt="" width="432" height="440" loading="lazy"></span>
-        <span class="arch"><img src="c-family.webp" alt="" loading="lazy" width="760" height="1013"></span>
-        <h3>Enquire</h3>
-      </a>
-      <div class="howcard">
-        <span class="howbird"><img src="zubi-bird.webp" alt="" width="662" height="511" loading="lazy"></span>
-        <span class="arch"><img src="c-friends.webp" alt="" loading="lazy" width="760" height="1013"></span>
-        <h3>Customise</h3>
-      </div>
-      <div class="howcard">
-        <span class="howbird"><img src="zubi-dive.webp" alt="" width="430" height="440" loading="lazy"></span>
-        <span class="arch"><img src="c-spiritual.webp" alt="" loading="lazy" width="760" height="1013"></span>
-        <h3>Travel</h3>
-      </div>
-    </div>
   </div>
 </section><section id="stories">
   <div class="wrap">
@@ -973,7 +967,7 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </section><section id="map" class="tint-sky">
   <div class="wrap">
-    <h2 style="text-align:center">Where will you <span class="acc">go</span>?</h2>
+    <div class="eyebrow" style="color:var(--orange500);justify-content:center;margin-bottom:14px"><span style="font-weight:700">03 &middot; Find it on the map</span></div><h2 style="text-align:center">Where will you <span class="acc">go</span>?</h2>
     <p class="lead ink700" style="text-align:center;max-width:56ch;margin:14px auto 0">Hover the map. Every marker is a journey we have already designed and escorted.</p>
     <div class="mapgrid">
       <div class="mapcards" id="mapcards">
@@ -987,11 +981,8 @@ footer .flogo img{height:40px;width:auto}
         </a>
         <p class="maphint ink700" id="maphint">Hovering <strong id="maphint-region">Ladakh</strong></p>
       </div>
-      <div class="mapwrap">
-        <svg id="indiamap" viewBox="0 0 400 440" role="img" aria-label="Map of India with Zubilant journey locations">
-          <path class="landmass" d="M129 33 L150 22 L172 30 L186 24 L200 34 L214 30 L224 44 L219 60 L232 70 L244 64 L262 74 L280 70 L300 80 L316 76 L330 88 L322 102 L336 112 L330 124 L310 128 L296 122 L282 130 L266 126 L252 134 L240 130 L234 142 L222 148 L228 162 L218 176 L226 190 L218 206 L226 222 L216 238 L222 254 L210 270 L214 288 L202 306 L206 324 L194 344 L196 364 L184 388 L176 408 L168 420 L158 404 L152 380 L142 356 L136 330 L126 306 L118 280 L108 256 L100 232 L92 210 L82 190 L72 172 L62 156 L56 138 L64 124 L58 108 L70 96 L64 80 L78 70 L90 76 L104 66 L112 50 L122 44 Z"/>
-          <g id="mappins"></g>
-        </svg>
+      <div class="mapwrap" id="mapwrap">
+        <svg id="indiamap" viewBox="0 0 612 696" role="img" aria-label="Map of India with Zubilant journey locations"><g id="mapstates"></g><g id="mappins"></g></svg>
       </div>
     </div>
     <p class="mt32" style="text-align:center"><a class="btn btn-secondary" href="journeys.html">View all destinations <span class="arw" aria-hidden="true">&rarr;</span></a></p>
@@ -1002,7 +993,7 @@ footer .flogo img{height:40px;width:auto}
       <div class="ffig"><img src="founder.webp" alt="Sachin Mehta, founder of Zubilant." loading="lazy" width="760" height="930"></div>
       <div>
         <div class="label ink500">The founder</div>
-        <h2 class="mt8">You can trust <span class="acc">me</span>.</h2>
+        <div class="eyebrow" style="color:var(--orange500);margin-bottom:6px"><span style="font-weight:700">05 &middot; Meet the founder</span></div><h2 class="mt8">You can trust <span class="acc">me</span>.</h2>
         <p class="lead ink700 mt16" style="max-width:52ch">Zubilant&rsquo;s founder serves as <strong>Travel and Tourism Domain Coordinator at UN/CEFACT</strong>, the United Nations body that sets global standards for travel and trade data.</p>
         <p class="mt24"><a class="tlink" href="about.html">The full story &rarr;</a></p>
       </div>
@@ -1018,8 +1009,8 @@ footer .flogo img{height:40px;width:auto}
 <section class="stepout notop" aria-label="Step outside">
   <div class="so-in">
     <div class="so-word">Step</div>
-    <div class="so-oval">
-      <img src="c-friends.webp" alt="" loading="lazy" width="760" height="1013">
+    <div class="so-stage">
+      <div class="so-oval"><img src="c-friends.webp" alt="" loading="lazy" width="760" height="1013"></div>
       <a class="btn btn-primary so-cta" href="plan-your-journey.html">Book Experience</a>
     </div>
     <div class="so-word">Outside</div>
@@ -1087,12 +1078,13 @@ footer .flogo img{height:40px;width:auto}
      card stays paper — contrast never depends on scroll position. */
   /* 13 Aug light-palette ruling: grounds cycle through the approved light
      surfaces only — paper, sand, teal/50-200, sage/100-200. */
+  /* R5: pastel only — never near-white */
   var CYCLE=[['--sand','--sage200','--teal200'],
              ['--sage100','--sage200','--teal100'],
-             ['--teal50','--teal200','--sage200'],
-             ['--paper','--sage100','--teal100'],
              ['--teal100','--teal200','--sage200'],
-             ['--sage200','--sage100','--teal100']];
+             ['--sage200','--sage100','--teal100'],
+             ['--teal50','--teal200','--sage200'],
+             ['--sage100','--teal100','--sage200']];
   var cs=getComputedStyle(document.documentElement);
   function tok(n){return cs.getPropertyValue(n).trim();}
   function paint(i){
@@ -1154,24 +1146,50 @@ footer .flogo img{height:40px;width:auto}
     row.addEventListener('click',function(e){ if(moved){e.preventDefault();} },true);
   });
 
-  /* Explore tabs auto-switch every 3s until the visitor takes over */
+  /* Explore tabs — strict 3s cycle: travellers → interests → month → trending.
+     Pauses only while the pointer is over the tabs or cards, resumes after. */
   var exploreTabs=Array.prototype.slice.call(document.querySelectorAll('.tabrow .chip[role="tab"]'));
   var exploreSec=document.getElementById('explore');
+  var hoverPause=false, ti=0;
   if(exploreTabs.length){
-    var ti=0, userTook=false, hoverPause=false;
-    var cyc=setInterval(function(){
-      if(userTook||hoverPause||document.hidden) return;
+    setInterval(function(){
+      if(hoverPause||document.hidden) return;
       var r=exploreSec.getBoundingClientRect();
       if(r.bottom<0||r.top>window.innerHeight) return;
       ti=(ti+1)%exploreTabs.length;
       exploreTabs[ti].click();
     },3000);
-    exploreTabs.forEach(function(t){t.addEventListener('pointerdown',function(){userTook=true;});});
-    /* R4 fix: pause only while the pointer is over the tabs or the cards —
-       hovering elsewhere in the section no longer freezes the auto-swap */
-    document.querySelectorAll('#explore .tabrow, #explore .hscroll').forEach(function(el){
+    exploreTabs.forEach(function(t,i){t.addEventListener('pointerdown',function(){ti=i;});});
+    document.querySelectorAll('#explore .tabrow, #explore .hscroll, .cararea .harr').forEach(function(el){
       el.addEventListener('pointerenter',function(){hoverPause=true;});
       el.addEventListener('pointerleave',function(){hoverPause=false;});
+    });
+  }
+
+  /* Arrows only when the active row actually overflows */
+  function syncArrows(){
+    var p=document.querySelector('.hscroll[role="tabpanel"]:not([hidden])');
+    var need=p && p.scrollWidth>p.clientWidth+8;
+    document.querySelectorAll('.cararea .harr').forEach(function(b){b.hidden=!need;});
+  }
+  window.addEventListener('resize',syncArrows);
+  document.querySelectorAll('.tabrow .chip').forEach(function(t){t.addEventListener('click',function(){setTimeout(syncArrows,50);});});
+  setTimeout(syncArrows,300);
+
+  /* Zubi answers when poked — example lines drawn from the real journeys */
+  var ZEG=['ex: I’m looking for a family trip in December',
+    'ex: Ladakh with friends in June',
+    'ex: Kerala backwaters with my parents',
+    'ex: Kashmir in tulip season, 6 nights',
+    'ex: Rajasthan for first-timers, 8 nights',
+    'ex: a spiritual trip to Varanasi',
+    'ex: Spiti with a group that likes hard roads'];
+  var zubiEl=document.getElementById('zubi'), egi=0, intentInput=document.getElementById('intent');
+  if(zubiEl&&intentInput){
+    zubiEl.addEventListener('click',function(){
+      egi=(egi+1)%ZEG.length;
+      intentInput.placeholder=ZEG[egi];
+      if(window.gsap) gsap.fromTo(zubiEl,{scale:1},{scale:1.12,duration:.14,yoyo:true,repeat:1,ease:'power2.out'});
     });
   }
 
@@ -1192,7 +1210,7 @@ footer .flogo img{height:40px;width:auto}
   if(minis.length){
     var zsel=0, zuser=false;
     function zshow(i){
-      if(i===zsel && document.getElementById('zprev').href.indexOf(ZREC[i].href)>-1){}
+      if(!ZREC[i]) return;
       zsel=i; var d=ZREC[i];
       minis.forEach(function(m,j){m.setAttribute('aria-selected',String(j===i));});
       var a=document.getElementById('zprev'); if(!a) return;
@@ -1205,70 +1223,92 @@ footer .flogo img{height:40px;width:auto}
         document.getElementById('zprev-desc').textContent=d.desc;
         document.getElementById('zprev-from').textContent=d.from;
       }
-      /* Mosby's Files-style transition: the incoming image sweeps open from
-         the left as a clip reveal while it settles from a slight zoom */
+      /* Mosby's Files-style transition: the whole page card tilts out from
+         the folder side and settles flat, image sweeping open under it */
       if(window.gsap && !reduced){
-        gsap.to(img,{opacity:0,duration:.18,onComplete:function(){
+        var prev=document.getElementById('zprev');
+        gsap.to(img,{opacity:0,duration:.16,onComplete:function(){
           swap();
+          gsap.fromTo(prev,
+            {rotate:-7,scale:.72,x:-90,opacity:.5,transformOrigin:'left bottom'},
+            {rotate:0,scale:1,x:0,opacity:1,duration:.75,ease:'power3.out',clearProps:'transform'});
           gsap.fromTo(img,
-            {opacity:1,clipPath:'inset(0 100% 0 0)',scale:1.12},
-            {clipPath:'inset(0 0% 0 0)',scale:1,duration:.7,ease:'power3.inOut',clearProps:'clipPath'});
-          gsap.fromTo('#zprev .body',{y:22,opacity:0},{y:0,opacity:1,duration:.5,ease:'power2.out',delay:.18});
+            {opacity:1,clipPath:'inset(0 100% 0 0)'},
+            {clipPath:'inset(0 0% 0 0)',duration:.6,ease:'power3.inOut',clearProps:'clipPath'});
+          gsap.fromTo('#zprev .body',{y:22,opacity:0},{y:0,opacity:1,duration:.5,ease:'power2.out',delay:.2});
         }});
       }else{ swap(); }
     }
     minis.forEach(function(m,i){
       m.addEventListener('mouseenter',function(){zuser=true;zshow(i);});
-      m.addEventListener('click',function(){window.location.href=ZREC[i].href;});
+      m.addEventListener('click',function(){zuser=true;zshow(i);});
     });
     setInterval(function(){ if(!zuser&&!document.hidden) zshow((zsel+1)%ZREC.length); },4000);
   }
 
-  /* INDIA MAP — every pin knows its journey; hover answers on the left */
+  /* INDIA MAP — accurate state geometry (india.svg, CC-BY @svg-maps/india).
+     Data-driven: each journey names its state id plus an optional offset;
+     pins anchor themselves to the state's geometry at runtime, so adding a
+     journey is one line here — the map finds it. */
   var PINS=[
-    {x:150,y:60, r:'Ladakh',      href:'j-ladakh-by-road.html',       img:'j-ladakh.webp',   meta:'Ladakh · 9 nights · Moderate', title:'Ladakh by Road',            desc:'Nine days over the high passes to Nubra and Pangong.'},
-    {x:131,y:52, r:'Kashmir',     href:'j-kashmir-tulip-season.html', img:'j-kashmir.webp',  meta:'Kashmir · 6 nights · Gentle',  title:'Kashmir in Tulip Season',   desc:'Srinagar, Gulmarg and Pahalgam when the tulips are out.'},
-    {x:158,y:92, r:'Spiti',       href:'j-spiti-middle-land.html',    img:'j-spiti.webp',    meta:'Spiti · 8 nights · Demanding', title:'Spiti: The Middle Land',    desc:'The high desert between Shimla and Manali.'},
-    {x:96,y:170, r:'Rajasthan',   href:'j-rajasthan-first-timers.html',img:'j-rajasthan.webp',meta:'Rajasthan · 8 nights · Moderate',title:'Rajasthan for First-Timers',desc:'Jaipur, Jodhpur, Jaisalmer and Udaipur, in the right order.'},
-    {x:70,y:216, r:'Gujarat',     href:'j-dwarka-somnath-road.html',  img:'j-dwarka.webp',   meta:'Gujarat · 5 nights · Gentle',  title:'Dwarka &amp; Somnath by Road', desc:'The Saurashtra coast, temple to temple.'},
-    {x:206,y:172,r:'Varanasi',    href:'j-varanasi-ganga.html',       img:'j-varanasi.webp', meta:'Varanasi · 4 nights · Gentle', title:'Varanasi &amp; the Ganga',     desc:'The oldest living city, at dawn and at aarti.'},
-    {x:262,y:132,r:'Sikkim',      href:'j-sikkim-darjeeling-bloom.html',img:'j-sikkim.webp', meta:'Sikkim · 7 nights · Gentle',   title:'Sikkim &amp; Darjeeling in Bloom',desc:'Toy train to rhododendron valleys, in April.'},
-    {x:300,y:138,r:'Assam',       href:'j-assam-tea-majuli.html',     img:'j-assam.webp',    meta:'Assam · 6 nights · Gentle',    title:'Assam: Tea, River, Island', desc:'Tea country, the Brahmaputra, and Majuli.'},
-    {x:152,y:342,r:'Kerala',      href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp',meta:'Kerala · 7 nights · Gentle',   title:'Kerala Backwaters, Slowly', desc:'Kochi through Alleppey to Kumarakom and the hills.'},
-    {x:330,y:330,r:'Andaman',     href:'j-andaman-unhurried.html',    img:'j-andaman.webp',  meta:'Andaman · 6 nights · Gentle',  title:'Andaman, Unhurried',        desc:'The only window we will sell it in.'}
+    {st:'jk',dx:26,dy:-6, r:'Ladakh',   href:'j-ladakh-by-road.html',        img:'j-ladakh.webp',   meta:'Ladakh · 9 nights · Moderate',   title:'Ladakh by Road',              desc:'Nine days over the high passes to Nubra and Pangong.'},
+    {st:'jk',dx:-24,dy:6, r:'Kashmir',  href:'j-kashmir-tulip-season.html',  img:'j-kashmir.webp',  meta:'Kashmir · 6 nights · Gentle',    title:'Kashmir in Tulip Season',     desc:'Srinagar, Gulmarg and Pahalgam when the tulips are out.'},
+    {st:'hp',dx:8,dy:-4,  r:'Spiti',    href:'j-spiti-middle-land.html',     img:'j-spiti.webp',    meta:'Spiti · 8 nights · Demanding',   title:'Spiti: The Middle Land',      desc:'The high desert between Shimla and Manali.'},
+    {st:'rj',dx:0,dy:0,   r:'Rajasthan',href:'j-rajasthan-first-timers.html',img:'j-rajasthan.webp',meta:'Rajasthan · 8 nights · Moderate',title:'Rajasthan for First-Timers',  desc:'Jaipur, Jodhpur, Jaisalmer and Udaipur, in the right order.'},
+    {st:'gj',dx:-10,dy:6, r:'Gujarat',  href:'j-dwarka-somnath-road.html',   img:'j-dwarka.webp',   meta:'Gujarat · 5 nights · Gentle',    title:'Dwarka & Somnath by Road',    desc:'The Saurashtra coast, temple to temple.'},
+    {st:'up',dx:30,dy:12, r:'Varanasi', href:'j-varanasi-ganga.html',        img:'j-varanasi.webp', meta:'Varanasi · 4 nights · Gentle',   title:'Varanasi & the Ganga',        desc:'The oldest living city, at dawn and at aarti.'},
+    {st:'sk',dx:0,dy:-2,  r:'Sikkim',   href:'j-sikkim-darjeeling-bloom.html',img:'j-sikkim.webp',  meta:'Sikkim · 7 nights · Gentle',     title:'Sikkim & Darjeeling in Bloom',desc:'Toy train to rhododendron valleys, in April.'},
+    {st:'as',dx:6,dy:0,   r:'Assam',    href:'j-assam-tea-majuli.html',      img:'j-assam.webp',    meta:'Assam · 6 nights · Gentle',      title:'Assam: Tea, River, Island',   desc:'Tea country, the Brahmaputra, and Majuli.'},
+    {st:'kl',dx:0,dy:0,   r:'Kerala',   href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp', meta:'Kerala · 7 nights · Gentle',     title:'Kerala Backwaters, Slowly',   desc:'Kochi through Alleppey to Kumarakom and the hills.'},
+    {st:'an',dx:-4,dy:-20,r:'Andaman',  href:'j-andaman-unhurried.html',     img:'j-andaman.webp',  meta:'Andaman · 6 nights · Gentle',    title:'Andaman, Unhurried',          desc:'The only window we will sell it in.'}
   ];
-  var pinsG=document.getElementById('mappins');
-  if(pinsG){
-    var SVGNS='http://www.w3.org/2000/svg';
-    function showPin(i,viaHover){
-      var d=PINS[i];
-      document.querySelectorAll('.mappin').forEach(function(p,j){p.classList.toggle('on',j===i);});
-      var a=document.getElementById('mapcard'); a.href=d.href;
-      document.getElementById('mapcard-img').src=d.img;
-      document.getElementById('mapcard-meta').innerHTML=d.meta;
-      document.getElementById('mapcard-title').innerHTML=d.title;
-      document.getElementById('mapcard-desc').innerHTML=d.desc;
-      document.getElementById('maphint-region').textContent=d.r;
-      if(window.gsap&&!reduced&&viaHover){
-        gsap.fromTo('#mapcard',{scale:.97,opacity:.7},{scale:1,opacity:1,duration:.35,ease:'power2.out'});
-      }
+  var pinsG=document.getElementById('mappins'), statesG=document.getElementById('mapstates');
+  function showPin(i,viaHover){
+    var d=PINS[i];
+    document.querySelectorAll('.mappin').forEach(function(p,j){p.classList.toggle('on',j===i);});
+    document.querySelectorAll('#mapstates path').forEach(function(p){p.classList.toggle('active',p.id==='st-'+d.st);});
+    var a=document.getElementById('mapcard'); a.href=d.href;
+    document.getElementById('mapcard-img').src=d.img;
+    document.getElementById('mapcard-meta').textContent=d.meta;
+    document.getElementById('mapcard-title').textContent=d.title;
+    document.getElementById('mapcard-desc').textContent=d.desc;
+    document.getElementById('maphint-region').textContent=d.r;
+    if(window.gsap&&!reduced&&viaHover){
+      gsap.fromTo('#mapcard',{scale:.97,opacity:.7},{scale:1,opacity:1,duration:.35,ease:'power2.out'});
     }
-    PINS.forEach(function(d,i){
-      var g=document.createElementNS(SVGNS,'g'); g.setAttribute('class','mappin');
-      g.setAttribute('transform','translate('+d.x+' '+d.y+')');
-      var pulse=document.createElementNS(SVGNS,'circle'); pulse.setAttribute('class','pulse'); pulse.setAttribute('r','7');
-      var core=document.createElementNS(SVGNS,'circle'); core.setAttribute('class','core'); core.setAttribute('r','6');
-      var label=document.createElementNS(SVGNS,'text'); label.setAttribute('x','10'); label.setAttribute('y','4');
-      label.textContent=d.r;
-      g.appendChild(pulse); g.appendChild(core); g.appendChild(label);
-      g.addEventListener('pointerenter',function(){showPin(i,true);});
-      g.addEventListener('click',function(){window.location.href=d.href;});
-      pinsG.appendChild(g);
-    });
-    var mi=0, mHover=false;
-    document.getElementById('indiamap').addEventListener('pointerenter',function(){mHover=true;});
-    document.getElementById('indiamap').addEventListener('pointerleave',function(){mHover=false;});
-    setInterval(function(){ if(!mHover&&!document.hidden){ mi=(mi+1)%PINS.length; showPin(mi,false);} },3500);
+  }
+  if(pinsG){
+    fetch('india.svg').then(function(r){return r.text();}).then(function(txt){
+      var doc=new DOMParser().parseFromString(txt,'image/svg+xml');
+      var SVGNS='http://www.w3.org/2000/svg';
+      doc.querySelectorAll('path').forEach(function(p){
+        var np=document.createElementNS(SVGNS,'path');
+        np.setAttribute('d',p.getAttribute('d'));
+        np.id='st-'+p.id;
+        statesG.appendChild(np);
+      });
+      PINS.forEach(function(d,i){
+        var sp=document.getElementById('st-'+d.st);
+        if(!sp) return;
+        var b=sp.getBBox();
+        var x=b.x+b.width/2+(d.dx||0), y=b.y+b.height/2+(d.dy||0);
+        var g=document.createElementNS(SVGNS,'g'); g.setAttribute('class','mappin');
+        g.setAttribute('transform','translate('+x+' '+y+')');
+        var pulse=document.createElementNS(SVGNS,'circle'); pulse.setAttribute('class','pulse'); pulse.setAttribute('r','8');
+        var core=document.createElementNS(SVGNS,'circle'); core.setAttribute('class','core'); core.setAttribute('r','6.5');
+        var label=document.createElementNS(SVGNS,'text'); label.setAttribute('x','11'); label.setAttribute('y','4');
+        label.textContent=d.r;
+        g.appendChild(pulse); g.appendChild(core); g.appendChild(label);
+        g.addEventListener('pointerenter',function(){showPin(i,true);});
+        g.addEventListener('click',function(){window.location.href=d.href;});
+        pinsG.appendChild(g);
+      });
+      var mi=0, mHover=false;
+      var im=document.getElementById('indiamap');
+      im.addEventListener('pointerenter',function(){mHover=true;});
+      im.addEventListener('pointerleave',function(){mHover=false;});
+      setInterval(function(){ if(!mHover&&!document.hidden){ mi=(mi+1)%PINS.length; showPin(mi,false);} },3500);
+    }).catch(function(){ /* map is decorative; the card still works via its link */ });
   }
 
   /* Testimonial arrows */
@@ -1357,11 +1397,15 @@ footer .flogo img{height:40px;width:auto}
     /* Zubi comes up from behind the enquiry card, then idles with a bounce */
     var zubi=document.getElementById('zubi');
     if(zubi){
-      gsap.set(zubi,{opacity:1,y:64});
-      gsap.to(zubi,{y:-36,duration:.8,ease:'back.out(1.6)',
+      gsap.set(zubi,{opacity:1,y:70});
+      gsap.to(zubi,{y:0,duration:.8,ease:'back.out(1.6)',
         scrollTrigger:{trigger:'.intent',start:'top 78%',once:true},
-        onComplete:function(){ gsap.to(zubi,{y:-46,duration:.9,ease:'sine.inOut',yoyo:true,repeat:-1}); }});
+        onComplete:function(){ gsap.to(zubi,{y:-9,duration:.9,ease:'sine.inOut',yoyo:true,repeat:-1}); }});
     }
+
+    /* Step Outside — the oval spins with scroll, like the bag */
+    gsap.to('.so-oval',{rotateZ:540,ease:'none',
+      scrollTrigger:{trigger:'.stepout',start:'top bottom',end:'bottom top',scrub:.8}});
 
     /* Metrics — numbers hold their starting values until the strip is
        actually on screen, then count up. Bag spins with scroll. */
