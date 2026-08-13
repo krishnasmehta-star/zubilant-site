@@ -583,11 +583,11 @@ footer .flogo img{height:40px;width:auto}
 .intent form .btn{position:relative;z-index:2}
 .zubi{position:absolute;right:34px;bottom:112px;width:74px;pointer-events:auto;opacity:0;z-index:3}
 .zubi img{width:74px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
-.zubi .cloud{position:absolute;right:60px;left:auto;top:6px;background:var(--paper);border:1px solid var(--lineStrong);
+.zubi .cloud{position:absolute;right:-18px;left:auto;top:-38px;background:var(--paper);border:1px solid var(--lineStrong);
   border-radius:16px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--ink900);white-space:nowrap;
   box-shadow:var(--e1)}
-.zubi .cloud::after{content:"";position:absolute;right:-6px;top:14px;width:10px;height:10px;background:var(--paper);
-  border-right:1px solid var(--lineStrong);border-top:1px solid var(--lineStrong);transform:rotate(45deg)}
+.zubi .cloud::after{content:"";position:absolute;right:26px;bottom:-6px;width:10px;height:10px;background:var(--paper);
+  border-left:1px solid var(--lineStrong);border-bottom:1px solid var(--lineStrong);transform:rotate(-45deg)}
 @media (max-width:640px){.zubi{display:none}}
 
 /* ZUBI RECOMMENDED — mini list left (auto-cycles), big linked preview right */
@@ -626,6 +626,12 @@ footer .flogo img{height:40px;width:auto}
 .zprev h3{font-size:26px;color:#fff}
 .zprev p{color:rgba(255,255,255,.95);margin-top:8px;max-width:60ch}
 .zprev .from{margin-top:14px;font-weight:700}
+.zprev .zgo{display:inline-flex;align-items:center;gap:10px;margin-top:16px;min-height:44px;padding:10px 22px;
+  border-radius:999px;background:var(--orange500);color:#fff;font-size:16px;font-weight:700;
+  transition:background var(--t-colour),transform var(--t-move)}
+.zprev .zgo .arw{transition:transform var(--t-move)}
+.zprev:hover .zgo{background:var(--orange600);transform:translateY(-2px)}
+.zprev:hover .zgo .arw{transform:translateX(5px)}
 @media (max-width:1080px){.zrec{grid-template-columns:1fr}.zprev{min-height:360px}}
 
 /* HOW WE WORK — compact strip, arched placeholder images, Zubi poses perched */
@@ -852,7 +858,8 @@ main{position:relative}
   </div>
 </header>
 <div class="intent-band"><div class="wrap"><div class="intent">
-  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Click me for suggestions</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
+  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Hi, I&rsquo;m Zubi!</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
+  <h2 class="h1" style="font-size:46px;text-align:center">What&rsquo;s on your mind?</h2>
   <p class="sub">Tell us in a line. A person reads every one of these &mdash; no chatbot, no auto-reply.</p>
   <form action="plan-your-journey.html" method="get">
     <label class="skip" for="intent">Describe the journey you have in mind</label>
@@ -978,6 +985,7 @@ main{position:relative}
           <h3 id="zprev-title">Ladakh by Road</h3>
           <p id="zprev-desc">Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude &mdash; oxygen in every vehicle, doctors&rsquo; numbers in every driver&rsquo;s phone.</p>
           <div class="from" id="zprev-from">From ₹70,000 per person</div>
+          <span class="zgo" aria-hidden="true">View this journey <span class="arw">&rarr;</span></span>
         </div>
       </a>
     </div>
