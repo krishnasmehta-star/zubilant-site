@@ -508,6 +508,18 @@ footer .flogo img{height:40px;width:auto}
 .flagbar b{color:var(--orange500);font-weight:700}
 .flagbar span{display:block}
 
+/* EXPLORE CAROUSELS — one horizontal scroll row per tab, wireframe 13 Aug */
+.hscroll{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:4px 4px 16px;margin-top:40px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.hscroll::-webkit-scrollbar{display:none}
+.hscroll .pcard{flex:0 0 264px;min-height:400px;scroll-snap-align:start}
+.harrows{display:flex;gap:12px;justify-content:flex-end;margin-top:8px}
+.harr{width:44px;height:44px;border-radius:50%;border:1px solid var(--lineStrong);background:var(--paper);
+  font-size:18px;line-height:1;cursor:pointer;color:var(--ink900);
+  transition:border-color var(--t-colour),color var(--t-colour),background var(--t-colour)}
+.harr:hover{border-color:var(--teal600);color:var(--teal600);background:var(--teal50)}
+@media (max-width:640px){.hscroll .pcard{flex-basis:230px;min-height:340px}}
+
 /* EXPLORE TABS — the "Start Your Journey" reference: centred heading,
    uppercase letter-spaced text tabs, orange underline on the active one */
 .tabrow{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
@@ -520,36 +532,38 @@ footer .flogo img{height:40px;width:auto}
   opacity:1;inset:auto 0 6px 0;border:0;border-radius:0}
 .tabrow button:hover{color:var(--ink900)}
 .tabrow button:hover::after{transform:scaleX(1)}
-.tabrow button[aria-selected="true"]{color:var(--ink900);font-weight:700}
+.tabrow button[aria-selected="true"],.tabrow button[aria-selected="true"]:hover{
+  background:none;border:0;color:var(--ink900);font-weight:700}
 .tabrow button[aria-selected="true"]::after{transform:scaleX(1)}
 
-/* METRICS — pinned GSAP section. Count-ups on the left, the symbol
-   animating on the right; scrub tied to scroll so people stop and look. */
+/* METRICS — "Why Zubilant" strip. Numbers count up the moment the section
+   lands in view; the bag spins fully with scroll, gsap.com windmill style. */
 .metrics{border-top:0;padding:0;background:var(--teal50)}
-.metrics .pinwrap{min-height:100vh;display:flex;align-items:center}
-.metrics .in{max-width:var(--maxw);margin:0 auto;padding:64px var(--pad);width:100%;
-  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:64px;align-items:center}
-.mstats{display:flex;flex-direction:column;gap:36px;margin-top:36px}
-.mstat{border-left:3px solid var(--orange500);padding-left:24px}
+.metrics .in{max-width:var(--maxw);margin:0 auto;padding:56px var(--pad);width:100%;
+  display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:48px;align-items:center}
+.metrics h2{margin-bottom:8px}
+.mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:28px}
+.mstat{border-left:3px solid var(--orange500);padding-left:20px}
 .mstat:nth-child(2){border-left-color:var(--teal600)}
 .mstat:nth-child(3){border-left-color:var(--sage600)}
-.mstat k{display:block;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink500)}
-.mstat v{display:block;font-size:56px;font-weight:700;letter-spacing:-.025em;line-height:1.05;margin-top:8px;
+.mstat k{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink500)}
+.mstat v{display:block;font-size:38px;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-top:6px;
   font-variant-numeric:tabular-nums;color:var(--teal900)}
-.mstat em{display:block;font-style:normal;font-size:15px;color:var(--ink700);margin-top:8px;max-width:44ch}
+.mstat em{display:block;font-style:normal;font-size:14px;color:var(--ink700);margin-top:6px}
 .msym{display:flex;align-items:center;justify-content:center}
-.msym img{width:280px;height:auto;will-change:transform}
-@media (max-width:1080px){.metrics .in{grid-template-columns:1fr;gap:40px}.msym img{width:200px}.mstat v{font-size:44px}}
-@media (max-width:640px){.mstat v{font-size:36px}.metrics .pinwrap{min-height:auto;padding:48px 0}}
+.msym img{width:180px;height:auto;will-change:transform}
+@media (max-width:1080px){.metrics .in{grid-template-columns:1fr;gap:32px}.msym{order:-1}.msym img{width:140px}
+  .mstats{grid-template-columns:1fr;gap:24px}}
+@media (max-width:640px){.mstat v{font-size:32px}}
 
 /* ZUBI — the mascot on the enquiry card, PostHog-style */
 .intent{position:relative}
-.zubi{position:absolute;left:44px;top:96px;width:84px;pointer-events:none;opacity:0}
-.zubi img{width:84px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
-.zubi .cloud{position:absolute;left:56px;top:-40px;background:var(--paper);border:1px solid var(--lineStrong);
+.zubi{position:absolute;right:64px;top:34px;width:80px;pointer-events:none;opacity:0}
+.zubi img{width:80px;height:auto;filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
+.zubi .cloud{position:absolute;right:56px;left:auto;top:-42px;background:var(--paper);border:1px solid var(--lineStrong);
   border-radius:16px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--ink900);white-space:nowrap;
   box-shadow:var(--e1)}
-.zubi .cloud::after{content:"";position:absolute;left:18px;bottom:-6px;width:10px;height:10px;background:var(--paper);
+.zubi .cloud::after{content:"";position:absolute;right:18px;left:auto;bottom:-6px;width:10px;height:10px;background:var(--paper);
   border-left:1px solid var(--lineStrong);border-bottom:1px solid var(--lineStrong);transform:rotate(-45deg)}
 @media (max-width:640px){.zubi{display:none}}
 
@@ -695,7 +709,7 @@ footer .flogo img{height:40px;width:auto}
   </div>
 </header>
 <div class="intent-band"><div class="wrap"><div class="intent">
-  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Hello you</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
+  <div class="zubi" id="zubi" aria-hidden="true"><div class="cloud">Hi, I&rsquo;m Zubi!</div><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
   <h2 class="h3">What&rsquo;s on your mind?</h2>
   <p class="sub">Tell us in a line. A person reads every one of these &mdash; no chatbot, no auto-reply.</p>
   <form action="plan-your-journey.html" method="get">
@@ -704,10 +718,11 @@ footer .flogo img{height:40px;width:auto}
     <button type="submit" class="btn btn-primary">Find <span class="arw" aria-hidden="true">&rarr;</span></button>
   </form>
 </div></div></div>
-<section class="metrics notop" id="metrics" aria-label="The record">
-  <div class="pinwrap"><div class="in">
+<section class="metrics notop" id="metrics" aria-label="Why Zubilant">
+  <div class="in">
     <div>
       <div class="label ink500">The record</div>
+      <h2 class="mt8">Why <span class="acc">Zubilant</span></h2>
       <div class="mstats">
         <div class="mstat"><k>Designing since</k><v><span class="cnt" data-from="2011" data-to="2009" data-fmt="plain">2009</span></v><em>As Stuti Tourism Pvt. Ltd.</em></div>
         <div class="mstat"><k>Travellers served</k><v><span class="cnt" data-from="399999" data-to="800000" data-fmt="in">8,00,000</span>+</v><em>Families, schools and companies, across India and beyond.</em></div>
@@ -715,7 +730,7 @@ footer .flogo img{height:40px;width:auto}
       </div>
     </div>
     <div class="msym"><img id="msymbol" src="symbol.webp" alt="" width="1062" height="1132" loading="lazy"></div>
-  </div></div>
+  </div>
 </section>
 <section id="explore" class="tint-moss">
   <div class="wrap shell">
@@ -730,7 +745,7 @@ footer .flogo img{height:40px;width:auto}
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-month" id="t-month">By month</button>
     <button class="chip" role="tab" aria-selected="false" aria-controls="p-trending" id="t-trending">Trending</button>
   </div>
-  <div class="cardgrid cols-5 breakout" id="p-travellers" role="tabpanel" aria-labelledby="t-travellers"><a class="pcard w-forest" href="family-holidays.html">
+  <div class="hscroll breakout" id="p-travellers" role="tabpanel" aria-labelledby="t-travellers"><a class="pcard w-forest" href="family-holidays.html">
       <img src="c-family.webp" alt="Family travel" loading="lazy" width="760" height="1013">
       <div class="body"><div class="meta">Explore by traveller</div><h3>Family travel</h3><p>Paced for grandparents and eight-year-olds in the same group.</p>
       <div class="foot"><span>5 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-moss" href="experiences.html">
@@ -746,31 +761,49 @@ footer .flogo img{height:40px;width:auto}
       <img src="c-corporate.webp" alt="Corporate &amp; institutions" loading="lazy" width="760" height="1013">
       <div class="body"><div class="meta">Explore by traveller</div><h3>Corporate &amp; institutions</h3><p>Headcount, days, and a record of what did not go wrong.</p>
       <div class="foot"><span>70+ served</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div>
-  <div class="bandlist breakout" id="p-interests" role="tabpanel" aria-labelledby="t-interests" hidden><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Culture &amp; heritage</div><p class="ink700">Rajasthan, Hampi, Varanasi, Majuli.</p></div>
-      <span class="cell ink500">4 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Mountains &amp; high roads</div><p class="ink700">Ladakh, Spiti, Sikkim.</p></div>
-      <span class="cell ink500">3 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Wildlife &amp; nature</div><p class="ink700">Kaziranga, Gir, Periyar.</p></div>
-      <span class="cell ink500">3 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Spiritual &amp; pilgrimage</div><p class="ink700">Varanasi, Dwarka, Somnath.</p></div>
-      <span class="cell ink500">2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Water &amp; islands</div><p class="ink700">Kerala backwaters, the Andamans.</p></div>
-      <span class="cell ink500">2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">Slow travel &amp; wellness</div><p class="ink700">Kumarakom, Thekkady, tea country.</p></div>
-      <span class="cell ink500">2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a></div>
-  <div class="bandlist breakout" id="p-month" role="tabpanel" aria-labelledby="t-month" hidden><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">April</div><p class="ink700">Kashmir in tulip season &middot; Sikkim &amp; Darjeeling in bloom</p></div>
-      <span class="cell ink500">2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">June to September</div><p class="ink700">Ladakh by road &middot; Spiti: the middle land</p></div>
-      <span class="cell ink500">2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">October to February</div><p class="ink700">Kerala &middot; Rajasthan &middot; Assam &middot; Varanasi &middot; Dwarka &amp; Somnath</p></div>
-      <span class="cell ink500">5 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></a><a class="band" href="journeys.html"><div class="bandrow">
-      <div><div class="h4">December to March</div><p class="ink700">Andaman, unhurried &mdash; the only window we will sell it in</p></div>
-      <span class="cell ink500">1 journey</span><span class="arw" aria-hidden="true">&rarr;</span></div></a></div>
-  <div id="p-trending" role="tabpanel" aria-labelledby="t-trending" hidden>
-    <span class="ph-block mt48" style="max-width:56ch">A &ldquo;trending&rdquo; panel with no numbers behind it is decoration. Recommend cutting it from launch and adding it once the enquiry form has three months of data.</span>
-  </div></div>
+  <div class="hscroll breakout" id="p-interests" role="tabpanel" aria-labelledby="t-interests" hidden><a class="pcard w-clay" href="journeys.html">
+      <img src="j-rajasthan.webp" alt="Culture and heritage journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Culture &amp; heritage</h3><p>Rajasthan, Hampi, Varanasi, Majuli.</p>
+      <div class="foot"><span>4 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-teal" href="journeys.html">
+      <img src="j-ladakh.webp" alt="Mountain journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Mountains &amp; high roads</h3><p>Ladakh, Spiti, Sikkim.</p>
+      <div class="foot"><span>3 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-moss" href="journeys.html">
+      <img src="j-assam.webp" alt="Wildlife and nature journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Wildlife &amp; nature</h3><p>Kaziranga, Gir, Periyar.</p>
+      <div class="foot"><span>3 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-sun" href="journeys.html">
+      <img src="j-varanasi.webp" alt="Spiritual and pilgrimage journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Spiritual &amp; pilgrimage</h3><p>Varanasi, Dwarka, Somnath.</p>
+      <div class="foot"><span>2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-river" href="journeys.html">
+      <img src="j-andaman.webp" alt="Water and island journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Water &amp; islands</h3><p>Kerala backwaters, the Andamans.</p>
+      <div class="foot"><span>2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-forest" href="journeys.html">
+      <img src="j-kerala.webp" alt="Slow travel and wellness journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by interest</div><h3>Slow travel &amp; wellness</h3><p>Kumarakom, Thekkady, tea country.</p>
+      <div class="foot"><span>2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div>
+  <div class="hscroll breakout" id="p-month" role="tabpanel" aria-labelledby="t-month" hidden><a class="pcard w-moss" href="journeys.html">
+      <img src="j-kashmir.webp" alt="April journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by month</div><h3>April</h3><p>Kashmir in tulip season &middot; Sikkim &amp; Darjeeling in bloom.</p>
+      <div class="foot"><span>2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-teal" href="journeys.html">
+      <img src="j-spiti.webp" alt="June to September journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by month</div><h3>June to September</h3><p>Ladakh by road &middot; Spiti: the middle land.</p>
+      <div class="foot"><span>2 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-clay" href="journeys.html">
+      <img src="j-dwarka.webp" alt="October to February journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by month</div><h3>October to February</h3><p>Kerala &middot; Rajasthan &middot; Assam &middot; Varanasi &middot; Dwarka &amp; Somnath.</p>
+      <div class="foot"><span>5 journeys</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-river" href="journeys.html">
+      <img src="j-andaman.webp" alt="December to March journeys" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Explore by month</div><h3>December to March</h3><p>Andaman, unhurried &mdash; the only window we will sell it in.</p>
+      <div class="foot"><span>1 journey</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div>
+  <div class="hscroll breakout" id="p-trending" role="tabpanel" aria-labelledby="t-trending" hidden><a class="pcard w-teal" href="j-ladakh-by-road.html">
+      <img src="j-ladakh.webp" alt="Ladakh by Road" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Placeholder &middot; awaiting data</div><h3>Ladakh by Road</h3><p>Trending ranking needs three months of enquiry data.</p>
+      <div class="foot"><span>9 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-moss" href="j-kashmir-tulip-season.html">
+      <img src="j-kashmir.webp" alt="Kashmir in Tulip Season" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Placeholder &middot; awaiting data</div><h3>Kashmir in Tulip Season</h3><p>Trending ranking needs three months of enquiry data.</p>
+      <div class="foot"><span>6 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a><a class="pcard w-river" href="j-kerala-backwaters-slowly.html">
+      <img src="j-kerala.webp" alt="Kerala Backwaters, Slowly" loading="lazy" width="800" height="600">
+      <div class="body"><div class="meta">Placeholder &middot; awaiting data</div><h3>Kerala Backwaters, Slowly</h3><p>Trending ranking needs three months of enquiry data.</p>
+      <div class="foot"><span>7 nights</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a></div>
+  <div class="harrows breakout"><button class="harr" data-dir="-1" aria-label="Scroll cards left">&larr;</button><button class="harr" data-dir="1" aria-label="Scroll cards right">&rarr;</button></div></div>
   </div>
 </section><section class="band-photo ">
   <img src="band-road.webp" alt="A road curving through high desert under a wide sky." loading="lazy" width="2000" height="900">
@@ -1065,6 +1098,14 @@ footer .flogo img{height:40px;width:auto}
     });
   });
 
+  /* Carousel arrows — scroll whichever tab panel is visible */
+  document.querySelectorAll('.harr').forEach(function(b){
+    b.addEventListener('click',function(){
+      var p=document.querySelector('.hscroll[role="tabpanel"]:not([hidden])');
+      if(p) p.scrollBy({left:parseInt(b.dataset.dir,10)*(264+24)*2,behavior:'smooth'});
+    });
+  });
+
   /* Journey index filter */
   var fchips=document.querySelectorAll('.chip[data-filter]');
   fchips.forEach(function(c){
@@ -1140,26 +1181,16 @@ footer .flogo img{height:40px;width:auto}
         onComplete:function(){ gsap.to(zubi,{y:-10,duration:.9,ease:'sine.inOut',yoyo:true,repeat:-1}); }});
     }
 
-    /* Metrics — pin + scrub. Numbers roll 2011→2009 and 3,99,999→8,00,000+
-       while the symbol turns beside them. */
-    var pin=document.querySelector('.metrics .pinwrap');
-    if(pin && window.innerWidth>1080){
-      var tl=gsap.timeline({scrollTrigger:{trigger:pin,start:'top top',end:'+=120%',scrub:1,pin:true}});
-      document.querySelectorAll('.metrics .cnt').forEach(function(el){
-        var o={v:parseFloat(el.dataset.from)}, to=parseFloat(el.dataset.to), fmt=el.dataset.fmt;
-        tl.to(o,{v:to,duration:1,ease:'none',
-          onUpdate:function(){ el.textContent = fmt==='in' ? inr(o.v) : String(Math.round(o.v)); }},0);
-      });
-      tl.fromTo('#msymbol',{rotate:-10,y:40,scale:.92},{rotate:10,y:-40,scale:1,ease:'none',duration:1},0);
-    }else{
-      /* Mobile / tablet: plain one-shot count-up when it scrolls into view */
-      document.querySelectorAll('.metrics .cnt').forEach(function(el){
-        var o={v:parseFloat(el.dataset.from)}, to=parseFloat(el.dataset.to), fmt=el.dataset.fmt;
-        gsap.to(o,{v:to,duration:1.6,ease:'power1.out',
-          scrollTrigger:{trigger:el,start:'top 85%',once:true},
-          onUpdate:function(){ el.textContent = fmt==='in' ? inr(o.v) : String(Math.round(o.v)); }});
-      });
-    }
+    /* Metrics — numbers count up the moment the strip lands in view;
+       the bag does full revolutions tied to scroll, gsap windmill style. */
+    document.querySelectorAll('.metrics .cnt').forEach(function(el){
+      var o={v:parseFloat(el.dataset.from)}, to=parseFloat(el.dataset.to), fmt=el.dataset.fmt;
+      gsap.to(o,{v:to,duration:1.8,ease:'power2.out',
+        scrollTrigger:{trigger:'.metrics',start:'top 75%',once:true},
+        onUpdate:function(){ el.textContent = fmt==='in' ? inr(o.v) : String(Math.round(o.v)); }});
+    });
+    gsap.to('#msymbol',{rotateZ:720,ease:'none',
+      scrollTrigger:{trigger:'.metrics',start:'top bottom',end:'bottom top',scrub:1}});
   });
 })();
 </script>
