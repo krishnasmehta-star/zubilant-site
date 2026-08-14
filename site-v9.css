@@ -819,3 +819,21 @@ main{position:relative}
 .proof em{display:block;font-style:normal;font-size:15px;color:var(--ink700);margin-top:10px;line-height:1.45}
 @media (max-width:1080px){.proof{grid-template-columns:repeat(2,1fr)}.proof div{border-bottom:1px solid var(--lineSoft)}}
 @media (max-width:640px){.proof{grid-template-columns:1fr}}
+
+/* ═══ STEP OUTSIDE v2 — Norris-style fluid reveal (homepage only).
+   Scoped to .stepout.v2; every other page keeps the oval band. ═══ */
+.stepout.v2{position:relative;background:var(--teal100);color:var(--teal900);
+  min-height:100svh;padding:0;overflow:hidden;text-align:center;cursor:default}
+.stepout.v2 .so-reveal{position:absolute;inset:0;width:100%;height:100%;display:block;
+  pointer-events:none;z-index:2}
+.stepout.v2 .so-in{position:relative;min-height:100svh;display:flex;flex-direction:column;
+  align-items:center;padding:8vh 24px 6vh;pointer-events:none;max-width:none;margin:0}
+.stepout.v2 .so-words{flex:1;display:flex;flex-direction:column;justify-content:center}
+.stepout.v2 .so-word{position:relative;z-index:1;font-weight:700;letter-spacing:-.02em;
+  line-height:.92;text-transform:uppercase;font-size:clamp(64px,13.5vw,206px);user-select:none}
+.stepout.v2 .so-cta{position:relative;left:auto;top:auto;transform:none;z-index:3;pointer-events:auto}
+.stepout.v2 .so-cta:hover{transform:translateY(-2px)}
+@media (max-width:640px){
+  .stepout.v2 .so-in{padding:11vh 12px 9vh}
+  .stepout.v2 .so-word{font-size:clamp(56px,19vw,120px)}
+}
