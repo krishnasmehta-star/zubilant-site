@@ -692,11 +692,16 @@
       b.addEventListener('click',function(){loadRegion(name);});
       regbar.appendChild(b);
     });
-    /* Placeholder tabs — outbound names await Sachin's list; visibly "soon" */
-    ['Dubai','Bali','Vietnam'].forEach(function(name){
+    /* Outbound tabs — journeys are live; each goes straight to its journey
+       until per-country map files land */
+    [{n:'Dubai',h:'j-dubai-abu-dhabi-tour.html'},
+     {n:'Vietnam',h:'j-vietnam-tour-north-to-south.html'},
+     {n:'Japan',h:'j-japan-cherry-blossom-tour.html'},
+     {n:'Bali',h:'j-bali-tour-beyond-pool-villa.html'},
+     {n:'Beyond India',h:'journeys.html'}].forEach(function(o){
       var b=document.createElement('button');
-      b.className='soon'; b.disabled=true;
-      b.innerHTML=name+' <small>soon</small>';
+      b.textContent=o.n; b.setAttribute('role','link');
+      b.addEventListener('click',function(){window.location.href=o.h;});
       regbar.appendChild(b);
     });
     if(window.gsap && !reduced){
