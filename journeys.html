@@ -512,5 +512,18 @@
 <script defer src="gsap.min.js"></script>
 <script defer src="ScrollTrigger.min.js"></script>
 <script src="site-v9.js"></script>
+<script>
+/* Deep-link filters: journeys.html?f=<tag> preselects that chip */
+(function(){
+  var f=new URLSearchParams(location.search).get('f');
+  if(!f) return;
+  function go(){
+    var chip=document.querySelector('.chip[data-filter="'+f+'"]');
+    if(chip){chip.click(); chip.scrollIntoView({block:'center'});}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
+  window.addEventListener('load',go);
+})();
+</script>
 </body>
 </html>
