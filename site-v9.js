@@ -491,3 +491,35 @@
     }
   });
 })();
+
+/* ANIMATION WATCHDOG (14 Aug) — content must never stay invisible. If the
+   animation ticker stalls or a scroll reveal never fires, anything hidden by
+   an entrance/reveal tween gets forced visible after the page has been
+   visible for 3 seconds. Animations are an enhancement, never a dependency. */
+(function(){
+  function rescue(){
+    try{
+      var sels='.hero h1,.hero .sub,.hero .eyebrow,main h2,main .lead,main .pcard,main .card,.mstat,.zrec,.jgrid,.daylist li,.intent';
+      document.querySelectorAll(sels).forEach(function(el){
+        var c=getComputedStyle(el);
+        if(parseFloat(c.opacity)<0.15){
+          el.style.opacity='1';
+          el.style.transform='none';
+          el.style.visibility='visible';
+        }
+      });
+    }catch(e){}
+  }
+  var armed=false;
+  function arm(){
+    if(armed||document.hidden) return;
+    armed=true;
+    setTimeout(function(){
+      rescue();
+      var t; window.addEventListener('scroll',function(){clearTimeout(t); t=setTimeout(rescue,400);},{passive:true});
+    },3000);
+  }
+  document.addEventListener('visibilitychange',arm);
+  window.addEventListener('load',arm);
+  arm();
+})();
