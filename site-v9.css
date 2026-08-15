@@ -286,22 +286,25 @@ section.notop{border-top:0}
   transition:transform 520ms cubic-bezier(.2,.7,.3,1)}
 /* R3: colour lives in the bottom quarter only, then shades out fast so the
    photograph breathes — text keeps a shadow for legibility. */
+.pcard::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(8,18,18,.24)}
 .pcard::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,var(--wash,rgba(31,77,58,.97)) 0%,var(--wash,rgba(31,77,58,.92)) 24%,rgba(0,39,43,.34) 44%,rgba(0,39,43,0) 62%)}
-.pcard .body{text-shadow:0 1px 4px rgba(0,20,22,.45)}
+  background:linear-gradient(to top,var(--wash,rgba(31,77,58,.97)) 0%,var(--wash,rgba(31,77,58,.93)) 40%,rgba(0,39,43,.42) 62%,rgba(0,39,43,.08) 82%)}
+.pcard .body{text-shadow:0 1px 6px rgba(0,10,10,.65),0 1px 2px rgba(0,10,10,.55)}
 .pcard:hover{box-shadow:0 10px 26px rgba(243,107,33,.28);transform:translateY(-6px)}
 .pcard:hover img{transform:scale(1.07)}
 .pcard .body{position:relative;z-index:2;padding:26px}
-.pcard .meta{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.84)}
+.pcard .meta{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.92)}
 .pcard h3{font-size:24px;margin-top:8px;color:#fff}
-.pcard p{font-size:15px;color:rgba(255,255,255,.95);margin-top:8px;line-height:1.5}
+.pcard p{font-size:15px;color:rgba(255,255,255,.96);margin-top:8px;line-height:1.5}
 .pcard .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;
   padding-top:14px;border-top:1px solid rgba(255,255,255,.30);font-size:15px;font-weight:600}
 .pcard .arw{transition:transform var(--t-move)}
 .pcard:hover .arw{transform:translateX(6px)}
-.w-forest{--wash:rgba(31,77,58,.94)} .w-river{--wash:rgba(14,124,134,.94)}
-.w-clay{--wash:rgba(180,85,46,.94)} .w-teal{--wash:rgba(0,84,92,.94)}
-.w-moss{--wash:rgba(74,110,59,.94)} .w-sun{--wash:rgba(176,110,26,.94)}
+/* R4: pastel washes — softer hues than v9, held legible by the uniform dark
+   scrim (::before) plus the higher-alpha gradient stops above. */
+.w-forest{--wash:rgba(110,158,133,.93)} .w-river{--wash:rgba(103,175,187,.93)}
+.w-clay{--wash:rgba(219,150,120,.93)} .w-teal{--wash:rgba(94,168,178,.93)}
+.w-moss{--wash:rgba(150,176,120,.93)} .w-sun{--wash:rgba(224,175,101,.93)}
 
 /* FULL-BLEED PHOTO BAND */
 .band-photo{position:relative;min-height:470px;display:flex;align-items:center;isolation:isolate;
