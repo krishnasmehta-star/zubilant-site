@@ -179,53 +179,108 @@
   </div>
 </section><section id="journeys">
   <div class="wrap">
+  <style>
+    /* ═══ ZUBI RECOMMENDED v2 · Norris-style fan · scoped .zfan ═══
+       Geometry is em-based: 1em = 10px at 1440, scaling fluidly down to
+       1081px viewports. At ≤1080 the fan becomes a snap rail. */
+    .zfan{position:relative;max-width:1440px;margin:48px auto 0;overflow:hidden;
+      font-size:clamp(7.75px,0.6944vw,10px);height:66.4em}
+    .zfan .zcard{position:absolute;left:50%;top:5.6em;width:30em;height:45em;
+      display:block;border-radius:2.4em;overflow:hidden;background:var(--teal900);
+      transform-origin:50% 230%;transform:translateX(-50%) rotate(var(--rot));
+      z-index:var(--z,1);box-shadow:var(--e2);
+      transition:transform var(--t-move),box-shadow var(--t-move)}
+    .zfan .zcard.zc-centre{width:32.4em;height:48.6em;top:2.6em}
+    .zfan .zcard:hover,.zfan .zcard:focus-visible{
+      transform:translateX(-50%) translateY(-2em) rotate(var(--rot));
+      box-shadow:var(--e3);z-index:9}
+    .zfan .zcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .zfan .zcard::after{content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(0,20,22,.20) 0%,rgba(0,20,22,0) 32%,rgba(0,20,22,0) 40%,rgba(0,20,22,.74) 100%)}
+    .zc-tags{position:absolute;top:1.4em;left:1.4em;right:1.4em;display:flex;flex-wrap:wrap;gap:.8em;z-index:2}
+    .zfan .zcard.zc-left .zc-tags{right:11em}
+    .zc-flip .zc-tags{left:11em;justify-content:flex-end}
+    .zc-tag{display:inline-block;padding:.5em 1em;border-radius:999px;background:rgba(255,255,255,.92);
+      color:var(--ink900);font-size:1.25em;font-weight:700;letter-spacing:.04em}
+    .zc-tag.zc-trend{background:var(--orange500);color:#fff;letter-spacing:.08em;text-transform:uppercase;font-size:1.2em}
+    .zc-info{position:absolute;left:1.8em;right:7em;bottom:1.8em;z-index:2;color:#fff;text-shadow:0 1px 4px rgba(0,20,22,.45)}
+    .zfan .zcard.zc-left .zc-info{left:1.8em;right:16.5em;bottom:8.6em}
+    .zc-flip .zc-info{left:17.8em;right:1.8em;bottom:8.6em;text-align:right}
+    .zc-title{display:block;font-size:2em;font-weight:700;line-height:1.25}
+    .zfan .zcard:not(.zc-centre) .zc-title{font-size:1.6em}
+    .zc-from{display:block;margin-top:.45em;font-size:1.45em;font-weight:700;color:rgba(255,255,255,.95)}
+    .zfan .zcard:not(.zc-centre) .zc-from{font-size:1.35em}
+    .zc-go{position:absolute;right:.7em;bottom:.7em;z-index:2;display:flex;align-items:center;justify-content:center;
+      width:2.2em;height:2.2em;border-radius:50%;background:var(--orange500);color:#fff;font-size:2em;
+      transition:background var(--t-colour),transform var(--t-move)}
+    .zfan .zcard:hover .zc-go,.zfan .zcard:focus-visible .zc-go{background:var(--orange600);transform:translateX(.2em)}
+    .zfan-note{text-align:center;font-size:13.5px;color:var(--ink500);margin-top:8px}
+    @media (max-width:1080px){
+      .zfan{font-size:10px;height:auto;display:flex;gap:16px;overflow-x:auto;padding:8px 20px 24px;
+        scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .zfan::-webkit-scrollbar{display:none}
+      .zfan .zcard,.zfan .zcard.zc-centre{position:relative;left:auto;transform:none;flex:none;
+        width:76vw;max-width:320px;height:430px;top:auto;scroll-snap-align:center}
+      .zfan .zcard:hover,.zfan .zcard:focus-visible{transform:none}
+      .zfan .zcard .zc-info,.zfan .zcard.zc-left .zc-info,.zfan .zc-flip .zc-info{
+        left:18px;right:70px;bottom:18px;text-align:left}
+      .zfan .zcard .zc-tags,.zfan .zcard.zc-left .zc-tags,.zfan .zc-flip .zc-tags{
+        left:14px;right:14px;justify-content:flex-start}
+      .zfan .zcard .zc-title,.zfan .zcard:not(.zc-centre) .zc-title{font-size:19px}
+      .zfan .zcard .zc-from,.zfan .zcard:not(.zc-centre) .zc-from{font-size:14.5px}
+    }
+  </style>
+  <div class="wrap">
     <h2 style="text-align:center">Zubi <span class="acc">Recommended</span></h2>
-    <p class="lead ink700" style="text-align:center;max-width:60ch;margin:16px auto 0"><span class="ph">Subheading pending &mdash; one line on how Zubi picks these three.</span></p>
-    <div class="zrec">
-      <div class="zlist" role="tablist" aria-label="Zubi recommended journeys">
-        <button class="zmini folder f-teal" role="tab" aria-selected="true" data-idx="0">
-          <span class="ftab">01 &middot; Ladakh</span>
-          <span class="fname">Ladakh by Road</span>
-          <span class="finner"><img src="j-ladakh.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Ladakh by Road</span><span class="m">9 nights &middot; Moderate</span></span></span>
-        </button>
-        <button class="zmini folder f-orange" role="tab" aria-selected="false" data-idx="1">
-          <span class="ftab">02 &middot; Kashmir</span>
-          <span class="fname">Kashmir in Tulip Season</span>
-          <span class="finner"><img src="j-kashmir.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Kashmir in Tulip Season</span><span class="m">6 nights &middot; Gentle</span></span></span>
-        </button>
-        <button class="zmini folder f-sage" role="tab" aria-selected="false" data-idx="2">
-          <span class="ftab">03 &middot; Kerala</span>
-          <span class="fname">Kerala Backwaters, Slowly</span>
-          <span class="finner"><img src="j-kerala.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Kerala Backwaters, Slowly</span><span class="m">7 nights &middot; Gentle</span></span></span>
-        </button>
-        <button class="zmini folder f-orange" role="tab" aria-selected="false" data-idx="3">
-          <span class="ftab">04 &middot; Dubai</span>
-          <span class="fname">Dubai &amp; Abu Dhabi Done Properly</span>
-          <span class="finner"><img src="j-dubai-abu-dhabi-tour.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Dubai &amp; Abu Dhabi Done Properly</span><span class="m">5 nights &middot; Gentle</span></span></span>
-        </button>
-        <button class="zmini folder f-teal" role="tab" aria-selected="false" data-idx="4">
-          <span class="ftab">05 &middot; Vietnam</span>
-          <span class="fname">Vietnam North to South</span>
-          <span class="finner"><img src="j-vietnam-tour-north-to-south.webp" alt="" loading="lazy" width="800" height="600">
-          <span class="finfo"><span class="t">Vietnam North to South</span><span class="m">7 nights &middot; Gentle</span></span></span>
-        </button>
-      </div>
-      <a class="zprev" id="zprev" href="j-ladakh-by-road.html">
-        <img id="zprev-img" src="j-ladakh.webp" alt="" width="800" height="600">
-        <div class="body">
-          <div class="meta" style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)" id="zprev-meta">Ladakh &middot; Moderate &middot; 9 nights</div>
-          <h3 id="zprev-title">Ladakh by Road</h3>
-          <p id="zprev-desc">Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude &mdash; oxygen in every vehicle, doctors&rsquo; numbers in every driver&rsquo;s phone.</p>
-          <div class="from" id="zprev-from">From ₹70,000 per person</div>
-          <span class="zgo" aria-hidden="true">View this journey <span class="arw">&rarr;</span></span>
-        </div>
-      </a>
-    </div>
-  <p class="mt32" style="text-align:center"><a class="tlink" href="journeys.html">All fifty-one journeys, with filters &rarr;</a></p>
+    <p class="lead ink700" style="text-align:center;max-width:60ch;margin:16px auto 0"><span class="ph">Subheading pending &mdash; one line on how Zubi picks these seven.</span></p>
+  </div>
+  <div class="zfan" id="zfan" aria-label="Seven journeys Zubi recommends">
+    <a class="zcard zc-left" style="--rot:-30deg;--z:1" href="j-rajasthan-first-timers.html">
+      <img src="j-rajasthan.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">8 nights</span><span class="zc-tag">Moderate</span></span>
+      <span class="zc-info"><span class="zc-title">Rajasthan for First-Timers</span><span class="zc-from">From &#8377;40,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-left" style="--rot:-20deg;--z:2" href="j-golden-triangle-delhi-agra-jaipur.html">
+      <img src="j-golden-triangle-delhi-agra-jaipur.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">5 nights</span><span class="zc-tag">Gentle</span></span>
+      <span class="zc-info"><span class="zc-title">The Golden Triangle: Delhi, Agra &amp; Jaipur</span><span class="zc-from">From &#8377;55,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-left" style="--rot:-10deg;--z:3" href="j-vietnam-tour-north-to-south.html">
+      <img src="j-vietnam-tour-north-to-south.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">7 nights</span><span class="zc-tag">Gentle&ndash;Moderate</span><span class="zc-tag zc-trend">Trending</span></span>
+      <span class="zc-info"><span class="zc-title">Vietnam North to South</span><span class="zc-from">From &#8377;1,10,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-centre" style="--rot:0deg;--z:7" href="j-ladakh-by-road.html">
+      <img src="j-ladakh.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">9 nights</span><span class="zc-tag">Moderate</span></span>
+      <span class="zc-info"><span class="zc-title">Ladakh by Road</span><span class="zc-from">From &#8377;70,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-flip" style="--rot:10deg;--z:3" href="j-ayodhya-prayagraj-chitrakoot-ram-path.html">
+      <img src="j-ayodhya-prayagraj-chitrakoot-ram-path.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">5 nights</span><span class="zc-tag">Gentle</span><span class="zc-tag zc-trend">Trending</span></span>
+      <span class="zc-info"><span class="zc-title">Ayodhya, Prayagraj &amp; Chitrakoot: The Ram Path</span><span class="zc-from">From &#8377;48,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-flip" style="--rot:20deg;--z:2" href="j-kerala-backwaters-slowly.html">
+      <img src="j-kerala.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">7 nights</span><span class="zc-tag">Gentle</span></span>
+      <span class="zc-info"><span class="zc-title">Kerala Backwaters, Slowly</span><span class="zc-from">From &#8377;58,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="zcard zc-flip" style="--rot:30deg;--z:1" href="j-dubai-abu-dhabi-tour.html">
+      <img src="j-dubai-abu-dhabi-tour.webp" alt="" loading="lazy" width="800" height="600">
+      <span class="zc-tags"><span class="zc-tag">5 nights</span><span class="zc-tag">Gentle</span></span>
+      <span class="zc-info"><span class="zc-title">Dubai &amp; Abu Dhabi Done Properly</span><span class="zc-from">From &#8377;85,000</span></span>
+      <span class="zc-go" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+  <div class="wrap">
+    <p class="zfan-note mt24">Prices per person, indicative &mdash; confirmed when you enquire.</p>
+    <p class="mt16" style="text-align:center"><a class="tlink" href="journeys.html">All fifty-nine journeys, with filters &rarr;</a></p>
   </div>
 </section><section id="stories">
   <div class="wrap">
@@ -549,63 +604,17 @@
     });
   }
 
-  /* Zubi Recommended — hover/click a mini card to change the preview;
-     auto-cycles until the visitor interacts. */
-  var ZREC=[
-    {href:'j-ladakh-by-road.html',img:'j-ladakh.webp',meta:'Ladakh · Moderate · 9 nights',title:'Ladakh by Road',
-     desc:'Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude — oxygen in every vehicle, doctors’ numbers in every driver’s phone.',
-     from:'From ₹70,000 per person'},
-    {href:'j-kashmir-tulip-season.html',img:'j-kashmir.webp',meta:'Kashmir · Gentle · 6 nights',title:'Kashmir in Tulip Season',
-     desc:'Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out — with a houseboat night your children will talk about for years.',
-     from:'Price pending'},
-    {href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp',meta:'Kerala · Gentle · 7 nights',title:'Kerala Backwaters, Slowly',
-     desc:'Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills — a houseboat, a spice garden, and afternoons with nothing in them, on purpose.',
-     from:'From ₹58,000 per person'},
-    {href:'j-dubai-abu-dhabi-tour.html',img:'j-dubai-abu-dhabi-tour.webp',meta:'UAE · Gentle · 5 nights',title:'Dubai & Abu Dhabi Done Properly',
-     desc:'Old creek souks, a conservation-reserve desert evening, the Burj at sunset and the Louvre Abu Dhabi. The most travelled destination for Indians, done with taste.',
-     from:'From ₹85,000 per person (indicative)'},
-    {href:'j-vietnam-tour-north-to-south.html',img:'j-vietnam-tour-north-to-south.webp',meta:'Vietnam · Gentle · 7 nights',title:'Vietnam North to South',
-     desc:'Hanoi, a night on Ha Long Bay, lantern-lit Hoi An and Ho Chi Minh City. The fastest-rising destination for Indian travellers, on the easiest visa in Asia.',
-     from:'From ₹1,10,000 per person (indicative)'}
-  ];
-  var minis=Array.prototype.slice.call(document.querySelectorAll('.zmini'));
-  if(minis.length){
-    var zsel=0, zuser=false;
-    function zshow(i){
-      if(!ZREC[i]) return;
-      zsel=i; var d=ZREC[i];
-      minis.forEach(function(m,j){m.setAttribute('aria-selected',String(j===i));});
-      var a=document.getElementById('zprev'); if(!a) return;
-      a.href=d.href;
-      var img=document.getElementById('zprev-img');
-      function swap(){
-        img.src=d.img;
-        document.getElementById('zprev-meta').textContent=d.meta;
-        document.getElementById('zprev-title').textContent=d.title;
-        document.getElementById('zprev-desc').textContent=d.desc;
-        document.getElementById('zprev-from').textContent=d.from;
-      }
-      /* Mosby's Files-style transition: the whole page card tilts out from
-         the folder side and settles flat, image sweeping open under it */
-      if(window.gsap && !reduced){
-        var prev=document.getElementById('zprev');
-        gsap.to(img,{opacity:0,duration:.16,onComplete:function(){
-          swap();
-          gsap.fromTo(prev,
-            {rotate:-7,scale:.72,x:-90,opacity:.5,transformOrigin:'left bottom'},
-            {rotate:0,scale:1,x:0,opacity:1,duration:.75,ease:'power3.out',clearProps:'transform'});
-          gsap.fromTo(img,
-            {opacity:1,clipPath:'inset(0 100% 0 0)'},
-            {clipPath:'inset(0 0% 0 0)',duration:.6,ease:'power3.inOut',clearProps:'clipPath'});
-          gsap.fromTo('#zprev .body',{y:22,opacity:0},{y:0,opacity:1,duration:.5,ease:'power2.out',delay:.2});
-        }});
-      }else{ swap(); }
-    }
-    minis.forEach(function(m,i){
-      m.addEventListener('mouseenter',function(){zuser=true;zshow(i);});
-      m.addEventListener('click',function(){zuser=true;zshow(i);});
-    });
-    setInterval(function(){ if(!zuser&&!document.hidden) zshow((zsel+1)%ZREC.length); },4000);
+  /* Zubi Recommended v2 — Norris-style fan. Cards fan out from the centre
+     as the section scrolls in; final state lives in CSS, so no-JS and
+     reduced-motion visitors see the finished fan. Desktop/tablet only —
+     on phones the fan is a snap rail with no entrance animation. */
+  var zfan=document.getElementById('zfan');
+  if(zfan && window.gsap && window.ScrollTrigger && !reduced
+     && window.matchMedia('(min-width:1081px)').matches){
+    gsap.from('#zfan .zcard',{rotation:0,y:64,opacity:0,duration:.8,ease:'power3.out',
+      stagger:{each:.07,from:'center'},
+      scrollTrigger:{trigger:zfan,start:'top 78%'},
+      onComplete:function(){gsap.set('#zfan .zcard',{clearProps:'transform,opacity'});}});
   }
 
   /* MAP — region-driven and data-driven.
