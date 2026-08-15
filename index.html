@@ -184,7 +184,7 @@
        Geometry is em-based: 1em = 10px at 1440, scaling fluidly down to
        1081px viewports. At ≤1080 the fan becomes a snap rail. */
     .zfan{position:relative;max-width:1440px;margin:48px auto 0;overflow:hidden;
-      font-size:clamp(7.75px,0.6944vw,10px);height:66.4em}
+      font-size:clamp(7.2px,0.57vw,8.2px);height:66.4em}
     .zfan .zcard{position:absolute;left:50%;top:5.6em;width:30em;height:45em;
       display:block;border-radius:2.4em;overflow:hidden;background:var(--teal900);
       transform-origin:50% 230%;transform:translateX(-50%) rotate(var(--rot));
@@ -201,20 +201,19 @@
     .zfan .zcard.zc-left .zc-tags{right:11em}
     .zc-flip .zc-tags{left:11em;justify-content:flex-end}
     .zc-tag{display:inline-block;padding:.5em 1em;border-radius:999px;background:rgba(255,255,255,.92);
-      color:var(--ink900);font-size:1.25em;font-weight:700;letter-spacing:.04em}
-    .zc-tag.zc-trend{background:var(--orange500);color:#fff;letter-spacing:.08em;text-transform:uppercase;font-size:1.2em}
+      color:var(--ink900);font-size:1.45em;font-weight:700;letter-spacing:.04em}
+    .zc-tag.zc-trend{background:var(--orange500);color:#fff;letter-spacing:.08em;text-transform:uppercase;font-size:1.4em}
     .zc-info{position:absolute;left:1.8em;right:7em;bottom:1.8em;z-index:2;color:#fff;text-shadow:0 1px 4px rgba(0,20,22,.45)}
-    .zfan .zcard.zc-left .zc-info{left:1.8em;right:16.5em;bottom:8.6em}
+    .zfan .zcard.zc-left .zc-info{left:1.8em;right:17.2em;bottom:9.8em}
     .zc-flip .zc-info{left:17.8em;right:1.8em;bottom:8.6em;text-align:right}
-    .zc-title{display:block;font-size:2em;font-weight:700;line-height:1.25}
-    .zfan .zcard:not(.zc-centre) .zc-title{font-size:1.6em}
-    .zc-from{display:block;margin-top:.45em;font-size:1.45em;font-weight:700;color:rgba(255,255,255,.95)}
-    .zfan .zcard:not(.zc-centre) .zc-from{font-size:1.35em}
+    .zc-title{display:block;font-size:2.2em;font-weight:700;line-height:1.25}
+    .zfan .zcard:not(.zc-centre) .zc-title{font-size:1.75em}
+    .zc-from{display:block;margin-top:.45em;font-size:1.6em;font-weight:700;color:rgba(255,255,255,.95)}
+    .zfan .zcard:not(.zc-centre) .zc-from{font-size:1.5em}
     .zc-go{position:absolute;right:.7em;bottom:.7em;z-index:2;display:flex;align-items:center;justify-content:center;
       width:2.2em;height:2.2em;border-radius:50%;background:var(--orange500);color:#fff;font-size:2em;
       transition:background var(--t-colour),transform var(--t-move)}
     .zfan .zcard:hover .zc-go,.zfan .zcard:focus-visible .zc-go{background:var(--orange600);transform:translateX(.2em)}
-    .zfan-note{text-align:center;font-size:13.5px;color:var(--ink500);margin-top:8px}
     @media (max-width:1080px){
       .zfan{font-size:10px;height:auto;display:flex;gap:16px;overflow-x:auto;padding:8px 20px 24px;
         scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -279,8 +278,7 @@
     </a>
   </div>
   <div class="wrap">
-    <p class="zfan-note mt24">Prices per person, indicative &mdash; confirmed when you enquire.</p>
-    <p class="mt16" style="text-align:center"><a class="tlink" href="journeys.html">All fifty-nine journeys, with filters &rarr;</a></p>
+    <p class="mt24" style="text-align:center"><a class="btn btn-secondary" href="journeys.html">View all <span class="arw" aria-hidden="true">&rarr;</span></a></p>
   </div>
 </section><section id="stories">
   <div class="wrap">
