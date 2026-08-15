@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-symbol.png">
-<link rel="stylesheet" href="site-v9.css?v=r4">
+<link rel="stylesheet" href="site-v9.css?v=r5">
 </head>
 <body>
 <div class="ground" aria-hidden="true"></div>
@@ -213,9 +213,12 @@
     .zfan .zcard:not(.zc-centre) .zc-from{font-size:1.5em}
     .zc-go{position:absolute;right:.7em;bottom:.7em;z-index:2;display:flex;align-items:center;justify-content:center;
       width:2.2em;height:2.2em;border-radius:50%;background:var(--orange500);color:#fff;font-size:2em;
-      transition:background var(--t-colour),transform var(--t-move)}
-    .zfan .zcard:hover .zc-go,.zfan .zcard:focus-visible .zc-go{background:var(--orange600);transform:translateX(.2em)}
+      opacity:0;transform:translateY(.4em) scale(.9);
+      transition:background var(--t-colour),transform var(--t-move),opacity var(--t-move)}
+    .zfan .zcard:hover .zc-go,.zfan .zcard:focus-visible .zc-go{
+      background:var(--orange600);opacity:1;transform:translateX(.2em) translateY(0) scale(1)}
     @media (max-width:1080px){
+      .zc-go{opacity:1;transform:none}
       .zfan{font-size:10px;height:auto;display:flex;gap:16px;overflow-x:auto;padding:8px 20px 24px;
         scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
       .zfan::-webkit-scrollbar{display:none}
