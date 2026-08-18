@@ -369,21 +369,64 @@
     });
   });
 
-  /* Phone menu */
+  /* Phone menu — builds a real overlay from the nav links and toggles a class.
+     No injected inline styles (site-v9.css owns the look). Esc closes,
+     body scroll locks, focus returns to the burger. */
   var burger=document.querySelector('.burger'), links=document.querySelector('.navlinks');
-  if(burger){
+  if(burger&&links){
+    var menu=null;
+    function build(){
+      if(menu) return menu;
+      menu=document.createElement('div');
+      menu.className='navmenu';
+      menu.setAttribute('role','dialog');
+      menu.setAttribute('aria-modal','true');
+      menu.setAttribute('aria-label','Menu');
+      var brand=document.querySelector('.brand .lg-col');
+      var tel=document.querySelector('.navtel');
+      var cta=document.querySelector('.nav .btn');
+      var top=document.createElement('div'); top.className='nmtop';
+      top.innerHTML='<img src="'+(brand?brand.getAttribute('src'):'logo.png')+'" alt="Zubilant">'+
+                    '<button class="nmclose" type="button" aria-label="Close menu">&times;</button>';
+      var body=document.createElement('div'); body.className='nmbody'; var ban=null;
+      links.querySelectorAll('.mhead,a').forEach(function(el){
+        if(el.closest('.mfoot')) return;
+        if(el.classList.contains('mhead')){
+          var h=document.createElement('div'); h.className='mhead';
+          h.innerHTML=el.innerHTML; body.appendChild(h); return;
+        }
+        if(el.classList.contains('mban')){ban=el.cloneNode(true); return;}
+        var a=el.cloneNode(true);
+        var c=a.querySelector('.cev'); if(c) c.remove();
+        body.appendChild(a);
+      });
+      if(ban) body.appendChild(ban);
+      var foot=document.createElement('div'); foot.className='nmfoot';
+      if(cta){var c2=cta.cloneNode(true); foot.appendChild(c2);}
+      if(tel){var t2=document.createElement('a'); t2.className='nmtel';
+        t2.href=tel.getAttribute('href'); t2.textContent='Call '+tel.textContent.trim();
+        foot.appendChild(t2);}
+      menu.appendChild(top); menu.appendChild(body); menu.appendChild(foot);
+      document.body.appendChild(menu);
+      menu.querySelector('.nmclose').addEventListener('click',close);
+      return menu;
+    }
+    function open(){
+      build();
+      document.body.classList.add('navopen');
+      burger.setAttribute('aria-expanded','true');
+      var f=menu.querySelector('a,button'); if(f) f.focus();
+    }
+    function close(){
+      document.body.classList.remove('navopen');
+      burger.setAttribute('aria-expanded','false');
+      burger.focus();
+    }
     burger.addEventListener('click',function(){
-      var open=burger.getAttribute('aria-expanded')==='true';
-      burger.setAttribute('aria-expanded',String(!open));
-      if(!open){
-        links.style.cssText='display:flex;flex-direction:column;align-items:flex-start;gap:0;position:fixed;inset:84px 0 0;background:var(--paper);padding:24px;overflow:auto;z-index:99';
-        links.querySelectorAll('a').forEach(function(a){a.style.color='var(--ink900)';a.style.fontSize='21px';a.style.padding='14px 0';});
-        links.querySelectorAll('.dd').forEach(function(d){d.style.cssText='position:static;opacity:1;visibility:visible;transform:none;border:0;padding:0 0 0 16px;min-width:0';});
-      }else{
-        links.style.cssText='';
-        links.querySelectorAll('a').forEach(function(a){a.style.cssText='';});
-        links.querySelectorAll('.dd').forEach(function(d){d.style.cssText='';});
-      }
+      (burger.getAttribute('aria-expanded')==='true'?close:open)();
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&document.body.classList.contains('navopen')) close();
     });
   }
   /* HERO ROTATION — the Jitter "Destination" pattern: crossfade every 3s,
