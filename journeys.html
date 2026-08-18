@@ -109,7 +109,7 @@ details.jfd>summary i{border:solid var(--ink500);border-width:0 1.6px 1.6px 0;pa
 .jread b{color:var(--teal700)}
 
 /* ── the grid: 4-up, smaller cards ── */
-.jgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px;align-items:stretch}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:18px;margin-top:22px;align-items:stretch}
 .jgrid>.jcard{height:100%}
 .jcard{position:relative;background:var(--paper);border:1px solid var(--lineSoft);border-radius:14px;
   overflow:hidden;display:flex;flex-direction:column;transition:box-shadow var(--t-move),transform var(--t-move)}
@@ -231,38 +231,37 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 /* ── the two-column layout: finder rail left, bar + grid right (r9) ── */
 .jlwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
 .jrailcard{position:relative;background:var(--paper);border:1px solid var(--lineSoft);border-radius:18px;
-  padding:18px 16px 20px;box-shadow:var(--e1)}
-.jrailcard .sub{color:var(--ink700);font-size:13px;line-height:1.5}
-.fskip{display:none;position:absolute;top:14px;right:14px;border:0;background:none;font:inherit;
-  font-size:14px;font-weight:700;color:var(--teal700);text-decoration:underline;cursor:pointer}
+  padding:16px 14px 18px;box-shadow:var(--e1)}
+.fhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:2px}
+.ftitle{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.fhr{display:inline-flex;align-items:baseline;gap:12px;white-space:nowrap}
+.fclear{color:var(--orange600) !important;font-size:13.5px;font-weight:700}
+.fskip{display:none;border:0;background:none;font:inherit;
+  font-size:13.5px;font-weight:700;color:var(--teal700);text-decoration:underline;cursor:pointer}
 .fskip:hover{color:var(--orange500)}
-@media(max-width:1280px){.fskip{display:inline-block}.jrailcard .sub{padding-right:60px}}
+@media(max-width:1280px){.fskip{display:inline-block}}
 /* the orange step line through 1-2-3, stacked layouts only */
 @media(min-width:1281px),(max-width:699px){
-  .fqs .jfq{position:relative;padding-left:36px}
-  .fqs .jfq .qt .stepn{position:absolute;left:0;top:-1px}
-  .fqs .jfq:not(:last-child)::before{content:"";position:absolute;left:12px;top:26px;bottom:-16px;
-    width:2.5px;background:var(--orange500);opacity:.85;border-radius:2px}
+  .fqs .jfq{position:relative;padding-left:30px}
+  .fqs .jfq .qt .stepn{position:absolute;left:0;top:0;width:20px;height:20px;flex-basis:20px;font-size:11px}
+  .fqs .jfq:not(:last-child)::before{content:"";position:absolute;left:9px;top:22px;bottom:-13px;
+    width:2px;background:var(--orange500);opacity:.85;border-radius:2px}
 }
 .jfq.done .stepn{background:var(--orange500)}
 @media(min-width:1281px){
   .jlwrap{grid-template-columns:302px minmax(0,1fr);gap:30px;align-items:start}
-  .jrail{position:sticky;top:102px;max-height:calc(100vh - 118px);overflow:auto;
-    scrollbar-width:thin;border-radius:18px}
-  .jrail .fchip{min-height:38px;padding:6px 11px;font-size:13.5px}
-  .jrail .fchips{gap:5px;margin-top:7px}
-  .jrail .fqs{gap:11px;margin-top:4px}
-  .jrailcard{padding:16px 14px 18px}
-  .jrail .jfq .qt{font-size:14px}
-  .jrail details.fwhen{margin-top:12px}
-  .jrail details.fwhen>summary{font-size:13px}
-  .jrail .fact{margin-top:12px}
-  #fbtn{display:none}
+  .jrail{position:sticky;top:102px}
+  .jrail .fchip{min-height:35px;padding:5px 10px;font-size:13px}
+  .jrail .fchips{gap:5px;margin-top:6px}
+  .jrail .fqs{gap:10px;margin-top:8px}
+  .jrail .jfq .qt{font-size:13.5px}
+  .jrail details.fwhen{margin-top:11px}
+  .jrail details.fwhen>summary{font-size:12.5px}
+  .jrail .fact{display:none}
   /* Budget and Where live in the rail on desktop — never show a filter twice */
   .jfbar details[data-g="bud"],.jfbar details[data-g="whr"]{display:none}
-  .jgrid{grid-template-columns:repeat(3,1fr)}
+  .wrap.jlwrap{max-width:1400px}
 }
-@media(min-width:1500px){.jgrid{grid-template-columns:repeat(4,1fr)}}
 
 /* ── slimmed filter bar: Budget · Nights · Where visible, the rest behind All filters ── */
 .jfbar:not(.xp) details.xtra:not(.on){display:none}
@@ -272,19 +271,11 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 .jfmore:hover{border-color:var(--ink700);color:var(--ink900)}
 .jfbar.xp .jfmore{border-style:solid;border-color:var(--orange500);color:var(--ink900)}
 
-@media(min-width:1500px){
-  .jgrid{grid-template-columns:repeat(4,1fr)}
-  /* five-up leaves no room for the CTA label - the whole card is the link anyway */
-  .jgo{font-size:0;padding:7px 10px;gap:0}
-  .jgo b{font-size:14px}
-}
-@media(max-width:1280px){.jgrid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:1080px){
   .jfwrap{top:78px}
   .jfbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
   .jfbar::-webkit-scrollbar{display:none}
   .hero.jhero h1{font-size:48px}
-  .jgrid{grid-template-columns:repeat(2,1fr);gap:16px}
   .qv{grid-template-columns:1fr}.qv img{min-height:200px;max-height:240px}
 }
 @media(max-width:640px){
@@ -302,7 +293,6 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
   .jask{padding:24px 18px}.jask h2{font-size:22px}.jask form{flex-wrap:wrap}
   .jband{margin-top:-46px}
   .hero.jhero h1{font-size:36px}
-  .jgrid{grid-template-columns:1fr}
 }
 
 </style>
@@ -362,8 +352,13 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
   <div class="wrap jlwrap">
     <aside class="jrail" aria-label="Find your journey">
       <div class="jrailcard">
-        <button class="fskip" type="button" id="fskip">Skip &darr;</button>
-        <p class="sub">Tap what you know, skip what you don&rsquo;t &mdash; the list narrows as you go. No typing needed.</p>
+        <div class="fhead">
+          <p class="ftitle">Confused? Start here!</p>
+          <span class="fhr">
+            <button class="jclear fclear" type="button" id="freset" hidden>Clear all</button>
+            <button class="fskip" type="button" id="fskip">Skip &darr;</button>
+          </span>
+        </div>
         <div class="fqs">
       <div class="jfq"><div class="qt"><span class="stepn" aria-hidden="true">1</span>Who&rsquo;s going?</div>
         <div class="fchips" data-fg="who" role="group" aria-label="Who's going">
@@ -396,7 +391,6 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
     </details>
     <div class="fact">
       <button class="btn btn-primary" type="button" id="fbtn">See all 59 journeys <span class="arw" aria-hidden="true">&darr;</span></button>
-      <button class="jclear" type="button" id="freset" hidden>Start over</button>
     </div>
       </div>
     </aside>
@@ -729,7 +723,7 @@ function syncFinder(){
   var btn=document.getElementById('fbtn');
   if(n===0)btn.innerHTML='Nothing matches everything &mdash; see what&rsquo;s close <span class="arw" aria-hidden="true">&darr;</span>';
   else btn.innerHTML=(narrowed?'See '+(n===1?'the one journey that fits':'my '+n+' journeys'):'See all 59 journeys')+' <span class="arw" aria-hidden="true">&darr;</span>';
-  document.getElementById('freset').hidden=!narrowed;
+  document.getElementById('freset').hidden=!(active().length||query);
 }
 function readback(){
   var el=document.getElementById('jread');
@@ -811,8 +805,7 @@ document.getElementById('fbtn').onclick=function(){
   document.getElementById('jfwrap').scrollIntoView({behavior:'smooth',block:'start'});};
 var fs=document.getElementById('fskip');
 if(fs)fs.onclick=function(){document.getElementById('jfwrap').scrollIntoView({behavior:'smooth',block:'start'});};
-document.getElementById('freset').onclick=function(){
-  ['who','whr','bud','mon'].forEach(function(g){fInputs(g).forEach(function(i){i.checked=false;});});render();};
+document.getElementById('freset').onclick=function(){document.getElementById('jclear').click();};
 document.getElementById('jfmoreT').onclick=function(){
   var x=document.querySelector('.jfbar').classList.toggle('xp');
   this.setAttribute('aria-expanded',x);

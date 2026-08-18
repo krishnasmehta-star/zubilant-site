@@ -113,7 +113,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* NAV — R7: back to the floating pill, frosted over the hero, solid after.
    Contiki's calm spacing kept: logo left, links centred, phone + CTA right. */
 .nav{position:fixed;top:16px;left:0;right:0;z-index:100;transition:top var(--t-move)}
-.nav .in{max-width:1320px;margin:0 auto;padding:0 24px 0 28px;height:66px;
+.nav .in{max-width:1320px;margin:0 auto;padding:0 26px;height:66px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
   width:calc(100% - 48px);border-radius:999px;
   border:1px solid rgba(255,255,255,.22);background:rgba(0,39,43,.32);
@@ -790,7 +790,6 @@ main{position:relative}
   .bandrow .cell{display:none}
   .deflist div,.daylist li{grid-template-columns:1fr;gap:6px}
   .btnrow .btn{width:100%}
-  .field{left:-40vw;width:120vw}
   .flagbar{left:8px;right:8px;bottom:8px;max-width:none}
 }
 /* REDUCED MOTION */
@@ -842,3 +841,9 @@ main{position:relative}
   .stepout.v2 .so-in{padding:11vh 12px 9vh}
   .stepout.v2 .so-word{font-size:clamp(56px,19vw,120px)}
 }
+
+/* r11 hygiene: the stale mobile ".field{left:-40vw;width:120vw}" rule (removed above) forced
+   every enquiry input to 120vw and overflowed 10 pages at 390. Harden the form grid so a
+   long option label can never widen a column again. */
+.fgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:640px){.fgrid{grid-template-columns:minmax(0,1fr)}}
