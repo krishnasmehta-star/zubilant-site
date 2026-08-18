@@ -523,3 +523,19 @@
   window.addEventListener('load',arm);
   arm();
 })();
+
+/* ── Zubi Recommended ⇒ ⚡ Trending badge, automatic wherever journey cards render (r10) ── */
+window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipur.html','j-kerala-backwaters-slowly.html','j-ladakh-by-road.html','j-ayodhya-prayagraj-chitrakoot-ram-path.html','j-dubai-abu-dhabi-tour.html','j-vietnam-tour-north-to-south.html'];
+(function(){
+  function zap(){
+    [].slice.call(document.querySelectorAll('.jcard')).forEach(function(c){
+      var a=c.querySelector('.jhit');if(!a)return;
+      if(window.ZREC.indexOf(a.getAttribute('href'))<0)return;
+      var fig=c.querySelector('.jfig');if(!fig||fig.querySelector('.b-zap'))return;
+      var old=fig.querySelector('.jbadge');if(old)old.parentNode.removeChild(old);
+      var s=document.createElement('span');s.className='jbadge b-zap';s.textContent='⚡️ Trending';
+      fig.insertBefore(s,fig.firstChild);
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zap);else zap();
+})();

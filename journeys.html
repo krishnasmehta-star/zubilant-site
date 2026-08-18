@@ -122,6 +122,7 @@ details.jfd>summary i{border:solid var(--ink500);border-width:0 1.6px 1.6px 0;pa
 .jbadge{position:absolute;top:8px;left:8px;z-index:3;border-radius:999px;padding:3px 9px;
   font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .b-trend{background:var(--sun100);color:#8A4A12}
+.b-zap{background:var(--orange500);color:#fff;letter-spacing:.04em}
 .b-rise{background:var(--sky100);color:#0B5A63}
 .b-visa{background:var(--moss100);color:#2C6B4F}
 .jqv{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:6px;
@@ -229,18 +230,34 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 
 /* ── the two-column layout: finder rail left, bar + grid right (r9) ── */
 .jlwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
-.jrailcard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:18px;
-  padding:22px 20px 24px;box-shadow:var(--e1)}
-.jrailcard h2{font-size:23px;letter-spacing:-.015em}
-.jrailcard .sub{color:var(--ink700);font-size:14px;margin-top:6px}
+.jrailcard{position:relative;background:var(--paper);border:1px solid var(--lineSoft);border-radius:18px;
+  padding:18px 16px 20px;box-shadow:var(--e1)}
+.jrailcard .sub{color:var(--ink700);font-size:13px;line-height:1.5}
+.fskip{display:none;position:absolute;top:14px;right:14px;border:0;background:none;font:inherit;
+  font-size:14px;font-weight:700;color:var(--teal700);text-decoration:underline;cursor:pointer}
+.fskip:hover{color:var(--orange500)}
+@media(max-width:1280px){.fskip{display:inline-block}.jrailcard .sub{padding-right:60px}}
+/* the orange step line through 1-2-3, stacked layouts only */
+@media(min-width:1281px),(max-width:699px){
+  .fqs .jfq{position:relative;padding-left:36px}
+  .fqs .jfq .qt .stepn{position:absolute;left:0;top:-1px}
+  .fqs .jfq:not(:last-child)::before{content:"";position:absolute;left:12px;top:26px;bottom:-16px;
+    width:2.5px;background:var(--orange500);opacity:.85;border-radius:2px}
+}
+.jfq.done .stepn{background:var(--orange500)}
 @media(min-width:1281px){
   .jlwrap{grid-template-columns:302px minmax(0,1fr);gap:30px;align-items:start}
   .jrail{position:sticky;top:102px;max-height:calc(100vh - 118px);overflow:auto;
     scrollbar-width:thin;border-radius:18px}
-  .jrail .fchip{min-height:44px;padding:8px 14px;font-size:14.5px}
-  .jrail .jfq .qt{font-size:15.5px}
-  .jrail .fact{margin-top:18px}
-  .jrail .fact .btn{width:100%;justify-content:center;font-size:15.5px}
+  .jrail .fchip{min-height:38px;padding:6px 11px;font-size:13.5px}
+  .jrail .fchips{gap:5px;margin-top:7px}
+  .jrail .fqs{gap:11px;margin-top:4px}
+  .jrailcard{padding:16px 14px 18px}
+  .jrail .jfq .qt{font-size:14px}
+  .jrail details.fwhen{margin-top:12px}
+  .jrail details.fwhen>summary{font-size:13px}
+  .jrail .fact{margin-top:12px}
+  #fbtn{display:none}
   /* Budget and Where live in the rail on desktop — never show a filter twice */
   .jfbar details[data-g="bud"],.jfbar details[data-g="whr"]{display:none}
   .jgrid{grid-template-columns:repeat(3,1fr)}
@@ -345,7 +362,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
   <div class="wrap jlwrap">
     <aside class="jrail" aria-label="Find your journey">
       <div class="jrailcard">
-        <h2>Find your journey</h2>
+        <button class="fskip" type="button" id="fskip">Skip &darr;</button>
         <p class="sub">Tap what you know, skip what you don&rsquo;t &mdash; the list narrows as you go. No typing needed.</p>
         <div class="fqs">
       <div class="jfq"><div class="qt"><span class="stepn" aria-hidden="true">1</span>Who&rsquo;s going?</div>
@@ -492,14 +509,14 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
   <a class="btn btn-secondary" href="tel:+918108117770">Call +91 81081 17770</a></div></div>
   </div>
 </section></main>
-<section class="stepout v2 notop" aria-label="Step outside" id="stepout">
-  <canvas class="so-reveal" aria-hidden="true"></canvas>
+<section class="stepout notop" aria-label="Step outside">
   <div class="so-in">
-    <div class="so-words">
-      <div class="so-word">Step</div>
-      <div class="so-word">Outside</div>
+    <div class="so-word">Step</div>
+    <div class="so-stage">
+      <div class="so-oval"><img src="c-friends.webp" alt="" loading="lazy" width="760" height="1013"></div>
+      <a class="btn btn-primary so-cta" href="plan-your-journey.html">Book Experience</a>
     </div>
-    <a class="btn btn-primary so-cta" href="plan-your-journey.html">Book Experience <span class="arw" aria-hidden="true">&rarr;</span></a>
+    <div class="so-word">Outside</div>
   </div>
 </section>
 <footer>
@@ -547,7 +564,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 </div>
 <script defer src="gsap.min.js"></script>
 <script defer src="ScrollTrigger.min.js"></script>
-<script src="site-v9.js?v=r7"></script>
+<script src="site-v9.js?v=r10"></script>
 <script>
 
 (function(){
@@ -704,6 +721,9 @@ function syncFinder(){
     b.setAttribute('aria-pressed',!!(i&&i.checked));});
   [].slice.call(document.querySelectorAll('.fchip[data-any]')).forEach(function(b){
     b.setAttribute('aria-pressed',!fInputs(b.dataset.any).some(function(i){return i.checked;}));});
+  [].slice.call(document.querySelectorAll('.fchips[data-fg]')).forEach(function(g){
+    var q=g.closest('.jfq');if(!q)return;
+    q.classList.toggle('done',fInputs(g.dataset.fg).some(function(i){return i.checked;}));});
   var cb=document.querySelector('#jcount b'),n=cb?+cb.textContent:59;
   var narrowed=['who','whr','bud','mon'].some(function(g){return fInputs(g).some(function(i){return i.checked;});});
   var btn=document.getElementById('fbtn');
@@ -735,7 +755,8 @@ function openQV(i){
     '<img src="'+j.img+'" alt="">'+
     '<div class="qvb"><h3 id="qvt">'+j.t+'</h3>'+
     '<div class="qvrow"><span class="qvt">'+j.n+' nights</span><span class="qvt">'+j.r+'</span>'+
-    '<span class="qvt">'+j.pace+' pace</span>'+(j.season?'<span class="qvt">Best '+j.season+'</span>':'')+'</div>'+
+    '<span class="qvt">'+j.pace+' pace</span>'+(j.season?'<span class="qvt">Best '+j.season+'</span>':'')+
+    (window.ZREC&&window.ZREC.indexOf(j.h)>-1?'<span class="qvt" style="background:var(--sun100)">⚡️ Trending</span>':'')+'</div>'+
     '<p>'+j.d+'</p>'+
     (j.rev?'<blockquote class="qvrev">&ldquo;'+j.rev[0]+'&rdquo;<cite>'+j.rev[1]+' &middot; '+j.rev[2]+'</cite></blockquote>':'')+
     '<div class="qvp">'+(j.p?'From <strong>₹'+j.p.toLocaleString('en-IN')+'</strong> per person'+(j.est?' <span style="color:var(--orange600)">(indicative)</span>':''):'<span style="color:var(--orange600)">Price pending</span>')+'</div>'+
@@ -788,6 +809,8 @@ document.addEventListener('click',function(e){
 });
 document.getElementById('fbtn').onclick=function(){
   document.getElementById('jfwrap').scrollIntoView({behavior:'smooth',block:'start'});};
+var fs=document.getElementById('fskip');
+if(fs)fs.onclick=function(){document.getElementById('jfwrap').scrollIntoView({behavior:'smooth',block:'start'});};
 document.getElementById('freset').onclick=function(){
   ['who','whr','bud','mon'].forEach(function(g){fInputs(g).forEach(function(i){i.checked=false;});});render();};
 document.getElementById('jfmoreT').onclick=function(){
@@ -800,157 +823,6 @@ var f=sp.get('f');if(f){var t=document.querySelector('.jfpanel input[data-f*="'+
 var q0=sp.get('q');if(q0)setQ(q0);else render();
 })();
 
-</script>
-<script>
-/* STEP OUTSIDE v2 — fluid reveal. A low-res "ink" canvas accumulates the
-   pointer trail; each frame it is re-drawn blurred, faded and drifting
-   upward (ink dissipating in water), then drained to true zero. The reveal
-   layer (whale photo + the wordmark re-set as a teal hollow outline at the
-   exact DOM glyph positions) is composited through the trail (source-in)
-   with two breathing echo passes for the liquid edge.
-   No libraries · pauses off-screen · reduced-motion gets a static reveal ·
-   ambient current on touch devices only. */
-(function(){
-  var sec=document.getElementById('stepout'); if(!sec) return;
-  var cv=sec.querySelector('.so-reveal'); if(!cv) return;
-  var ctx=cv.getContext('2d'); if(!ctx) return;
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var TOUCH=(navigator.maxTouchPoints>0)||(window.matchMedia&&matchMedia('(hover: none)').matches);
-
-  var art=new Image(); art.src='whale-step-outside.webp';
-  var artCv=document.createElement('canvas'), artCtx=artCv.getContext('2d');
-  var trail=document.createElement('canvas'), tctx=trail.getContext('2d');
-  var canFilter = typeof tctx.filter!=='undefined';
-  var W=0,H=0,tw=0,th=0,DS=0.22, ready=false;
-
-  function paintArt(){
-    if(!(art.complete&&art.naturalWidth)) return;
-    artCtx.clearRect(0,0,W,H);
-    var s=Math.max(W/art.naturalWidth,H/art.naturalHeight),
-        dw=art.naturalWidth*s, dh=art.naturalHeight*s;
-    artCtx.drawImage(art,(W-dw)/2,(H-dh)/2,dw,dh);
-    var r0=sec.getBoundingClientRect(), dpr=W/r0.width;
-    artCtx.strokeStyle='#7FC4CA';
-    artCtx.lineJoin='round'; artCtx.miterLimit=2;
-    artCtx.shadowColor='rgba(0,39,43,.5)';
-    sec.querySelectorAll('.so-word').forEach(function(w){
-      var cs=getComputedStyle(w), r=w.getBoundingClientRect();
-      var txt=w.textContent.toUpperCase();
-      var fs=parseFloat(cs.fontSize)*dpr;
-      artCtx.font=cs.fontWeight+' '+fs+'px '+cs.fontFamily;
-      if('letterSpacing' in artCtx) artCtx.letterSpacing=((parseFloat(cs.letterSpacing)||0)*dpr)+'px';
-      var m=artCtx.measureText(txt);
-      var asc=(m.fontBoundingBoxAscent!==undefined)?m.fontBoundingBoxAscent:fs*0.8;
-      var desc=(m.fontBoundingBoxDescent!==undefined)?m.fontBoundingBoxDescent:fs*0.2;
-      var half=((r.height*dpr)-(asc+desc))/2;
-      var x=(r.left-r0.left)*dpr + ((r.width*dpr)-m.width)/2;
-      var y=(r.top-r0.top)*dpr + half + asc;
-      artCtx.lineWidth=Math.max(2,fs*0.016);
-      artCtx.shadowBlur=fs*0.07;
-      artCtx.strokeText(txt,x,y);
-    });
-    artCtx.shadowColor='transparent'; artCtx.shadowBlur=0;
-    ready=true;
-    if(reduce) staticFrame();
-  }
-  function size(){
-    var r=sec.getBoundingClientRect();
-    var dpr=Math.min(window.devicePixelRatio||1,1.5);
-    W=cv.width=Math.max(2,Math.round(r.width*dpr));
-    H=cv.height=Math.max(2,Math.round(r.height*dpr));
-    cv.style.width=r.width+'px'; cv.style.height=r.height+'px';
-    tw=trail.width=Math.max(2,Math.round(W*DS));
-    th=trail.height=Math.max(2,Math.round(H*DS));
-    artCv.width=W; artCv.height=H;
-    paintArt();
-  }
-  art.onload=size;
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(paintArt);
-  size(); addEventListener('resize',size);
-
-  var px=-1,py=-1,hx,hy,hasPointer=false,idleMs=99999;
-  sec.addEventListener('pointermove',function(e){
-    var r=cv.getBoundingClientRect();
-    px=(e.clientX-r.left)/r.width; py=(e.clientY-r.top)/r.height;
-    hasPointer=true; idleMs=0;
-  },{passive:true});
-  sec.addEventListener('pointerleave',function(){hasPointer=false; hx=hy=undefined;},{passive:true});
-
-  function blob(x,y,rad,a){
-    var g=tctx.createRadialGradient(x,y,0,x,y,rad);
-    g.addColorStop(0,'rgba(255,255,255,'+a+')');
-    g.addColorStop(.6,'rgba(255,255,255,'+(a*.45)+')');
-    g.addColorStop(1,'rgba(255,255,255,0)');
-    tctx.fillStyle=g; tctx.beginPath(); tctx.arc(x,y,rad,0,6.2832); tctx.fill();
-  }
-
-  function staticFrame(){
-    ctx.clearRect(0,0,W,H);
-    tctx.clearRect(0,0,tw,th);
-    blob(tw*.5,th*.52,th*.42,.9); blob(tw*.32,th*.4,th*.25,.7); blob(tw*.68,th*.6,th*.25,.7);
-    ctx.drawImage(trail,0,0,W,H);
-    ctx.globalCompositeOperation='source-in';
-    ctx.drawImage(artCv,0,0);
-    ctx.globalCompositeOperation='source-over';
-  }
-
-  var amb=Math.random()*80, wob=0, running=false, rafId=0, last=0;
-
-  function frame(now){
-    if(!running) return;
-    var dt=Math.min(48,now-last||16); last=now; idleMs+=dt;
-
-    tctx.globalCompositeOperation='copy';
-    if(canFilter) tctx.filter='blur(2.2px)';
-    tctx.globalAlpha=0.968;
-    var g=1.007;
-    tctx.drawImage(trail,(tw-tw*g)/2,(th-th*g)/2-0.55,tw*g,th*g);
-    tctx.globalAlpha=1; if(canFilter) tctx.filter='none';
-    tctx.globalCompositeOperation='destination-out';
-    tctx.fillStyle='rgba(0,0,0,0.02)';
-    tctx.fillRect(0,0,tw,th);
-    tctx.globalCompositeOperation='source-over';
-
-    if(TOUCH && idleMs>2400){
-      amb+=dt*0.00042;
-      var ax=0.5+0.36*Math.sin(amb*1.7)+0.10*Math.sin(amb*3.9+0.7);
-      var ay=0.46+0.27*Math.sin(amb*2.3+1.4)+0.09*Math.cos(amb*5.1);
-      blob(ax*tw,ay*th,th*0.17,0.42);
-    }
-
-    if(hasPointer&&px>=0){
-      var bx=px*tw, by=py*th;
-      if(hx!==undefined){
-        var d=Math.hypot(bx-hx,by-hy), n=Math.min(14,Math.ceil(d/(th*0.02))||1);
-        for(var i=1;i<=n;i++) blob(hx+(bx-hx)*i/n, hy+(by-hy)*i/n, th*0.19, 0.62);
-      } else blob(bx,by,th*0.19,0.62);
-      hx=bx; hy=by;
-    }
-
-    wob+=dt*0.0011;
-    ctx.clearRect(0,0,W,H);
-    ctx.drawImage(trail,0,0,W,H);
-    ctx.globalAlpha=0.32;
-    ctx.drawImage(trail, Math.sin(wob*2.1)*W*0.007, Math.cos(wob*1.3)*H*0.004, W,H);
-    ctx.drawImage(trail, -Math.sin(wob*1.7+1)*W*0.007, -Math.cos(wob*2.6)*H*0.004, W,H);
-    ctx.globalAlpha=1;
-    ctx.globalCompositeOperation='source-in';
-    ctx.drawImage(artCv,0,0);
-    ctx.globalCompositeOperation='source-over';
-
-    rafId=requestAnimationFrame(frame);
-  }
-
-  if(reduce){ if(ready) staticFrame(); return; }
-
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(en){
-      var vis=en[0].isIntersecting;
-      if(vis&&!running){running=true;last=0;rafId=requestAnimationFrame(frame);}
-      else if(!vis&&running){running=false;cancelAnimationFrame(rafId);}
-    },{threshold:0.05}).observe(sec);
-  } else { running=true; rafId=requestAnimationFrame(frame); }
-})();
 </script>
 </body>
 </html>
