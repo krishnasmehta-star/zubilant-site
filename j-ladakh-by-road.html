@@ -12,78 +12,135 @@
 <link rel="stylesheet" href="site-v9.css">
 <style>
   /* ═══════════════════════════════════════════════════════════════
-     PAGE-SCOPED — journey detail template r2, 18 Aug 2026.
-     Rebuilds the hero/summary/related-trips block only; everything
-     else on this page (day-by-day, inclusions, at-a-glance, where
-     you stay, who it's for) is unchanged real copy. Page-inline for
-     now, matching the precedent set by Step Outside v2, the Zubi
-     Recommended fan and the journeys r7 page (doc 12's editing
-     rule) — moves into site-v9.css/site-v9.js only once this
-     template is approved for all 59 detail pages (board 2.3 #15).
+     PAGE-SCOPED — journey detail template r3, 18 Aug 2026.
+     v3 brief (Krishna): wireframe structure, rendered fully in the
+     v9 brand language of index.html / journeys.html. Homepage-style
+     hero, no §-numbered .shell column anywhere, sticky enquiry card
+     replaces both the empty right rail and the floating quote card.
+     Page-inline until the template is approved for all 59 pages
+     (board 2.3 #15). All colours/type/radii from site-v9.css tokens.
      ═══════════════════════════════════════════════════════════════ */
 
-  /* ── hero: photo only, one on-photo CTA ── */
-  .jhero2{position:relative;height:56vh;min-height:420px;overflow:hidden}
-  .jhero2 img{width:100%;height:100%;object-fit:cover;display:block}
-  .jhero2::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,20,22,.55) 0%,rgba(0,20,22,0) 34%)}
-  .jhero2 .hcta{position:absolute;left:50%;bottom:32px;transform:translateX(-50%)}
+  /* ── hero: the sitewide .hero.short treatment, journey-sized title ── */
+  .jhero3 h1{font-size:58px;max-width:16ch}
+  .jhero3 .sub{font-size:17.5px;max-width:56ch}
+  .hero.short.jhero3 .in{padding-bottom:120px}
+  @media (max-width:1080px){.jhero3 h1{font-size:46px}.hero.short.jhero3 .in{padding-bottom:112px}}
+  @media (max-width:640px){.jhero3 h1{font-size:38px}.hero.short.jhero3 .in{padding-bottom:96px}}
 
-  /* ── badges / tags row ── */
-  .herotags{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
+  /* ── summary band — overlaps the hero like the homepage intent band ── */
+  .sumband{position:relative;margin-top:-64px;z-index:2}
+  .sumcard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
+    box-shadow:var(--e3);padding:32px 38px}
+  .sumtop{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .herotags{display:flex;gap:10px;flex-wrap:wrap}
   .htag{display:inline-flex;align-items:center;min-height:36px;padding:7px 16px;border-radius:999px;
     font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
   .htag.pop{background:var(--orange500);color:#fff}
-  .htag.cat{background:var(--teal50);color:var(--teal700);border:1px solid var(--teal200)}
+  .htag.cat{background:var(--teal50);color:var(--teal700);border:1px solid var(--teal200);
+    transition:background var(--t-colour),color var(--t-colour)}
+  .htag.cat:hover{background:var(--teal700);color:#fff}
+  .hrate{display:flex;align-items:center;gap:8px;font-size:15px;flex-wrap:wrap}
+  .hrate svg{width:17px;height:17px;color:var(--sun)}
+  .hrate b{font-size:17px}
+  .hrate a{color:var(--teal700);font-weight:700;text-decoration:underline;margin-left:2px}
 
-  /* ── three big stats ── */
-  .bigstats{display:flex;gap:48px;margin-top:24px;flex-wrap:wrap}
-  .bigstats div{min-width:80px}
-  .bigstats b{display:block;font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1}
-  .bigstats span{display:block;margin-top:4px;font-size:13px;font-weight:600;letter-spacing:.06em;
+  .summain{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px 48px;align-items:center;
+    margin-top:24px;padding-top:24px;border-top:1px solid var(--lineSoft)}
+  .bigstats{display:flex;gap:36px;flex-wrap:wrap}
+  .bigstats div{border-left:3px solid var(--orange500);padding-left:16px;min-width:88px}
+  .bigstats div:nth-child(2){border-left-color:var(--teal600)}
+  .bigstats div:nth-child(3){border-left-color:var(--sage600)}
+  .bigstats b{display:block;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.05;color:var(--teal900)}
+  .bigstats span{display:block;margin-top:5px;font-size:12px;font-weight:700;letter-spacing:.12em;
     text-transform:uppercase;color:var(--ink500)}
+  .sumcta{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .sumcta .pfrom{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
+  .sumcta .pval{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-top:2px}
+  .sumcta .pper{font-size:14px;color:var(--ink700);margin-top:2px}
+  .sumcta .tel{font-size:15px;color:var(--ink700)}
 
-  /* ── rating row — honest: company Google rating, labelled, not a
-       per-journey score (standing ruling, doc 20) ── */
-  .hrate{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:16px;flex-wrap:wrap}
-  .hrate svg{width:18px;height:18px;color:var(--sun)}
-  .hrate b{font-size:18px}
-  .hrate a{color:var(--teal700);font-weight:700;text-decoration:underline;margin-left:4px}
-
-  /* ── price + CTA row ── */
-  .pricerow{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:24px;padding-top:24px;border-top:1px solid var(--lineSoft)}
-  .pricerow .pfrom{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500)}
-  .pricerow .pval{font-size:36px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
-  .pricerow .pper{font-size:14px;color:var(--ink700)}
-
-  /* ── start/end/transport/group row ── */
-  .factrow{display:flex;gap:32px;flex-wrap:wrap;margin-top:24px;font-size:15px}
+  .sumfacts{display:flex;align-items:center;gap:14px 32px;flex-wrap:wrap;margin-top:24px;
+    padding-top:24px;border-top:1px solid var(--lineSoft)}
+  .factrow{display:flex;gap:32px;flex-wrap:wrap;font-size:15px}
   .factrow div{display:flex;flex-direction:column;gap:2px}
-  .factrow span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500)}
+  .factrow span{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink500)}
   .factrow b{font-weight:600}
-
-  /* ── nights breakdown pills ── */
-  .nightpills{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-  .npill{display:inline-flex;align-items:center;gap:6px;background:var(--moss100);color:#2C6B4F;
+  .nightpills{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+  .npill{display:inline-flex;align-items:center;gap:6px;background:var(--moss100);color:var(--forest700);
     border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:700}
+  @media (max-width:1080px){
+    .sumcard{padding:26px 24px}
+    .summain{grid-template-columns:1fr}
+    .nightpills{margin-left:0}
+  }
 
-  /* ── itinerary + route, side by side ── */
-  .itingrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start;margin-top:32px}
-  @media (max-width:900px){.itingrid{grid-template-columns:1fr}.routecard{position:static}}
-  .routecard{position:sticky;top:118px;background:var(--paper);border:1px solid var(--lineSoft);
-    border-radius:var(--r-card);padding:24px;box-shadow:var(--e1)}
-  .routecard .rtitle{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
-  .routestops{margin-top:18px;border-left:2px solid var(--teal200);padding-left:20px;display:flex;flex-direction:column;gap:20px}
-  .routestops div{position:relative}
-  .routestops div::before{content:"";position:absolute;left:-25px;top:3px;width:10px;height:10px;border-radius:50%;
-    background:var(--orange500);border:2px solid var(--paper);box-shadow:0 0 0 1.5px var(--orange500)}
-  .routestops b{display:block;font-size:15.5px}
-  .routestops em{display:block;font-style:normal;font-size:13px;color:var(--ink700);margin-top:2px}
-  .routecard .rnote{margin-top:18px;padding-top:16px;border-top:1px solid var(--lineSoft);font-size:13px;color:var(--ink700);line-height:1.5}
+  /* ── main grid: content + sticky enquiry card (site-v9 .jgrid/.jside) ── */
+  .jside{padding-top:30px}
+  .jside .zubi-peek{position:absolute;top:-30px;right:22px;width:58px;pointer-events:none;
+    filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
+  .jside .srate{display:flex;align-items:center;gap:7px;font-size:14.5px;color:var(--ink700);
+    padding-bottom:16px;border-bottom:1px solid var(--lineSoft);margin-bottom:18px}
+  .jside .srate svg{width:16px;height:16px;color:var(--sun)}
+  .jside .srate b{font-size:16px;color:var(--ink900)}
+  .jside .srate a{color:var(--teal700);font-weight:700}
+  .jside .pnote{font-size:12.5px;color:var(--ink500);margin-top:8px;line-height:1.5}
+  .jside .qline{font-size:15px;line-height:1.55;color:var(--ink700);margin-top:20px}
+  .jside .wa{display:block;text-align:center;margin-top:6px;font-size:13.5px;color:var(--ink500)}
 
-  /* ── related trips: the real journeys-index .jcard, ported unchanged
-       (not in site-v9.css — that page's card CSS is page-inline by
-       design, per doc 12) ── */
-  .jgrid2{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+  /* ── what's included: two tinted panels ── */
+  .incgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:26px}
+  .ipanel{border-radius:var(--r-card);padding:26px 28px;border:1px solid var(--lineSoft);background:var(--paper)}
+  .ipanel.yes{background:var(--moss100);border-color:var(--sage200)}
+  .ipanel .label{color:var(--ink500)}
+  .ipanel .ticks{margin-top:16px}
+  .ipanel .ticks li{font-size:16px}
+  @media (max-width:640px){.incgrid{grid-template-columns:1fr}}
+
+  /* ── route band — dark forest strip in the .proof style ── */
+  .routeband{display:grid;grid-template-columns:repeat(4,1fr);border-radius:var(--r-card);
+    background:var(--forest);color:#fff;margin-top:26px;overflow:hidden;box-shadow:var(--e2)}
+  .routeband div{padding:24px 24px 26px;border-right:1px solid rgba(255,255,255,.16);position:relative}
+  .routeband div::before{content:"";position:absolute;left:24px;top:0;width:32px;height:4px;background:var(--sun)}
+  .routeband div:nth-child(2)::before{background:var(--sky)}
+  .routeband div:nth-child(3)::before{background:var(--moss)}
+  .routeband div:nth-child(4)::before{background:var(--terra)}
+  .routeband div:last-child{border-right:0}
+  .routeband k{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.68)}
+  .routeband v{display:block;font-size:20px;font-weight:700;letter-spacing:-.01em;margin-top:8px;line-height:1.2}
+  .routeband em{display:block;font-style:normal;font-size:13.5px;color:rgba(255,255,255,.8);margin-top:6px;line-height:1.45}
+  @media (max-width:1080px){.routeband{grid-template-columns:repeat(2,1fr)}
+    .routeband div{border-bottom:1px solid rgba(255,255,255,.16)}
+    .routeband div:nth-child(2n){border-right:0}
+    .routeband div:nth-last-child(-n+2){border-bottom:0}}
+  @media (max-width:640px){.routeband{grid-template-columns:1fr}
+    .routeband div{border-right:0}
+    .routeband div:nth-last-child(2){border-bottom:1px solid rgba(255,255,255,.16)}}
+
+  /* ── at a glance: fact cards with icons ── */
+  .glance{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  .gcard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
+    padding:20px 22px;box-shadow:var(--e1)}
+  .gcard .gi{width:40px;height:40px;border-radius:50%;background:var(--teal50);display:flex;
+    align-items:center;justify-content:center;color:var(--river)}
+  .gcard .gi svg{width:20px;height:20px}
+  .gcard k{display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink500);margin-top:14px}
+  .gcard v{display:block;font-size:17px;font-weight:600;margin-top:4px;line-height:1.35}
+  @media (max-width:1080px){.glance{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.glance{grid-template-columns:1fr}}
+
+  /* ── where you stay / who it's for: tinted duo ── */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:26px}
+  .dcard{border-radius:var(--r-card);padding:28px 30px;border:1px solid var(--teal200);background:var(--teal50)}
+  .dcard.warm{background:var(--sun100);border-color:#F0DDB4}
+  .dcard h3{font-size:21px}
+  .dcard p{margin-top:12px;font-size:16px;line-height:1.6;color:var(--ink700)}
+  @media (max-width:1080px){.duo{grid-template-columns:1fr}}
+
+  /* ── related trips: the exact journeys-index .jcard, unchanged ── */
+  .jgrid2{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
   @media (max-width:1080px){.jgrid2{grid-template-columns:repeat(2,1fr)}}
   @media (max-width:640px){.jgrid2{grid-template-columns:1fr}}
   .jcard{position:relative;background:var(--paper);border:1px solid var(--lineSoft);border-radius:14px;
@@ -116,25 +173,9 @@
     transition:background var(--t-colour),color var(--t-colour)}
   .jcard:hover .jgo{background:var(--orange500);color:#fff}
 
-  /* ── floating quote card — the real, existing homepage rating
-       device (.ratecard), copy adapted here to also carry the
-       "quotes are free" line, still the real Google numbers ── */
-  .quotecard{position:fixed;right:20px;bottom:20px;z-index:130;background:var(--paper);
-    border:1px solid var(--lineSoft);border-radius:var(--r-card);padding:20px 22px;
-    width:250px;box-shadow:var(--e3);text-decoration:none;color:inherit;display:block;
-    transition:box-shadow var(--t-move),transform var(--t-move)}
-  .quotecard:hover{box-shadow:0 24px 56px rgba(22,33,31,.16);transform:translateY(-3px)}
-  .quotecard .qrate{display:flex;align-items:center;gap:6px;font-size:15px}
-  .quotecard .qrate svg{width:16px;height:16px;color:var(--sun)}
-  .quotecard .qrate b{font-size:20px}
-  .quotecard p{font-size:14px;color:var(--ink700);margin-top:10px;line-height:1.5}
-  .quotecard .btn{width:100%;margin-top:14px;font-size:15px;min-height:46px;padding:10px 14px}
-  @media (max-width:1080px){.quotecard{display:none}}
-
-  /* ── mobile sticky CTA bar — fixes a real gap: .jside goes static
-       and .ratecard-style widgets hide below 1080px, so without this
-       a phone visitor has no persistent price/CTA once scrolled past
-       the hero. 62% of travel bookings are mobile. ── */
+  /* ── mobile sticky CTA bar — below 1080 the .jside goes static, so
+       this keeps a persistent price + CTA on every phone screen.
+       62% of travel bookings are mobile. ── */
   .stickybar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:140;
     background:var(--paper);border-top:1px solid var(--lineSoft);box-shadow:var(--e3);
     padding:12px 20px;padding-bottom:calc(12px + env(safe-area-inset-bottom));
@@ -169,58 +210,71 @@
 <main id="main">
 <div class="pipe" aria-hidden="true"><span class="track"></span><span class="fill" id="pipefill"></span></div>
 
-<header class="jhero2">
-  <img src="j-ladakh.webp" alt="Ladakh by Road, Ladakh." fetchpriority="high">
-  <a class="btn btn-onphoto hcta" href="plan-your-journey.html?journey=Ladakh+by+Road">Get a call back</a>
-</header>
-
-<section class="notop">
-  <div class="wrap">
-    <div class="herotags">
-      <span class="htag pop">Escorted throughout</span>
-      <a class="htag cat" href="family-holidays.html">Family Holidays</a>
+<header class="hero short jhero3" id="hero">
+  <img src="j-ladakh.webp" alt="Double-humped camels resting on the dunes at Hunder, Nubra Valley, Ladakh." fetchpriority="high">
+  <div class="in">
+    <div class="eyebrow">Escorted family journey &middot; Ladakh, India</div>
+    <h1>Ladakh <span class="acc">by Road</span>.</h1>
+    <p class="sub">Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude, oxygen in every vehicle, doctors&rsquo; numbers in every driver&rsquo;s phone.</p>
+    <div class="trust">
+      <div><k>Google rating</k><v>4.9 &#9733;</v></div>
+      <div><k>Travellers served</k><v>800,000+</v></div>
+      <div><k>Designing journeys</k><v>Since 2009</v></div>
     </div>
-
-    <h1 class="mt16">Ladakh by Road</h1>
-    <p class="lead ink700 mt16" style="max-width:64ch">Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude, oxygen in every vehicle, doctors' numbers in every driver's phone.</p>
-
-    <div class="bigstats">
-      <div><b>9</b><span>Nights</span></div>
-      <div><b>Ladakh</b><span>Region</span></div>
-      <div><b>Moderate</b><span>Pace</span></div>
-    </div>
-
-    <div class="hrate">
-      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
-      <b>4.9</b> Zubilant on Google <span class="ph">(review count pending)</span>
-      <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews &rarr;</a>
-    </div>
-
-    <div class="pricerow">
-      <div>
-        <div class="pfrom">From</div>
-        <div class="pval">&#8377;70,000</div>
-        <div class="pper">per person</div>
-      </div>
-      <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Enquire about this journey <span class="arw" aria-hidden="true">&rarr;</span></a>
-      <a class="tel tlink" href="tel:+918108117770">or call +91 81081 17770</a>
-    </div>
-
-    <div class="factrow">
-      <div><span>Start</span><b>Leh</b></div>
-      <div><span>End</span><b>Leh</b></div>
-      <div><span>Transport</span><b>Private vehicle</b></div>
-      <div><span>Group size</span><b class="ph">to be confirmed</b></div>
-    </div>
-
-    <div class="nightpills">
-      <span class="npill">6 nights &middot; guesthouse</span>
-      <span class="npill">3 nights &middot; fixed camp</span>
+    <div class="btnrow">
+      <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Get a free quote <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-onphoto" href="#days">See day by day</a>
     </div>
   </div>
-</section>
+</header>
 
-<section>
+<div class="sumband">
+  <div class="wrap">
+    <div class="sumcard">
+      <div class="sumtop">
+        <div class="herotags">
+          <span class="htag pop">Escorted throughout</span>
+          <a class="htag cat" href="family-holidays.html">Family Holidays</a>
+        </div>
+        <div class="hrate">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
+          <b>4.9</b> Zubilant on Google
+          <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews &rarr;</a>
+        </div>
+      </div>
+      <div class="summain">
+        <div class="bigstats">
+          <div><b>10</b><span>Days</span></div>
+          <div><b>9</b><span>Nights</span></div>
+          <div><b>5,359 m</b><span>Highest pass</span></div>
+        </div>
+        <div class="sumcta">
+          <div>
+            <div class="pfrom">From</div>
+            <div class="pval">&#8377;70,000</div>
+            <div class="pper">per person*</div>
+          </div>
+          <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Enquire about this journey <span class="arw" aria-hidden="true">&rarr;</span></a>
+          <a class="tel tlink" href="tel:+918108117770">or call +91 81081 17770</a>
+        </div>
+      </div>
+      <div class="sumfacts">
+        <div class="factrow">
+          <div><span>Start</span><b>Leh</b></div>
+          <div><span>End</span><b>Leh</b></div>
+          <div><span>Transport</span><b>Private vehicle</b></div>
+          <div><span>Group size</span><b class="ph">to be confirmed</b></div>
+        </div>
+        <div class="nightpills">
+          <span class="npill">6 nights &middot; guesthouse</span>
+          <span class="npill">3 nights &middot; fixed camp</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="notop" style="padding-top:56px">
   <div class="wrap jgrid">
     <div>
       <div class="label ink500">The journey</div>
@@ -231,128 +285,134 @@
       </div>
 
       <h2 class="mt64">What&rsquo;s included</h2>
-      <div class="cardgrid cols-2" style="margin-top:24px">
-        <div><div class="label ink500">Included</div>
+      <div class="incgrid">
+        <div class="ipanel yes"><div class="label">Included</div>
           <ul class="ticks"><li>All accommodation</li><li>All breakfasts and dinners</li><li>Inner Line Permits</li><li>Oxygen cylinder in every vehicle</li><li>Private vehicles throughout</li><li>Zubilant escort throughout</li></ul>
         </div>
-        <div><div class="label ink500">Not included</div>
+        <div class="ipanel"><div class="label">Not included</div>
           <ul class="ticks no"><li>Flights to and from Leh</li><li>Lunches</li><li>Camel rides</li><li>Travel insurance, mandatory for this journey</li></ul>
         </div>
       </div>
-    </div>
-    <aside></aside>
-  </div>
-</section>
 
-<section id="">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 01</span><div class="lab">Day by day</div>
-      <div class="note">Ten days, start to finish.</div></div>
-    <div class="ccol">
-      <div class="itingrid">
-        <ul class="daylist" style="margin-top:0">
-          <li><span class="d">Day 1</span><p>Arrive Leh. Nothing scheduled. Tea at the guesthouse, an early night.</p></li>
-          <li><span class="d">Day 2</span><p>A slow morning walk in the old town, Leh Palace at your own speed. Acclimatisation, disguised as sightseeing.</p></li>
-          <li><span class="d">Day 3</span><p>Shanti Stupa at sunrise, Thiksey and Hemis after breakfast. Early night before the pass.</p></li>
-          <li><span class="d">Day 4</span><p>Over Khardung La to Nubra. We leave at six to beat the convoy traffic.</p></li>
-          <li><span class="d">Day 5</span><p>Nubra, Diskit monastery, the dunes at Hunder, camels if the children insist. They will.</p></li>
-          <li><span class="d">Day 6</span><p>Nubra to Pangong through the Shyok valley. Lake by mid-afternoon, when the colour turns.</p></li>
-          <li><span class="d">Day 7</span><p>Sunrise at Pangong, then back to Leh via Chang La.</p></li>
-          <li><span class="d">Day 8</span><p>Alchi and Likir, or a rest day, the group decides.</p></li>
-          <li><span class="d">Day 9</span><p>Local market morning, farewell dinner.</p></li>
-          <li><span class="d">Day 10</span><p>Depart Leh.</p></li>
-        </ul>
-        <div class="routecard">
-          <div class="rtitle">Route</div>
-          <div class="routestops">
-            <div><b>Leh</b><em>Days 1&ndash;3, 8&ndash;10 &middot; 3,500 m</em></div>
-            <div><b>Nubra Valley</b><em>Days 4&ndash;5 &middot; via Khardung La, 5,359 m</em></div>
-            <div><b>Pangong Lake</b><em>Days 6&ndash;7 &middot; via Shyok valley</em></div>
-            <div><b>Leh</b><em>Return via Chang La</em></div>
-          </div>
-          <div class="rnote">A plotted map with real distances is a separate, larger build (board 2.3 #4) — this route panel uses the same stops named in the day-by-day copy at left, nothing invented.</div>
-        </div>
+      <h2 class="mt64" id="days">Day by day</h2>
+      <p class="ink700 mt16">Ten days, start to finish. The route, then the rhythm of it.</p>
+      <div class="routeband">
+        <div><k>Days 1&ndash;3</k><v>Leh</v><em>Arrive and acclimatise &middot; 3,500 m</em></div>
+        <div><k>Days 4&ndash;5</k><v>Nubra Valley</v><em>via Khardung La, 5,359 m</em></div>
+        <div><k>Days 6&ndash;7</k><v>Pangong Lake</v><em>the long way, via Shyok</em></div>
+        <div><k>Days 8&ndash;10</k><v>Back to Leh</v><em>return via Chang La</em></div>
       </div>
+      <ul class="daylist">
+        <li><span class="d">Day 1</span><p>Arrive Leh. Nothing scheduled. Tea at the guesthouse, an early night.</p></li>
+        <li><span class="d">Day 2</span><p>A slow morning walk in the old town, Leh Palace at your own speed. Acclimatisation, disguised as sightseeing.</p></li>
+        <li><span class="d">Day 3</span><p>Shanti Stupa at sunrise, Thiksey and Hemis after breakfast. Early night before the pass.</p></li>
+        <li><span class="d">Day 4</span><p>Over Khardung La to Nubra. We leave at six to beat the convoy traffic.</p></li>
+        <li><span class="d">Day 5</span><p>Nubra, Diskit monastery, the dunes at Hunder, camels if the children insist. They will.</p></li>
+        <li><span class="d">Day 6</span><p>Nubra to Pangong through the Shyok valley. Lake by mid-afternoon, when the colour turns.</p></li>
+        <li><span class="d">Day 7</span><p>Sunrise at Pangong, then back to Leh via Chang La.</p></li>
+        <li><span class="d">Day 8</span><p>Alchi and Likir, or a rest day, the group decides.</p></li>
+        <li><span class="d">Day 9</span><p>Local market morning, farewell dinner.</p></li>
+        <li><span class="d">Day 10</span><p>Depart Leh.</p></li>
+      </ul>
 
       <h2 class="mt64">At a glance</h2>
       <p class="ink700 mt16">The facts most itineraries leave out. We print them because they are what decides whether this trip suits your group.</p>
-      <dl class="deflist">
-        <div><dt>Max altitude</dt><dd>5,359 m (Khardung La)</dd></div>
-        <div><dt>Longest drive</dt><dd>6 hours</dd></div>
-        <div><dt>Walking</dt><dd>3 km, mostly flat</dd></div>
-        <div><dt>Lift at every hotel</dt><dd>No</dd></div>
-        <div><dt>Nearest hospital</dt><dd>SNM Hospital, Leh, 2 hours from Nubra</dd></div>
-      </dl>
+      <div class="glance">
+        <div class="gcard"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19h18"/><path d="M5 19l5.5-9 3 4.5L16 11l4 8"/></svg></div><k>Max altitude</k><v>5,359 m (Khardung La)</v></div>
+        <div class="gcard"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c4-2 4-6 8-8s8-6 8-8"/><path d="M4 20h4M4 20v-4"/></svg></div><k>Longest drive</k><v>6 hours</v></div>
+        <div class="gcard"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4.5" r="1.6"/><path d="M10 20l2-5-2.5-3 3-4 2.5 3H18"/><path d="M8 20l2-5"/></svg></div><k>Walking</k><v>3 km, mostly flat</v></div>
+        <div class="gcard"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 8v4M10 10h4"/><path d="M9 21v-4h6v4"/></svg></div><k>Lift at every hotel</k><v>No</v></div>
+        <div class="gcard"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M12 9v6M9 12h6"/></svg></div><k>Nearest hospital</k><v>SNM Hospital, Leh, 2 hours from Nubra</v></div>
+      </div>
 
-      <h2 class="mt64">Where you stay</h2>
-      <p class="lead ink700 mt16">Three nights at a family-run guesthouse in Changspa with a garden and proper heating, two nights in a fixed camp at Nubra, one night lakeside at Pangong in the best of the fixed camps, and the remainder back in Leh.</p>
-
-      <h2 class="mt64">Who it&rsquo;s for</h2>
-      <p class="lead ink700 mt16">Families with children over eight, and adults comfortable with two long driving days. Not for anyone advised against altitude, and not for travellers who need a lift at every hotel, Ladakh does not have them.</p>
+      <div class="duo">
+        <div class="dcard">
+          <h3>Where you stay</h3>
+          <p>Three nights at a family-run guesthouse in Changspa with a garden and proper heating, two nights in a fixed camp at Nubra, one night lakeside at Pangong in the best of the fixed camps, and the remainder back in Leh.</p>
+        </div>
+        <div class="dcard warm">
+          <h3>Who it&rsquo;s for</h3>
+          <p>Families with children over eight, and adults comfortable with two long driving days. Not for anyone advised against altitude, and not for travellers who need a lift at every hotel, Ladakh does not have them.</p>
+        </div>
+      </div>
     </div>
+
+    <aside class="jside">
+      <img class="zubi-peek" src="zubi-watching.webp" alt="" width="58" height="58" aria-hidden="true">
+      <div class="srate">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
+        <b>4.9</b> Zubilant on Google &middot; <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">reviews</a>
+      </div>
+      <div class="k">From</div>
+      <div class="price">&#8377;70,000</div>
+      <div class="per">per person*</div>
+      <div class="pnote">*<span class="ph">Indicative price</span>, anchored to market rates. Final price on your quote.</div>
+      <dl>
+        <div><dt>Nights</dt><dd>9</dd></div>
+        <div><dt>Route</dt><dd>Leh to Leh</dd></div>
+        <div><dt>Transport</dt><dd>Private vehicle</dd></div>
+        <div><dt>Pace</dt><dd>Moderate</dd></div>
+      </dl>
+      <p class="qline">Quotes are free. Tell us who&rsquo;s going and we customise it for you.</p>
+      <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Get a free quote <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="tel tlink" href="tel:+918108117770">or call +91 81081 17770</a>
+      <span class="wa">also on WhatsApp</span>
+    </aside>
   </div>
 </section>
 
-<section id="">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 02</span><div class="lab">Also consider</div>
-      <div class="note">Journeys that suit the same group.</div></div>
-    <div class="ccol">
-      <h2>You might also like.</h2>
-      <div class="jgrid2">
+<section>
+  <div class="wrap">
+    <h2>You might also like.</h2>
+    <p class="ink700 mt16">Journeys that suit the same group.</p>
+    <div class="jgrid2">
 
-        <article class="jcard">
-          <a class="jhit" href="j-kashmir-tulip-season.html" aria-label="Kashmir in Tulip Season"></a>
-          <div class="jfig"><img src="j-kashmir.webp" alt="Kashmir in Tulip Season, Kashmir." loading="lazy" width="800" height="600"></div>
-          <div class="jbody">
-            <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
-            <h3>Kashmir in Tulip Season</h3>
-            <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 6 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Kashmir</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Gentle</span></div>
-            <p>Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.</p>
-            <div class="jfoot"><span class="jprice">From <strong>&#8377;47,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
-          </div>
-        </article>
+      <article class="jcard">
+        <a class="jhit" href="j-kashmir-tulip-season.html" aria-label="Kashmir in Tulip Season"></a>
+        <div class="jfig"><img src="j-kashmir.webp" alt="Kashmir in Tulip Season, Kashmir." loading="lazy" width="800" height="600"></div>
+        <div class="jbody">
+          <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
+          <h3>Kashmir in Tulip Season</h3>
+          <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 6 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Kashmir</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Gentle</span></div>
+          <p>Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.</p>
+          <div class="jfoot"><span class="jprice">From <strong>&#8377;47,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
+        </div>
+      </article>
 
-        <article class="jcard">
-          <a class="jhit" href="j-kerala-backwaters-slowly.html" aria-label="Kerala Backwaters, Slowly"></a>
-          <div class="jfig"><img src="j-kerala.webp" alt="Kerala Backwaters, Slowly, Kerala." loading="lazy" width="800" height="600"></div>
-          <div class="jbody">
-            <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
-            <h3>Kerala Backwaters, Slowly</h3>
-            <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 7 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Kerala</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Gentle</span></div>
-            <p>Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills, a houseboat, a spice garden, and afternoons with nothing in them, on purpose.</p>
-            <div class="jfoot"><span class="jprice">From <strong>&#8377;58,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
-          </div>
-        </article>
+      <article class="jcard">
+        <a class="jhit" href="j-kerala-backwaters-slowly.html" aria-label="Kerala Backwaters, Slowly"></a>
+        <div class="jfig"><img src="j-kerala.webp" alt="Kerala Backwaters, Slowly, Kerala." loading="lazy" width="800" height="600"></div>
+        <div class="jbody">
+          <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
+          <h3>Kerala Backwaters, Slowly</h3>
+          <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 7 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Kerala</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Gentle</span></div>
+          <p>Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills, a houseboat, a spice garden, and afternoons with nothing in them, on purpose.</p>
+          <div class="jfoot"><span class="jprice">From <strong>&#8377;58,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
+        </div>
+      </article>
 
-        <article class="jcard">
-          <a class="jhit" href="j-rajasthan-first-timers.html" aria-label="Rajasthan for First-Timers"></a>
-          <div class="jfig"><img src="j-rajasthan.webp" alt="Rajasthan for First-Timers, Rajasthan." loading="lazy" width="800" height="600"></div>
-          <div class="jbody">
-            <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
-            <h3>Rajasthan for First-Timers</h3>
-            <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 8 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Rajasthan</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Moderate</span></div>
-            <p>Jaipur, Jodhpur, Jaisalmer and Udaipur in eight nights, the right four cities in the right order, with the forts before lunch and the markets after tea.</p>
-            <div class="jfoot"><span class="jprice">From <strong>&#8377;40,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
-          </div>
-        </article>
+      <article class="jcard">
+        <a class="jhit" href="j-rajasthan-first-timers.html" aria-label="Rajasthan for First-Timers"></a>
+        <div class="jfig"><img src="j-rajasthan.webp" alt="Rajasthan for First-Timers, Rajasthan." loading="lazy" width="800" height="600"></div>
+        <div class="jbody">
+          <div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div>
+          <h3>Rajasthan for First-Timers</h3>
+          <div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 8 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Rajasthan</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Moderate</span></div>
+          <p>Jaipur, Jodhpur, Jaisalmer and Udaipur in eight nights, the right four cities in the right order, with the forts before lunch and the markets after tea.</p>
+          <div class="jfoot"><span class="jprice">From <strong>&#8377;40,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>
+        </div>
+      </article>
 
-      </div>
     </div>
   </div>
 </section>
 </main>
 
-<a class="quotecard" href="plan-your-journey.html?journey=Ladakh+by+Road">
-  <div class="qrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b> stars</div>
-  <p>Quotes are free. Let us customise it for you.</p>
-  <span class="btn btn-primary" style="width:100%;margin-top:14px;font-size:15px;min-height:46px;padding:10px 14px">Get a free quote</span>
-</a>
-
 <div class="stickybar" id="stickybar">
   <div class="sb-price"><span class="k">From</span><span class="v">&#8377;70,000</span></div>
-  <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Enquire <span class="arw" aria-hidden="true">&rarr;</span></a>
+  <a class="btn btn-primary" href="plan-your-journey.html?journey=Ladakh+by+Road">Get a free quote <span class="arw" aria-hidden="true">&rarr;</span></a>
 </div>
+
 
 <section class="stepout v2 notop" aria-label="Step outside" id="stepout">
   <canvas class="so-reveal" aria-hidden="true"></canvas>
@@ -410,7 +470,7 @@
 <script>
   (function(){
     var bar=document.getElementById('stickybar');
-    var hero=document.querySelector('.jhero2');
+    var hero=document.querySelector('.hero');
     if(!bar||!hero) return;
     new IntersectionObserver(function(entries){
       bar.classList.toggle('show', !entries[0].isIntersecting);
