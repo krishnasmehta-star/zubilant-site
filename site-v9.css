@@ -726,7 +726,12 @@ main{position:relative}
 .tquote .who b{display:block;color:var(--ink900)}
 .tarrows{display:flex;gap:12px;margin-top:28px}
 .timg{border-radius:var(--r-card);overflow:hidden;aspect-ratio:4/3;background:var(--teal100);
-  display:flex;align-items:center;justify-content:center}
+  display:flex;align-items:center;justify-content:center;position:relative}
+.timg.trot{padding:0}
+.trot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;
+  transition:opacity 1.1s ease}
+.trot-img.is-active{opacity:1}
+@media (prefers-reduced-motion:reduce){.trot-img{transition:none}}
 #stories{--sec-pad:56px}
 @media (max-width:1080px){.tstory{grid-template-columns:1fr}}
 

@@ -295,10 +295,30 @@
         <div class="who"><b id="tq-name">Rhina Todd</b><span id="tq-meta">7 months ago &middot; Google review</span></div>
         <p class="mt24"><a class="tlink" href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews on Google &rarr;</a></p>
       </div>
-      <div class="timg"><span class="ph" style="padding:16px;text-align:center">Placeholder image &mdash; traveller photo awaiting Sachin</span></div>
+      <div class="timg trot" id="trot">
+        <img class="trot-img is-active" src="traveller-1.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-2.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-3.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-4.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-5.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+      </div>
     </div>
   </div>
-</section><section id="map" class="tint-sky">
+</section><script>
+(function(){
+  var rot=document.getElementById('trot');
+  if(!rot)return;
+  var imgs=rot.querySelectorAll('.trot-img');
+  if(imgs.length<2)return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var i=0;
+  setInterval(function(){
+    imgs[i].classList.remove('is-active');
+    i=(i+1)%imgs.length;
+    imgs[i].classList.add('is-active');
+  },3000);
+})();
+</script><section id="map" class="tint-sky">
   <div class="wrap">
     <h2 style="text-align:center">Where will you <span class="acc">go</span>?</h2>
     <p class="lead ink700" style="text-align:center;max-width:56ch;margin:14px auto 0">Every marker on the map is a real trip we&rsquo;ve planned before.</p>
