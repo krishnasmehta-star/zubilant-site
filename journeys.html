@@ -152,7 +152,7 @@ details.jfd>summary i{border:solid var(--ink500);border-width:0 1.6px 1.6px 0;pa
 .jattrs span{display:inline-flex;align-items:center;gap:4px}
 .jattrs svg{width:12px;height:12px;flex:0 0 12px;color:var(--river)}
 .jbody p{display:none}
-.jfoot{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;margin-top:auto;
+.jfoot{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-top:auto;
   padding-top:9px;border-top:1px solid var(--lineSoft)}
 .jprice{font-size:12.5px;color:var(--ink900);line-height:1.25;min-width:0}
 .jprice strong{font-size:15px}
@@ -201,7 +201,8 @@ details.jfd>summary i{border:solid var(--ink500);border-width:0 1.6px 1.6px 0;pa
   background:rgba(255,255,255,.94);font-size:19px;line-height:1;cursor:pointer;box-shadow:var(--e1)}
 
 /* ── guided finder — r8, 18 Aug 2026. Tap-only path for the 50+ visitor ── */
-.fqs{display:grid;grid-template-columns:1.35fr 1fr 1.3fr;gap:18px 26px;margin-top:24px}
+.fqs{display:grid;grid-template-columns:1fr;gap:15px;margin-top:10px}
+@media(min-width:700px) and (max-width:1280px){.fqs{grid-template-columns:1fr 1fr 1fr;gap:18px 26px}}
 .jfq .qt{display:flex;align-items:center;gap:9px;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
 .jfq .stepn{flex:0 0 26px;width:26px;height:26px;border-radius:999px;background:var(--teal700);color:#fff;
   display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700}
@@ -224,12 +225,27 @@ details.fwhen>summary i{font-style:normal;font-weight:500;color:var(--ink500);te
 details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 .fact{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px}
 .fact .btn{font-size:17px}
-.fdiv{display:flex;align-items:center;gap:14px;margin-top:24px;color:var(--ink500);font-size:13px;
-  font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.fdiv::before,.fdiv::after{content:"";flex:1 1 auto;border-top:1px solid var(--lineSoft)}
-.fask{color:var(--ink700);font-size:15px;margin-top:14px}
-@media(max-width:1080px){.fqs{grid-template-columns:1fr;gap:16px}}
 @media(max-width:640px){.fchip{font-size:15px;padding:9px 14px}.fact .btn{width:100%;justify-content:center}}
+
+/* ── the two-column layout: finder rail left, bar + grid right (r9) ── */
+.jlwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.jrailcard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:18px;
+  padding:22px 20px 24px;box-shadow:var(--e1)}
+.jrailcard h2{font-size:23px;letter-spacing:-.015em}
+.jrailcard .sub{color:var(--ink700);font-size:14px;margin-top:6px}
+@media(min-width:1281px){
+  .jlwrap{grid-template-columns:302px minmax(0,1fr);gap:30px;align-items:start}
+  .jrail{position:sticky;top:102px;max-height:calc(100vh - 118px);overflow:auto;
+    scrollbar-width:thin;border-radius:18px}
+  .jrail .fchip{min-height:44px;padding:8px 14px;font-size:14.5px}
+  .jrail .jfq .qt{font-size:15.5px}
+  .jrail .fact{margin-top:18px}
+  .jrail .fact .btn{width:100%;justify-content:center;font-size:15.5px}
+  /* Budget and Where live in the rail on desktop — never show a filter twice */
+  .jfbar details[data-g="bud"],.jfbar details[data-g="whr"]{display:none}
+  .jgrid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:1500px){.jgrid{grid-template-columns:repeat(4,1fr)}}
 
 /* ── slimmed filter bar: Budget · Nights · Where visible, the rest behind All filters ── */
 .jfbar:not(.xp) details.xtra:not(.on){display:none}
@@ -240,7 +256,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 .jfbar.xp .jfmore{border-style:solid;border-color:var(--orange500);color:var(--ink900)}
 
 @media(min-width:1500px){
-  .jgrid{grid-template-columns:repeat(5,1fr);max-width:1360px;margin-left:auto;margin-right:auto}
+  .jgrid{grid-template-columns:repeat(4,1fr)}
   /* five-up leaves no room for the CTA label - the whole card is the link anyway */
   .jgo{font-size:0;padding:7px 10px;gap:0}
   .jgo b{font-size:14px}
@@ -309,9 +325,29 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 <div class="jband"><div class="wrap">
   <div class="jask">
     <div class="zubi" aria-hidden="true"><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
-    <h2>Find your journey</h2>
-    <p class="sub">Answer what you know, skip what you don&rsquo;t &mdash; the journeys below narrow with every tap. No typing needed.</p>
-    <div class="fqs">
+    <h2>What&rsquo;s on your mind?</h2>
+    <p class="sub">Tell Zubi in a line and the fifty-nine below narrow to what fits. Nothing right? A person reads every enquiry &mdash; no chatbot, no auto&#8209;reply.</p>
+    <form id="jaskform" autocomplete="off">
+      <label class="skip" for="jq">Describe the journey you have in mind</label>
+      <input type="text" id="jq" placeholder="ex: beach trip with my parents in December, under 60k">
+      <button type="submit" class="btn btn-primary">Find <span class="arw" aria-hidden="true">&rarr;</span></button>
+    </form>
+    <div class="qrow"><button class="qchip" type="button" data-q="spiritual-and-pilgrimage">Spiritual</button><button class="qchip" type="button" data-q="family-travel">Family</button><button class="qchip" type="button" data-q="n:0-4">Short breaks</button><button class="qchip" type="button" data-q="p:0-50000">Under &#8377;50,000</button><button class="qchip" type="button" data-q="honeymoon">Honeymoon</button><button class="qchip" type="button" data-q="mountains-and-trekking">Mountains</button><button class="qchip" type="button" data-q="beaches-and-islands">Beaches</button><button class="qchip" type="button" data-q="visa-free">Visa-free</button></div>
+    <div class="jtrust">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
+      <b>4.9</b> on Google <span class="ph">(review count pending)</span> &middot;
+      <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews &rarr;</a>
+    </div>
+  </div>
+</div></div>
+
+<section class="notop" style="padding-top:4px">
+  <div class="wrap jlwrap">
+    <aside class="jrail" aria-label="Find your journey">
+      <div class="jrailcard">
+        <h2>Find your journey</h2>
+        <p class="sub">Tap what you know, skip what you don&rsquo;t &mdash; the list narrows as you go. No typing needed.</p>
+        <div class="fqs">
       <div class="jfq"><div class="qt"><span class="stepn" aria-hidden="true">1</span>Who&rsquo;s going?</div>
         <div class="fchips" data-fg="who" role="group" aria-label="Who's going">
           <button class="fchip" type="button" data-f="family-travel">Family with kids</button>
@@ -345,23 +381,11 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
       <button class="btn btn-primary" type="button" id="fbtn">See all 59 journeys <span class="arw" aria-hidden="true">&darr;</span></button>
       <button class="jclear" type="button" id="freset" hidden>Start over</button>
     </div>
-    <div class="fdiv"><span>or just say it</span></div>
-    <p class="fask">Tell Zubi in a line and the journeys narrow to what fits. A person reads every enquiry &mdash; no chatbot, no auto&#8209;reply.</p>
-    <form id="jaskform" autocomplete="off">
-      <label class="skip" for="jq">Describe the journey you have in mind</label>
-      <input type="text" id="jq" placeholder="ex: beach trip with my parents in December, under 60k">
-      <button type="submit" class="btn btn-primary">Find <span class="arw" aria-hidden="true">&rarr;</span></button>
-    </form>
-    <div class="qrow"><button class="qchip" type="button" data-q="spiritual-and-pilgrimage">Spiritual</button><button class="qchip" type="button" data-q="family-travel">Family</button><button class="qchip" type="button" data-q="n:0-4">Short breaks</button><button class="qchip" type="button" data-q="p:0-50000">Under &#8377;50,000</button><button class="qchip" type="button" data-q="honeymoon">Honeymoon</button><button class="qchip" type="button" data-q="mountains-and-trekking">Mountains</button><button class="qchip" type="button" data-q="beaches-and-islands">Beaches</button><button class="qchip" type="button" data-q="visa-free">Visa-free</button></div>
-    <div class="jtrust">
-      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
-      <b>4.9</b> on Google <span class="ph">(review count pending)</span> &middot;
-      <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews &rarr;</a>
-    </div>
-  </div>
-</div></div>
+      </div>
+    </aside>
+    <div class="jmain">
+      <div class="jfwrap" id="jfwrap">
 
-<div class="jfwrap" id="jfwrap"><div class="wrap">
   <div class="jfbar">
     <div class="jfsearch">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 18 18"></path></svg>
@@ -383,10 +407,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
       </select></div>
   </div>
   <div class="jread" id="jread"></div>
-</div></div>
-
-<section class="notop" style="padding-top:4px">
-  <div class="wrap">
+      </div>
     <div class="jgrid" id="jgrid">
 <article class="jcard" data-i="0" data-n="6" data-p="47000" data-tags="|april|culture-and-heritage|family-travel|gentle|india|multi-generational|" data-title="Kashmir in Tulip Season" data-blob="kashmir in tulip season kashmir six nights across srinagar, gulmarg and pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.  april culture-and-heritage family-travel gentle india multi-generational " data-season="Apr" data-months="april" data-r="kashmir"><a class="jhit" href="j-kashmir-tulip-season.html" aria-label="Kashmir in Tulip Season"></a><div class="jfig"><img src="j-kashmir.webp" alt="Kashmir in Tulip Season, Kashmir." loading="lazy" width="800" height="600"><button class="jqv" type="button" data-qv="0"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Quick view</button></div><div class="jbody"><div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div><h3>Kashmir in Tulip Season</h3><div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 6 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Kashmir</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Gentle</span></div><p>Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.</p><div class="jfoot"><span class="jprice">From <strong>&#8377;47,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div></div></article>
 <article class="jcard" data-i="1" data-n="9" data-p="70000" data-tags="|august|family-travel|friends-travel|india|july|june|moderate|mountains-and-trekking|september|" data-title="Ladakh by Road" data-blob="ladakh by road ladakh nine days over the high passes to nubra and pangong, at a pace that lets everyone sleep well at altitude, oxygen in every vehicle, doctors&#x27; numbers in every driver&#x27;s phone.  august family-travel friends-travel india july june moderate mountains-and-trekking september " data-season="Jun&ndash;Sep" data-months="june|july|august|september" data-r="ladakh"><a class="jhit" href="j-ladakh-by-road.html" aria-label="Ladakh by Road"></a><div class="jfig"><img src="j-ladakh.webp" alt="Ladakh by Road, Ladakh." loading="lazy" width="800" height="600"><button class="jqv" type="button" data-qv="1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Quick view</button></div><div class="jbody"><div class="jrate"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg><b>4.9</b><span>Zubilant on Google</span></div><h3>Ladakh by Road</h3><div class="jattrs"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg> 9 nights</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg> Ladakh</span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg> Moderate</span></div><p>Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude, oxygen in every vehicle, doctors' numbers in every driver's phone.</p><div class="jfoot"><span class="jprice">From <strong>&#8377;70,000</strong><i>per person*</i></span><span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div></div></article>
@@ -457,6 +478,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
     <div class="jmoreWrap"><button class="btn btn-secondary" id="jmore" hidden>Show more journeys</button></div>
     <p class="jnote">Prices are indicative, per person on twin sharing.
       <span class="ph">Land-only vs flights-included, and final 2026-27 rates &mdash; pending confirmation.</span></p>
+    </div>
   </div>
 </section>
 <section id="">
