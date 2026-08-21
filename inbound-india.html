@@ -303,6 +303,24 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 .jxhead{margin-bottom:6px}
 .jxhead .lead{max-width:62ch}
 .jallout{margin-top:26px;font-size:15.5px;color:var(--ink700)}
+/* inbound hero — favour the lower crop so the jeep reads, not just faces */
+.hero.short>img{object-position:center 62%}
+
+/* two-up editorial pair — the homepage .mstat rule set, sized for prose */
+.pstats{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:28px}
+.pstat{border-left:3px solid var(--orange500);padding-left:20px}
+.pstat:nth-child(2){border-left-color:var(--teal600)}
+.pstat k{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink500)}
+.pstat p{font-size:17px;line-height:1.55;color:var(--ink700);margin-top:10px}
+@media(max-width:820px){.pstats{grid-template-columns:1fr;gap:24px}}
+/* other specialisations — homepage .pcard, laid out as a static three-up */
+.specrail{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px;
+  overflow:visible;padding:4px 4px 8px}
+.specrail .pcard{flex:0 0 auto;min-height:400px}
+@media(max-width:900px){.specrail{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.specrail{grid-template-columns:1fr}}
+
 /* USP proof strip in the short hero — three items on one line at desktop */
 .hero.short .trust{gap:26px;margin-top:24px}
 .hero.short .trust k{font-size:11px;letter-spacing:.13em}
@@ -318,12 +336,12 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 <meta property="og:url" content="https://zubilant.co.in/inbound-india.html">
 <meta property="og:title" content="Inbound India — Zubilant">
 <meta property="og:description" content="For travellers arriving from abroad, and for Indian families hosting them.">
-<meta property="og:image" content="https://zubilant.co.in/j-rajasthan.webp">
+<meta property="og:image" content="https://zubilant.co.in/traveller-4.webp">
 <meta property="og:image:alt" content="Inbound India">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Inbound India — Zubilant">
 <meta name="twitter:description" content="For travellers arriving from abroad, and for Indian families hosting them.">
-<meta name="twitter:image" content="https://zubilant.co.in/j-rajasthan.webp">
+<meta name="twitter:image" content="https://zubilant.co.in/traveller-4.webp">
 </head>
 <body>
 <div class="ground" aria-hidden="true"></div>
@@ -346,7 +364,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
 <main id="main">
 <div class="pipe" aria-hidden="true"><span class="track"></span><span class="fill" id="pipefill"></span></div>
 <header class="hero short">
-  <img src="j-rajasthan.webp" alt="Inbound India" fetchpriority="high" width="700" height="933">
+  <img src="traveller-4.webp" alt="Young travellers from abroad sitting on the front of an open jeep, laughing." fetchpriority="high" width="900" height="675">
   <div class="in">
     <div class="eyebrow">Inbound India</div>
     <h1>India, for visitors.</h1>
@@ -359,12 +377,11 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
     <div class="btnrow"><a class="btn btn-primary" href="plan-your-journey.html">Plan your journey <span class="arw" aria-hidden="true">&rarr;</span></a></div>
   </div>
 </header><section class="notop">
-  <div class="wrap shell jxhead">
-    <div class="mcol"><span class="num">&sect; 01</span><div class="lab">The journeys</div>
-      <div class="note">Every one has run before.</div></div>
-    <div class="ccol">
-  <h2>What fits this group.</h2>
-  <p class="lead">The same journeys, run with the arrival logistics, the documentation and the pacing that a first visit to India actually needs. Tell us what you have come for, how long you have, and which part of the country &mdash; the list narrows to what is honestly doable in that time.</p></div>
+  <div class="wrap" style="text-align:center">
+    <div class="ccol" style="max-width:100%">
+      <h2>What fits this <span class="acc">group</span>.</h2>
+      <p class="lead ink700" style="max-width:62ch;margin:16px auto 0">The same journeys, run with the arrival logistics, the documentation and the pacing that a first visit to India actually needs. Tell us what you have come for, how long you have, and which part of the country &mdash; the list narrows to what is honestly doable in that time. Every one has run before.</p>
+    </div>
   </div>
 </section><section class="notop" style="padding-top:6px">
   <div class="wrap jlwrap">
@@ -460,40 +477,34 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
     <p class="jallout">Not what you are after? <a class="tlink" href="journeys.html">See all 59 journeys &rarr;</a></p>
     </div>
   </div>
-</section><section id="">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 02</span><div class="lab">What changes</div>
-      <div class="note"></div></div>
-    <div class="ccol"><h2>What changes</h2><p class="lead ink700 mt16">Airport handling, SIM and currency on day one, and an itinerary that does not assume anyone has done this before.</p></div>
+</section><section>
+  <div class="wrap">
+    <div class="label ink500">The standard</div>
+    <h2 class="mt8">For a first visit to <span class="acc">India</span>.</h2>
+    <div class="pstats">
+        <div class="pstat"><k>What changes</k><p>Airport handling, SIM and currency on day one, and an itinerary that does not assume anyone has done this before.</p></div>
+        <div class="pstat"><k>What does not</k><p>The escort, the printed drive lengths, and the refusal to put six cities into seven days.</p></div>
+    </div>
+    <p class="mt24"><a class="tlink" href="plan-your-journey.html">Plan your journey &rarr;</a></p>
   </div>
-</section><section id="">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 03</span><div class="lab">What does not</div>
-      <div class="note"></div></div>
-    <div class="ccol"><h2>What does not</h2><p class="lead ink700 mt16">The escort, the printed drive lengths, and the refusal to put six cities into seven days.</p></div>
-  </div>
-</section><section id="enquire">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 04</span><div class="lab">Enquire</div>
-      <div class="note">Five fields. Budget is not the first question.</div></div>
-    <div class="ccol">
-  <h2>Tell us who&rsquo;s travelling and we&rsquo;ll shape something.</h2>
-  <p class="lead">No obligation, no payment, no call centre. One person reads it and replies.</p>
-  <div class="formcard">
-    <form class="fgrid" method="post" action="/api/enquiry">
-      <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
-      <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
-      <div class="field"><label for="f-who">Who&rsquo;s travelling</label><select id="f-who" name="who"><option>A family, including grandparents</option><option>A family with young children</option><option>Friends</option><option>A couple</option><option>A school or college group</option><option>A company team</option><option>Travelling for a parent</option></select></div>
-      <div class="field"><label for="f-when">Roughly when</label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
-      <div class="field full"><label for="f-notes">Anything we should know</label>
-        <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
-      <div class="formfoot full">
-        <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
-        <span class="ph-block" style="max-width:46ch">The reply-time promise appears here only once someone internally owns it. Until then this page makes no promise it cannot keep.</span>
-      </div>
-    </form>
-  </div>
-  <p class="mt24">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a> &mdash; also on WhatsApp. Or <a class="tlink" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p></div>
+</section><section class="tint-moss">
+  <div class="wrap">
+    <h2>Our other <span class="acc">specialisations</span>.</h2>
+    <p class="lead ink700" style="margin-top:12px;max-width:56ch">The same escorts and the same standards, planned around a different group.</p>
+    <div class="hscroll specrail">
+      <a class="pcard w-forest" href="family-holidays.html">
+      <img src="c-family.webp" alt="Family holidays" loading="lazy" width="760" height="1013">
+      <div class="body"><div class="meta">Explore by traveller</div><h3>Family holidays</h3><p>Paced for grandparents and eight-year-olds in the same group. Kashmir to Kerala to Singapore.</p>
+      <div class="foot"><span>How we plan these</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a>
+      <a class="pcard w-clay" href="spiritual-journeys.html">
+      <img src="c-spiritual.webp" alt="Spiritual journeys" loading="lazy" width="760" height="1013">
+      <div class="body"><div class="meta">Explore by traveller</div><h3>Spiritual journeys</h3><p>Darshan slots arranged, queues managed: Varanasi, Ayodhya, Char Dham, Rameswaram.</p>
+      <div class="foot"><span>How we plan these</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a>
+      <a class="pcard w-river" href="senior-travel-saathi.html">
+      <img src="c-senior.webp" alt="Senior Travel Saathi" loading="lazy" width="760" height="1013">
+      <div class="body"><div class="meta">Explore by traveller</div><h3>Senior Travel Saathi</h3><p>For the adult child booking for a parent. Lifts, drive caps, hospitals named.</p>
+      <div class="foot"><span>How we plan these</span><span class="arw" aria-hidden="true">&rarr;</span></div></div></a>
+    </div>
   </div>
 </section></main>
 <section class="stepout v2 notop" aria-label="Step outside" id="stepout">
