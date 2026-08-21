@@ -299,7 +299,8 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&root.classList.contains('zbc-open')) close(); });
 
   /* nudge once, 7s in, only if the visitor hasn't opened it and isn't mid-scroll on a phone */
-  setTimeout(function(){ if(!opened&&!nudgeShown){ nudgeShown=true; nudge.classList.add('show'); setTimeout(hideNudge,9000); } },7000);
+  /* no nudge on the enquiry page (the visitor is already where Zubi sends people) or after a Zubi hand-off */
+  if(PAGE!=='plan-your-journey'&&!/[?&]via=zubi/.test(location.search)) setTimeout(function(){ if(!opened&&!nudgeShown){ nudgeShown=true; nudge.classList.add('show'); setTimeout(hideNudge,9000); } },7000);
 
   /* lift above the journey-page sticky bar when it is showing */
   var bar=document.querySelector('.stickybar');

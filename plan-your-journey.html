@@ -139,7 +139,7 @@
     if(who&&sel){for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===who){sel.selectedIndex=i;break;}}}
     var notes=[]; if(q.get('journey')) notes.push('Interested in: '+q.get('journey')); if(q.get('notes')) notes.push(q.get('notes'));
     if(notes.length) set('f-notes',notes.join('\n'));
-    if(q.get('via')==='zubi'){var n=document.getElementById('f-notes'); if(n){n.closest('form').scrollIntoView({block:'center'});}}
+    if(q.get('via')==='zubi'){var n=document.getElementById('f-notes'); if(n){var go=function(){var r=n.closest('form').getBoundingClientRect(); window.scrollTo({top:window.scrollY+r.top-120,behavior:'auto'}); document.getElementById('f-who').focus({preventScroll:true});}; setTimeout(go,700); setTimeout(go,1800);}}
   }catch(e){}
 })();
 </script>

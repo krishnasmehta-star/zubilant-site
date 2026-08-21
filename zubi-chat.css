@@ -32,7 +32,7 @@
 .zbc-root.zbc-open .zbc-launch{display:none}
 
 /* nudge bubble — appears once, 6s after load, hides on open */
-.zbc-nudge{position:absolute;right:0;bottom:calc(100% + 12px);max-width:260px;background:var(--paper,#fff);color:var(--ink900,#16211F);
+.zbc-nudge{position:absolute;right:0;bottom:calc(100% + 12px);width:max-content;max-width:min(260px,calc(100vw - 32px));background:var(--paper,#fff);color:var(--ink900,#16211F);
   border:1px solid var(--lineSoft,#E2E6E5);border-radius:16px;border-bottom-right-radius:6px;padding:12px 40px 12px 14px;font-size:14.5px;
   box-shadow:0 2px 4px rgba(22,33,31,.06),0 12px 28px rgba(22,33,31,.09);
   opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .26s,transform .26s}
