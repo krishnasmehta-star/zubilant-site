@@ -60,11 +60,15 @@
 .shapehead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
 .shapehead h3{font-size:26px;line-height:1.2;max-width:24ch}
 #how .routeband{margin-top:28px}
+.cclose{background:var(--teal900);color:#fff;border-top:0;position:relative;overflow:hidden}
+.cclose::before{content:"";position:absolute;right:-12%;top:-40%;width:54%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(243,107,33,.22),transparent 65%);pointer-events:none}
+.cclose .btn-primary::after{background:var(--orange500)}.cclose .btn-primary::before{background:var(--orange600)}.cclose .btn-primary{box-shadow:0 6px 18px rgba(243,107,33,.32)}
+.cclose h2{color:#fff}.cclose .acc{color:var(--sun)}.cclose .lead,.cclose p{color:rgba(255,255,255,.86)}
 .ctaband{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:56px;align-items:center}
-.ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.22);border-radius:var(--r-card);background:rgba(255,255,255,.06);display:flex;flex-direction:column;gap:14px}
+.ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);background:rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column;gap:14px}
 .ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
 .ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
-.ctaticks li::after{content:"";position:absolute;left:4px;top:10px;width:6px;height:3px;border-left:2px solid var(--forest);border-bottom:2px solid var(--forest);transform:rotate(-45deg)}
+.ctaticks li::after{content:"";position:absolute;left:4px;top:10px;width:6px;height:3px;border-left:2px solid var(--teal900);border-bottom:2px solid var(--teal900);transform:rotate(-45deg)}
 /* enquiry modal */
 .embd{position:fixed;inset:0;z-index:1000;background:rgba(0,20,22,.62);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 200ms ease}
 .embd[hidden]{display:none}
@@ -134,7 +138,7 @@
   <div class="in">
     <div class="eyebrow">Corporate travel</div>
     <h1>Take the team somewhere <span class="acc">worth the Monday after</span>.</h1>
-    <p class="sub">Offsites, incentive tours, outbound training and workations, designed by one person who then travels with you. Across India and abroad, for teams of any size.</p>
+    <p class="sub">Offsites, incentives, training and workations. Designed by one person, who then travels with you.</p>
     <div class="btnrow">
       <a class="btn btn-primary" href="#enquire" data-open-enquiry>Plan a corporate trip <span class="arw" aria-hidden="true">&rarr;</span></a>
       <a class="btn btn-onphoto" href="#types">See the four kinds of trip</a>
@@ -152,19 +156,19 @@
     <div>
       <div class="label ink500">Corporate travel, designed</div>
       <h2 class="mt16">Productive, memorable, and <span class="acc">seamless</span>.</h2>
-      <p class="lead mt24">At Zubilant Travel, we specialize in crafting exceptional corporate tours that foster team building, enhance productivity, and reward excellence. Our bespoke corporate travel solutions cater to the unique needs of businesses, ensuring that every journey is both productive and memorable.</p>
-      <p class="ink700 mt16">Whether you&rsquo;re planning an offsite meeting, an incentive tour, or an outbound training program, we have the expertise to deliver seamless and impactful experiences.</p>
+      <p class="lead mt24">Corporate tours that build teams, sharpen work and reward the people who earned it. Bespoke to your business, so every journey is productive and remembered.</p>
+      <p class="ink700 mt16">Offsite, incentive tour or outbound training program, we have run them since 2009.</p>
     </div>
     <div class="getcard">
-      <div class="label">What your HR or admin lead gets</div>
+      <div class="label">What you get</div>
       <ul class="ticks">
-        <li><b>One coordinator</b>, from the first call to the last coach back to the airport.</li>
-        <li><b>A costed plan with the logistics visible</b>: coach capacities, drive times, room splits, dietary counts.</li>
-        <li><b>A wet-weather alternative</b> for anything planned outdoors, agreed before you travel.</li>
-        <li><b>A Zubilant person on the ground</b>, so changes on the day are handled on the day.</li>
-        <li><b>One number to call.</b> Not a helpline. A name.</li>
+        <li><b>One coordinator</b>, first call to last drop.</li>
+        <li><b>A costed plan</b> with every logistic visible.</li>
+        <li><b>A wet-weather plan</b>, agreed before you go.</li>
+        <li><b>Someone on the ground</b> the whole trip.</li>
+        <li><b>One number to call.</b> A name, not a helpline.</li>
       </ul>
-      <a class="btn btn-primary mt24" href="#enquire" data-open-enquiry>Start with a conversation <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-primary mt24" href="#enquire" data-open-enquiry>Get a costed plan <span class="arw" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -176,14 +180,14 @@
         <div class="label ink500">Types of corporate tours</div>
         <h2 class="mt16">Four kinds of trip. <span class="acc">One standard.</span></h2>
       </div>
-      <p class="ink700" style="max-width:44ch">Each is built differently because each is for something different. Tell us which one you need and the plan changes shape around it.</p>
+      <p class="ink700" style="max-width:40ch">Pick the one you need. The plan changes shape around it.</p>
     </div>
     <div class="ctypes">
       <a class="ctype" href="#enquire" data-open-enquiry data-type="Outbound training program">
         <span class="cfig"><img src="j-rishikesh-wellness-yoga-retreat.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">01</span></span>
         <span class="cbody">
           <h3>Outbound training program</h3>
-          <p>Structured learning away from the desk. Facilitated activities, problem-solving in the field and debriefs that carry back to work. We handle the venue, the safety cover and the schedule so the facilitator can run the room.</p>
+          <p>Learning away from the desk. We handle venue, safety cover and schedule; your facilitator runs the room.</p>
           <span class="cfor"><k>Built for</k> L&amp;D teams, new cohorts, leadership programmes</span>
           <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
         </span>
@@ -192,7 +196,7 @@
         <span class="cfig"><img src="j-coorg-mysuru-coffee-country.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">02</span></span>
         <span class="cbody">
           <h3>Offsite</h3>
-          <p>Two to four days for planning, strategy or simply getting the team in one place. A working room that actually works, meals that keep to time, and evenings with something worth doing.</p>
+          <p>Two to four days to plan, decide or simply be in one room. A working room that works, and evenings worth having.</p>
           <span class="cfor"><k>Built for</k> Leadership, a department, the whole company</span>
           <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
         </span>
@@ -201,7 +205,7 @@
         <span class="cfig"><img src="j-dubai-abu-dhabi-tour.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">03</span></span>
         <span class="cbody">
           <h3>Incentive tour</h3>
-          <p>The reward for a target met. These trips are judged on how they feel, so the hotels are a grade up, the pacing is generous, and the moments people will photograph are planned rather than hoped for.</p>
+          <p>The reward for a target met. Hotels a grade up, generous pacing, and the photograph moments planned, not hoped for.</p>
           <span class="cfor"><k>Built for</k> Sales clubs, top performers, dealer and partner groups</span>
           <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
         </span>
@@ -210,7 +214,7 @@
         <span class="cfig"><img src="j-goa-beyond-the-beach.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">04</span></span>
         <span class="cbody">
           <h3>Workation</h3>
-          <p>A longer stay, a week or more, where the team works from somewhere better than the office. Connectivity and desks checked in person, quiet hours respected, and the place itself waiting when the laptops close.</p>
+          <p>A week or more, working from somewhere better than the office. Connectivity checked in person, quiet hours respected.</p>
           <span class="cfor"><k>Built for</k> Remote and hybrid teams, founders&rsquo; weeks, sprint weeks</span>
           <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
         </span>
@@ -226,7 +230,7 @@
         <div class="label ink500">Our clients</div>
         <h2 class="mt16">Companies we have <span class="acc">travelled with</span>.</h2>
       </div>
-      <p class="ink700" style="max-width:44ch">From a central bank to a carmaker to a pharmaceutical firm. Different industries, the same brief: get it right, quietly.</p>
+      <p class="ink700" style="max-width:40ch">A central bank, a carmaker, a pharma firm. Same brief: get it right, quietly.</p>
     </div>
   </div>
   <div class="marq" aria-label="Client logos">
@@ -255,26 +259,26 @@
   <div class="wrap">
     <div class="label ink500">How we work</div>
     <h2 class="mt16">How an offsite <span class="acc">gets built</span>.</h2>
-    <p class="lead ink700 mt16" style="max-width:60ch">Three steps. A person designs it, not a booking engine, and the same person is on the phone throughout.</p>
+    <p class="lead ink700 mt16" style="max-width:52ch">Three steps. A person designs it, and the same person answers the phone.</p>
     <div class="steps">
-      <div class="step"><span class="n">01</span><h3>Enquire</h3><p>Headcount, rough dates, and what the trip is for: reward, planning, training or a working week away. Those answers change everything downstream, so we ask them first and budget second.</p></div>
-      <div class="step"><span class="n">02</span><h3>We customise</h3><p>A costed plan with the logistics visible: coach capacities, drive times, room splits, dietary counts, the meeting room&rsquo;s actual dimensions, and the wet-weather alternative for anything outdoors.</p></div>
-      <div class="step"><span class="n">03</span><h3>On-ground support</h3><p>A Zubilant coordinator travels with the group, from the first pick-up to the last drop. Changes on the day are handled on the day, and your HR or admin lead gets one number to call.</p></div>
+      <div class="step"><span class="n">01</span><h3>Enquire</h3><p>Headcount, rough dates, and what the trip is for. We ask those first and budget second.</p></div>
+      <div class="step"><span class="n">02</span><h3>We customise</h3><p>A costed plan with the logistics visible: coaches, drive times, room splits, dietary counts, the wet-weather alternative.</p></div>
+      <div class="step"><span class="n">03</span><h3>On-ground support</h3><p>A Zubilant coordinator travels with you, first pick-up to last drop. Changes on the day are handled on the day.</p></div>
     </div>
 
     <div class="shape">
       <div class="shapehead">
         <div>
           <div class="label ink500">The shape of a three-day offsite</div>
-          <h3 class="mt8">A rhythm that works. Yours gets built around your agenda.</h3>
+          <h3 class="mt8">A rhythm that works. Yours is built around your agenda.</h3>
         </div>
-        <p class="ink700" style="max-width:40ch">Not a schedule, a shape. Work in the mornings when people are sharp, something worth remembering in the evenings, and no 6am coach on the last day.</p>
+        <p class="ink700" style="max-width:36ch">Not a schedule, a shape. Work while people are sharp, remember the evenings, no 6am coach home.</p>
       </div>
       <div class="routeband">
-        <div><k>Day 1</k><v>Arrive and settle</v><em>Late-morning arrival &middot; lunch together &middot; one opening session &middot; an easy evening</em></div>
-        <div><k>Day 2</k><v>The working day</v><em>Two sessions before lunch &middot; one after &middot; the activity everyone photographs &middot; dinner out</em></div>
-        <div><k>Day 3</k><v>Close and go home</v><em>A short wrap-up &middot; free time &middot; afternoon departure, not a dawn one</em></div>
-        <div><k>Throughout</k><v>One coordinator</v><em>Rooms, meals, transfers and the wet-weather plan, handled without a WhatsApp group of 40</em></div>
+        <div><k>Day 1</k><v>Arrive and settle</v><em>Late-morning arrival &middot; lunch &middot; one opening session &middot; easy evening</em></div>
+        <div><k>Day 2</k><v>The working day</v><em>Two sessions, lunch, one more &middot; the activity everyone photographs &middot; dinner out</em></div>
+        <div><k>Day 3</k><v>Close and go home</v><em>Short wrap-up &middot; free time &middot; afternoon departure</em></div>
+        <div><k>Throughout</k><v>One coordinator</v><em>Rooms, meals, transfers, weather. Handled, without a WhatsApp group of 40.</em></div>
       </div>
     </div>
   </div>
@@ -287,7 +291,7 @@
         <div class="label ink500">Where teams go</div>
         <h2 class="mt16">Routes that work <span class="acc">for groups</span>.</h2>
       </div>
-      <p class="ink700" style="max-width:48ch">Short transfers, hotels that can seat everyone at once, and a place worth the trip. Goa and Coorg for offsites, Rishikesh for training weeks, Dubai and Thailand for incentives, Kerala when the team is staying a while.</p>
+      <p class="ink700" style="max-width:40ch">Short transfers, hotels that seat everyone at once, a place worth the trip. Every route is re-shaped to your dates and headcount.</p>
     </div>
     <div class="jgrid2">
       <article class="jcard">
@@ -357,8 +361,8 @@
         </div>
       </article>
     </div>
-    <p class="ink500 mt16" style="font-size:13px">*Indicative per-person price for private travel. Group rates are quoted against your headcount and dates.</p>
-    <p class="mt24"><a class="btn btn-secondary" href="journeys.html">See all 59 journeys <span class="arw" aria-hidden="true">&rarr;</span></a></p>
+    <p class="ink500 mt16" style="font-size:13px">*Indicative, per person, private travel. Group rates quoted against your headcount and dates.</p>
+    <div class="btnrow" style="margin-top:28px"><a class="btn btn-primary" href="#enquire" data-open-enquiry>Get a costed plan for your team <span class="arw" aria-hidden="true">&rarr;</span></a><a class="btn btn-secondary" href="journeys.html">See all 59 journeys</a></div>
   </div>
 </section>
 
@@ -399,12 +403,12 @@
 })();
 </script>
 
-<section id="enquire" class="tint-forest">
+<section id="enquire" class="cclose">
   <div class="wrap ctaband">
     <div>
       <div class="label" style="color:var(--sun)">Plan your next experience</div>
-      <h2 class="mt16">Tell us who&rsquo;s travelling and we&rsquo;ll <span class="acc">shape something</span>.</h2>
-      <p class="lead mt16" style="max-width:52ch">A few questions, two minutes. No obligation, no payment, no call centre. One person reads it and replies.</p>
+      <h2 class="mt16">Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll cost it.</span></h2>
+      <p class="lead mt16" style="max-width:44ch">Two minutes. No obligation, no call centre. One person reads it and replies.</p>
       <div class="btnrow">
         <a class="btn btn-primary" href="#enquire" data-open-enquiry>Plan a corporate trip <span class="arw" aria-hidden="true">&rarr;</span></a>
         <a class="btn btn-onphoto" href="tel:+918108117770">Call +91 81081 17770</a>
@@ -413,9 +417,9 @@
     </div>
     <ul class="ctaticks">
       <li>A costed plan, not a brochure</li>
-      <li>Your dates, your headcount, your agenda</li>
-      <li>One coordinator from first call to last drop</li>
-      <li>India or abroad, any season</li>
+      <li>Your dates, headcount and agenda</li>
+      <li>One coordinator throughout</li>
+      <li>India or abroad</li>
     </ul>
   </div>
 </section>
@@ -427,7 +431,7 @@
     <div class="emhead">
       <div class="label ink500">Plan a corporate trip</div>
       <h3 id="emt" class="mt8">Tell us who&rsquo;s travelling.</h3>
-      <p class="ink700 mt8" style="font-size:15px">No obligation. One person reads it and replies.</p>
+      <p class="ink700 mt8" style="font-size:15px">Two minutes. One person reads it and replies with a costed plan.</p>
     </div>
     <form class="fgrid" method="post" action="/api/enquiry">
       <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
