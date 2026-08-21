@@ -1184,3 +1184,9 @@ body.navopen .navmenu{display:flex}
 
 /* Phone: the banner sits at the end of the overlay, not inline with links. */
 .nmbody .mban{grid-column:auto;margin:18px 0 4px;max-width:340px}
+
+/* jbadge: was defined only in journeys.html; cards also render on corporate + journey detail pages */
+.jbadge{position:absolute;top:8px;left:8px;z-index:3;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.b-trend{background:var(--sun100);color:#8A4A12}
+.b-zap{background:var(--orange500);color:#fff;letter-spacing:.04em}
+.b-rise{background:var(--sky100);color:#0B5A63}
