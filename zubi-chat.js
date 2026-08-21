@@ -83,14 +83,14 @@
     [R('\\b(phone|whatsapp|email|e-mail|number|contact|reach (you|zubilant)|office|address|where are you (based|located))\\b'), function(){return {html:F.contact+'<p>Or I can have someone call you — just say <b>call me back</b>.</p>',links:[['contact.html','Contact page →']]};}],
     [R('\\b(what (is|does) zubilant|who are you|about (you|zubilant|the company)|stuti|since when|how long|how old|trust|legit|genuine|reviews?|rating|google)\\b'), function(){return {html:F.about,links:[['about.html','About Zubilant →']]};}],
     [R('\\b(group|fixed departure|batch|join (a|the) group|other (people|travell?ers)|private|custom|tailor|bespoke|personali[sz]ed)\\b'), function(){return {html:F.fit,chips:['Show me journeys','Request a call back']};}],
-    [R('\\b(cancel|refund|payment|pay|emi|instalment|installment|advance|deposit|terms|policy|insurance)\\b'), function(){return {html:F.unknown_policy,chips:['Request a call back','Call '+PHONE]};}],
+    [R('\\b(cancel\\w*|refund\\w*|payments?|pay|paid|emi|instal?l?ments?|advance|deposit|terms|policy|policies|insurance|insured)\\b'), function(){return {html:F.unknown_policy,chips:['Request a call back','Call '+PHONE]};}],
     [R('\\b(includ|inclusion|exclu|flight|airfare|air ?fare|land.?only|what do i get|covered|meals|hotel category)\\b'), function(){
       var h=F.incl; if(HERE) h+='<p>For <b>'+esc(HERE.t)+'</b>, scroll down to the inclusions on this page, or ask me for a quote.</p>';
       return {html:h,chips:['Get a quote for this trip','Request a call back']};}],
     [R('\\b(visa|passport|visa.?free|on.?arrival)\\b'), function(q){var r=poolAnswer(q,'visa-free','visa-free journey','journeys.html?f=visa-free',F.visa);
       if(!budget(q)){ var named=search(q.replace(/visa[- ]?free|visa|passport|on[- ]?arrival/gi,' '),2).filter(function(d){return d.tags.indexOf('visa-free')<0;}); if(named.length){ r.cards=named.concat(r.cards||[]).slice(0,3); r.html='<p>For <b>'+esc(named[0].t)+'</b> the visa is handled with you on the call — I won’t guess at rules that change.</p>'+F.visa; } r.links=[['journeys.html?f=visa-free','Visa-free escapes →']]; }
       return r;}],
-    [R('\\b(safe|safety|medical|doctor|oxygen|altitude|emergency|security)\\b'), function(){return {html:F.safety,links:[['safety-and-logistics.html','Safety &amp; Logistics →']]};}],
+    [R('\\b(safe|safety|medical|doctor|emergency|security)\\b'), function(){return {html:F.safety,links:[['safety-and-logistics.html','Safety &amp; Logistics →']]};}],
     [R('\\b(corporate|compan(y|ies)|offsite|off-site|team|incentive|mice|employees|conference)\\b'), function(){return {html:F.corporate,links:[['corporate.html','Corporate travel →']]};}],
     [R('\\b(inbound|foreign(er)?s? (visiting|coming)|visit(ing)? india|coming to india|international (guests|visitors)|nri)\\b'), function(){return {html:F.inbound,links:[['inbound-india.html','Inbound India →']]};}],
     [R('\\b(price|cost|how much|budget|rate|charges?|expensive|cheap|afford|under|below|within|₹|rs\\.?|inr)\\b'), priceIntent],
@@ -186,12 +186,15 @@
   /* ── answer(): the router ── */
   function answer(q){
     var s=q.trim(); if(!s) return null;
-    var fq=faq(s); if(fq&&/^(thank|zubi|who are you|are you (a )?(bot|human|ai)|awards?|un.?cefact|sachin|founder|stuti|how do i book|opening hours|languages?)/i.test(s)) return fq;
+    var fq=faq(s); if(fq&&/(^(thank|zubi|who are you|are you (a )?(bot|human|ai)|awards?|un.?cefact|sachin|founder|stuti|how do i book|languages?)|\b(hours|timings?|altitude|acclimati|oxygen|child (discount|price|pricing|fare)|infant|room|sharing|complaint|escalat|documents?|passport|confirmation|voucher)\b)/i.test(s)) return fq;
     for(var i=0;i<INTENTS.length;i++){
       if(INTENTS[i][0].test(s)){ var r=INTENTS[i][1](s); if(r) return r; }
     }
-    if(fq) return fq;
     var c=search(s,3);
+    /* a named journey beats a generic FAQ: "hornbill festival" should show the Hornbill journey, not the festivals FAQ */
+    var named=c.length&&tokens(s).some(function(w){return w.length>3&&new RegExp('(^|[^a-z])'+w+'(?![a-z])').test(c[0].t.toLowerCase());});
+    if(named) return {html:'<p>These look closest to what you’re after:</p>',cards:c,more:'journeys.html'};
+    if(fq) return fq;
     if(c.length) return {html:'<p>These look closest to what you’re after:</p>',cards:c,more:'journeys.html'};
     return {html:pick(F.fallback),chips:startChips().slice(0,3).concat(['Request a call back'])};
   }

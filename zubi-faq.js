@@ -73,7 +73,7 @@ window.ZUBI_FAQ=[
     links:[['index.html#reviews','Reviews on the homepage →']] },
 
   /* ── practical ── */
-  { q:['opening hours','working hours','what time do you open','are you open on sunday','office timings','when can i call'],
+  { q:['opening hours','working hours','office hours','hours','what time do you open','are you open on sunday','office timings','timings','when can i call'],
     a:'<p>I don’t have office hours I can vouch for, so I won’t invent them. WhatsApp <a href="https://wa.me/918108117770" target="_blank" rel="noopener">+91 81081 17770</a> any time and a person replies when they’re in; or leave a call-back request and pick the slot that suits you.</p>',
     chips:['Request a call back'] },
   { q:['languages','do you speak hindi','gujarati','marathi','english','language'],
@@ -119,7 +119,7 @@ window.ZUBI_FAQ=[
     links:[['senior-travel-saathi.html','Senior Travel Saathi →']] },
   { q:['winter trip','snow trip','december trip to mountains','travel in winter','kashmir in winter','ladakh in winter','snowfall'],
     a:'<p>For snow: Gulmarg in winter (skiing for beginners) and the higher Himalaya in December–February. Kashmir in tulip season is April; Ladakh by road runs June–September. Tell me the month and I’ll show what’s in season.</p>', chips:['Gulmarg in winter','December holidays'] },
-  { q:['festival','festivals','rann utsav','hornbill','tulip festival','diwali trip','holi trip','christmas new year'],
+  { q:['festival','festivals','festival trips','diwali trip','holi trip','christmas new year','new year trip'],
     a:'<p>Festival journeys on the site: Rann of Kutch in Rann Utsav season, the Hornbill Festival in Nagaland, Kashmir in tulip season, Japan in cherry blossom. For Diwali and Christmas–New Year dates, book early — those weeks fill first.</p>', chips:['Rann of Kutch','Hornbill Festival','Kashmir tulips'] },
   { q:['confirmation','will i get a confirmation','booking confirmation','voucher','itinerary document','what do i receive'],
     a:'<p>Nothing is booked until you confirm the shaped itinerary and quote in writing; what you receive after that, and when, is confirmed with your quote. I won’t describe a process I can’t see.</p>' },
