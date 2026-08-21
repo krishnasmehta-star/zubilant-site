@@ -582,3 +582,53 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zap);else zap();
 })();
+
+/* ── Quick view, shared (r15). Every .jcard on every page gets the journeys-index
+   Quick view. Built from the card's own DOM, so nothing is duplicated or invented.
+   journeys.html ships its own data-driven copy and is skipped (it owns #qvbd). ── */
+(function(){
+  function init(){
+    if(document.getElementById('qvbd')) return;
+    var cards=[].slice.call(document.querySelectorAll('.jcard'));
+    if(!cards.length) return;
+    var bd=document.createElement('div');bd.className='qvbd';bd.id='qvbd';
+    bd.setAttribute('role','dialog');bd.setAttribute('aria-modal','true');bd.setAttribute('aria-labelledby','qvt');
+    bd.innerHTML='<div class="qv" id="qv"></div>';document.body.appendChild(bd);
+    var qv=bd.firstChild,lastFocus=null;
+    var PIN='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg>';
+    cards.forEach(function(c,i){
+      var fig=c.querySelector('.jfig');if(!fig||fig.querySelector('.jqv'))return;
+      var b=document.createElement('button');b.type='button';b.className='jqv';b.setAttribute('data-qv',i);
+      b.innerHTML=PIN+' Quick view';fig.appendChild(b);
+    });
+    function esc(s){return String(s||'').replace(/</g,'&lt;');}
+    function open(c){
+      lastFocus=document.activeElement;
+      var a=c.querySelector('.jhit'),img=c.querySelector('.jfig img'),h=c.querySelector('h3'),
+          p=c.querySelector('.jbody p'),pr=c.querySelector('.jprice'),href=a?a.getAttribute('href'):'#';
+      var tags=[].slice.call(c.querySelectorAll('.jattrs span')).map(function(s){return esc(s.textContent.trim());});
+      var trend=c.querySelector('.b-zap');
+      var ask='plan-your-journey.html'+(h?'?journey='+encodeURIComponent(h.textContent.trim()):'');
+      qv.innerHTML='<button class="qvx" aria-label="Close">&times;</button>'+
+        (img?'<img src="'+img.getAttribute('src')+'" alt="">':'')+
+        '<div class="qvb"><h3 id="qvt">'+(h?h.innerHTML:'')+'</h3>'+
+        '<div class="qvrow">'+tags.map(function(t){return '<span class="qvt">'+t+'</span>';}).join('')+
+        (trend?'<span class="qvt" style="background:var(--sun100)">⚡️ Trending</span>':'')+'</div>'+
+        (p?'<p>'+p.innerHTML+'</p>':'')+
+        (pr?'<div class="qvp">'+pr.innerHTML.replace(/<i>.*?<\/i>/,' per person <span style="color:var(--orange600)">(indicative)</span>')+'</div>':'')+
+        '<div class="qvcta"><a class="btn btn-primary" href="'+href+'">View the full journey <span class="arw">→</span></a>'+
+        '<a class="btn btn-secondary" href="'+ask+'">Ask about it</a></div></div>';
+      bd.classList.add('show');document.body.style.overflow='hidden';
+      qv.querySelector('.qvx').onclick=close;qv.querySelector('.qvx').focus();
+    }
+    function close(){bd.classList.remove('show');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+    bd.addEventListener('click',function(e){if(e.target===bd)close();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.classList.contains('show'))close();});
+    document.addEventListener('click',function(e){
+      var b=e.target.closest('.jqv');if(!b)return;
+      e.preventDefault();e.stopPropagation();
+      var c=b.closest('.jcard');if(c)open(c);
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();

@@ -11,40 +11,87 @@
 <link rel="icon" href="logo-symbol.png">
 <link rel="stylesheet" href="site-v9.css">
 <style>
-/* corporate page: scoped layout only, tokens from site-v9 */
-.cintro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:start}
+/* corporate page r2: scoped layout only, tokens from site-v9 */
+.chero .trust{margin-top:34px}
+.chero .trust v{font-size:20px}
+.cintro{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:start}
+.getcard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);padding:32px;box-shadow:var(--e2);position:relative;overflow:hidden}
+.getcard::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--orange500),var(--sun))}
+.getcard .label{color:var(--ink500)}
+.getcard .ticks{margin-top:18px;gap:12px}
+.getcard .ticks li{font-size:15.5px;line-height:1.5}
+.getcard .ticks li::before{background:var(--orange500)}
+.getcard .ticks b{color:var(--ink900)}
+.clhead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
 .ctypes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:40px}
 .ctype{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--lineSoft);
-  border-radius:var(--r-card);padding:26px 24px 22px;color:inherit;text-decoration:none;
+  border-radius:var(--r-card);overflow:hidden;color:inherit;text-decoration:none;
   transition:transform var(--t-move),box-shadow var(--t-move),border-color var(--t-move)}
-.ctype:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(243,107,33,.16);border-color:#F6C6A8}
+.ctype:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(243,107,33,.18);border-color:#F6C6A8}
 .ctype:focus-visible{outline:2px solid var(--orange500);outline-offset:2px}
-.ctype .ci{width:44px;height:44px;border-radius:50%;background:var(--teal50);color:var(--teal600);display:flex;align-items:center;justify-content:center}
-.ctype .ci svg{width:22px;height:22px}
-.ctype k{display:block;margin-top:18px;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--orange500)}
-.ctype h3{font-size:20px;line-height:1.2;margin-top:6px;letter-spacing:-.01em}
-.ctype p{margin-top:10px;font-size:15px;line-height:1.55;color:var(--ink700);flex:1 1 auto}
-.ctype .cgo{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:14px;font-weight:700;color:var(--teal600)}
+.ctype .cfig{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--teal50)}
+.ctype .cfig img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 600ms cubic-bezier(.2,.7,.3,1)}
+.ctype:hover .cfig img{transform:scale(1.06)}
+.ctype .cnum{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.94);color:var(--orange600);
+  font-size:12px;font-weight:700;letter-spacing:.14em;border-radius:999px;padding:5px 10px}
+.ctype .cbody{display:flex;flex-direction:column;flex:1 1 auto;padding:20px 22px 20px}
+.ctype h3{font-size:20px;line-height:1.2;letter-spacing:-.01em}
+.ctype p{margin-top:10px;font-size:14.5px;line-height:1.55;color:var(--ink700);flex:1 1 auto}
+.ctype .cfor{display:block;margin-top:14px;padding-top:12px;border-top:1px solid var(--lineSoft);font-size:13px;color:var(--ink700);line-height:1.45}
+.ctype .cfor k{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink500);margin-bottom:2px}
+.ctype .cgo{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:14px;font-weight:700;color:var(--teal600)}
 .ctype .cgo b{transition:transform var(--t-move)}
 .ctype:hover .cgo{color:var(--orange500)}
 .ctype:hover .cgo b{transform:translateX(4px)}
-.clhead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
-.logos{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
-.logos li{display:flex;align-items:center;justify-content:center;min-height:120px;padding:20px 22px;
+.marq{margin-top:40px;overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marqtrack{display:flex;width:max-content;gap:18px;animation:marq 34s linear infinite}
+.marq:hover .marqtrack{animation-play-state:paused}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}
+.logos{list-style:none;margin:0;padding:0;display:flex;gap:18px}
+.logos li{display:flex;align-items:center;justify-content:center;width:220px;min-height:120px;padding:20px 22px;flex:0 0 auto;
   background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);transition:border-color var(--t-move),box-shadow var(--t-move)}
 .logos li:hover{border-color:var(--teal200);box-shadow:var(--e2)}
 .logos img{max-width:100%;max-height:72px;width:auto;height:auto;object-fit:contain;filter:grayscale(1);opacity:.78;transition:filter var(--t-move),opacity var(--t-move)}
 .logos li:hover img{filter:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.marqtrack{animation:none;flex-wrap:wrap;width:auto}.marqtrack .logos+.logos{display:none}.marq{mask-image:none;-webkit-mask-image:none}}
+.shape{margin-top:64px;padding-top:48px;border-top:1px solid var(--lineSoft)}
+.shapehead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.shapehead h3{font-size:26px;line-height:1.2;max-width:24ch}
+#how .routeband{margin-top:28px}
+.ctaband{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:56px;align-items:center}
+.ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.22);border-radius:var(--r-card);background:rgba(255,255,255,.06);display:flex;flex-direction:column;gap:14px}
+.ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
+.ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
+.ctaticks li::after{content:"";position:absolute;left:4px;top:10px;width:6px;height:3px;border-left:2px solid var(--forest);border-bottom:2px solid var(--forest);transform:rotate(-45deg)}
+/* enquiry modal */
+.embd{position:fixed;inset:0;z-index:1000;background:rgba(0,20,22,.62);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 200ms ease}
+.embd[hidden]{display:none}
+.embd.show{opacity:1}
+.em{position:relative;background:var(--paper);border-radius:18px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:36px 40px 40px;box-shadow:var(--e3);transform:translateY(14px);transition:transform 220ms cubic-bezier(.2,.7,.3,1)}
+.embd.show .em{transform:none}
+.emhead{margin-bottom:24px;padding-right:40px}
+.emhead h3{font-size:26px;line-height:1.2}
+.emx{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:999px;border:0;background:var(--sand);font-size:20px;line-height:1;cursor:pointer}
+.emx:hover{background:var(--teal50)}
+.em .fgrid{gap:18px}
+.em .field input,.em .field select,.em .field textarea{font-size:16px;min-height:48px}
+.em .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 @media (max-width:1080px){
-  .cintro{grid-template-columns:1fr;gap:24px}
+  .cintro{grid-template-columns:1fr;gap:28px}
   .ctypes{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .logos{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ctaband{grid-template-columns:1fr;gap:28px}
 }
 @media (max-width:640px){
+  .chero .trust{gap:22px}
   .ctypes{grid-template-columns:1fr}
-  .logos{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .logos li{min-height:96px;padding:16px}
+  .logos li{width:160px;min-height:96px;padding:16px}
   .logos img{max-height:56px}
+  .shapehead h3{font-size:22px}
+  .em{padding:26px 20px 28px}
+  .em .fgrid{grid-template-columns:1fr}
+  .embd{padding:12px}
 }
 </style>
 
@@ -82,68 +129,91 @@
 </nav>
 <main id="main">
 <div class="pipe" aria-hidden="true"><span class="track"></span><span class="fill" id="pipefill"></span></div>
-<header class="hero short">
+<header class="hero short chero">
   <img src="corporate-hero.webp" alt="A company team on a Zubilant offsite, gathered on a hillside at the end of the day." fetchpriority="high" width="1600" height="1200">
   <div class="in">
-    <div class="eyebrow">Corporate</div>
-    <h1>Team travel that <span class="acc">does its job</span>.</h1>
-    <p class="sub">Offsites, incentive tours, outbound training and workations for companies who need everyone in the right place, looked after, and back at work sharper than they left.</p>
+    <div class="eyebrow">Corporate travel</div>
+    <h1>Take the team somewhere <span class="acc">worth the Monday after</span>.</h1>
+    <p class="sub">Offsites, incentive tours, outbound training and workations, designed by one person who then travels with you. Across India and abroad, for teams of any size.</p>
+    <div class="btnrow">
+      <a class="btn btn-primary" href="#enquire" data-open-enquiry>Plan a corporate trip <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-onphoto" href="#types">See the four kinds of trip</a>
+    </div>
+    <div class="trust">
+      <div><k>Designing since</k><v>2009</v></div>
+      <div><k>Travellers served</k><v>800,000+</v></div>
+      <div><k>Rated</k><v>4.9 on Google</v></div>
+    </div>
   </div>
 </header>
-<div class="wrap"><div class="proof" style="margin-top:64px">
-  <div><k>Designing since</k><v>2009</v><em>Seventeen years as Stuti Tourism Pvt. Ltd.</em></div>
-  <div><k>Travellers served</k><v>800,000+</v><em>Across leisure, education and corporate.</em></div>
-  <div><k>Institutions</k><v>70+</v><em>Schools, colleges and companies.</em></div>
-  <div><k>Standards work</k><v>UN/CEFACT</v><em>Our founder is Travel &amp; Tourism Domain Coordinator.</em></div>
-</div></div>
 
-<section id="intro">
+<section id="intro" class="notop" style="padding-top:72px">
   <div class="wrap cintro">
     <div>
       <div class="label ink500">Corporate travel, designed</div>
       <h2 class="mt16">Productive, memorable, and <span class="acc">seamless</span>.</h2>
+      <p class="lead mt24">At Zubilant Travel, we specialize in crafting exceptional corporate tours that foster team building, enhance productivity, and reward excellence. Our bespoke corporate travel solutions cater to the unique needs of businesses, ensuring that every journey is both productive and memorable.</p>
+      <p class="ink700 mt16">Whether you&rsquo;re planning an offsite meeting, an incentive tour, or an outbound training program, we have the expertise to deliver seamless and impactful experiences.</p>
     </div>
-    <div>
-      <p class="lead">At Zubilant Travel, we specialize in crafting exceptional corporate tours that foster team building, enhance productivity, and reward excellence. Our bespoke corporate travel solutions cater to the unique needs of businesses, ensuring that every journey is both productive and memorable.</p>
-      <p class="ink700 mt16">Whether you&rsquo;re planning an offsite meeting, an incentive tour, or an outbound training program, we have the expertise to deliver seamless and impactful experiences. One coordinator owns your trip from the first call to the last transfer, and the logistics are written down before anyone boards a coach.</p>
-      <p class="mt24"><a class="btn btn-primary" href="#enquire">Plan a corporate trip <span class="arw" aria-hidden="true">&rarr;</span></a></p>
+    <div class="getcard">
+      <div class="label">What your HR or admin lead gets</div>
+      <ul class="ticks">
+        <li><b>One coordinator</b>, from the first call to the last coach back to the airport.</li>
+        <li><b>A costed plan with the logistics visible</b>: coach capacities, drive times, room splits, dietary counts.</li>
+        <li><b>A wet-weather alternative</b> for anything planned outdoors, agreed before you travel.</li>
+        <li><b>A Zubilant person on the ground</b>, so changes on the day are handled on the day.</li>
+        <li><b>One number to call.</b> Not a helpline. A name.</li>
+      </ul>
+      <a class="btn btn-primary mt24" href="#enquire" data-open-enquiry>Start with a conversation <span class="arw" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>
 
 <section id="types" class="tint-moss">
   <div class="wrap">
-    <div class="label ink500">Types of corporate tours</div>
-    <h2 class="mt16">Four kinds of trip. <span class="acc">One standard.</span></h2>
-    <p class="lead ink700 mt16" style="max-width:60ch">Each is built differently because each is for something different. Tell us which one you need and the plan changes shape around it.</p>
+    <div class="clhead">
+      <div>
+        <div class="label ink500">Types of corporate tours</div>
+        <h2 class="mt16">Four kinds of trip. <span class="acc">One standard.</span></h2>
+      </div>
+      <p class="ink700" style="max-width:44ch">Each is built differently because each is for something different. Tell us which one you need and the plan changes shape around it.</p>
+    </div>
     <div class="ctypes">
-      <a class="ctype" href="#enquire" data-type="Outbound training program">
-        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18"/><path d="M5 19l5.5-9 3 4.5L16 11l4 8"/><circle cx="17.5" cy="5.5" r="1.8"/></svg></span>
-        <k>01</k>
-        <h3>Outbound training program</h3>
-        <p>Structured learning away from the desk. Facilitated activities, problem-solving in the field and debriefs that carry back to work. We handle the venue, the safety cover and the schedule so the facilitator can run the room.</p>
-        <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+      <a class="ctype" href="#enquire" data-open-enquiry data-type="Outbound training program">
+        <span class="cfig"><img src="j-rishikesh-wellness-yoga-retreat.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">01</span></span>
+        <span class="cbody">
+          <h3>Outbound training program</h3>
+          <p>Structured learning away from the desk. Facilitated activities, problem-solving in the field and debriefs that carry back to work. We handle the venue, the safety cover and the schedule so the facilitator can run the room.</p>
+          <span class="cfor"><k>Built for</k> L&amp;D teams, new cohorts, leadership programmes</span>
+          <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+        </span>
       </a>
-      <a class="ctype" href="#enquire" data-type="Offsite">
-        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 10h18M8 21h8M12 18v3"/></svg></span>
-        <k>02</k>
-        <h3>Offsite</h3>
-        <p>Two to four days for planning, strategy or simply getting the team in one place. A working room that actually works, meals that keep to time, and evenings with something worth doing. Leadership, department or whole-company.</p>
-        <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+      <a class="ctype" href="#enquire" data-open-enquiry data-type="Offsite">
+        <span class="cfig"><img src="j-coorg-mysuru-coffee-country.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">02</span></span>
+        <span class="cbody">
+          <h3>Offsite</h3>
+          <p>Two to four days for planning, strategy or simply getting the team in one place. A working room that actually works, meals that keep to time, and evenings with something worth doing.</p>
+          <span class="cfor"><k>Built for</k> Leadership, a department, the whole company</span>
+          <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+        </span>
       </a>
-      <a class="ctype" href="#enquire" data-type="Incentive tour">
-        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span>
-        <k>03</k>
-        <h3>Incentive tour</h3>
-        <p>The reward for a target met. These trips are judged on how they feel, so the hotels are a grade up, the pacing is generous, and the moments people will photograph are planned rather than hoped for. India or abroad.</p>
-        <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+      <a class="ctype" href="#enquire" data-open-enquiry data-type="Incentive tour">
+        <span class="cfig"><img src="j-dubai-abu-dhabi-tour.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">03</span></span>
+        <span class="cbody">
+          <h3>Incentive tour</h3>
+          <p>The reward for a target met. These trips are judged on how they feel, so the hotels are a grade up, the pacing is generous, and the moments people will photograph are planned rather than hoped for.</p>
+          <span class="cfor"><k>Built for</k> Sales clubs, top performers, dealer and partner groups</span>
+          <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+        </span>
       </a>
-      <a class="ctype" href="#enquire" data-type="Workation">
-        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/><path d="M12 8v4M10 10h4"/></svg></span>
-        <k>04</k>
-        <h3>Workation</h3>
-        <p>A longer stay, a week or more, where the team works from somewhere better than the office. Reliable connectivity and desks checked in person, quiet hours respected, and the place itself waiting when the laptops close.</p>
-        <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+      <a class="ctype" href="#enquire" data-open-enquiry data-type="Workation">
+        <span class="cfig"><img src="j-goa-beyond-the-beach.webp" alt="" loading="lazy" width="800" height="600"><span class="cnum">04</span></span>
+        <span class="cbody">
+          <h3>Workation</h3>
+          <p>A longer stay, a week or more, where the team works from somewhere better than the office. Connectivity and desks checked in person, quiet hours respected, and the place itself waiting when the laptops close.</p>
+          <span class="cfor"><k>Built for</k> Remote and hybrid teams, founders&rsquo; weeks, sprint weeks</span>
+          <span class="cgo">Plan this trip <b aria-hidden="true">&rarr;</b></span>
+        </span>
       </a>
     </div>
   </div>
@@ -158,14 +228,26 @@
       </div>
       <p class="ink700" style="max-width:44ch">From a central bank to a carmaker to a pharmaceutical firm. Different industries, the same brief: get it right, quietly.</p>
     </div>
-    <ul class="logos" aria-label="Client logos">
-      <li><img src="client-reliance-life.webp" alt="Reliance Life Insurance" loading="lazy" width="254" height="74"></li>
-      <li><img src="client-sbi-life.webp" alt="SBI Life" loading="lazy" width="195" height="63"></li>
-      <li><img src="client-rbi.webp" alt="Reserve Bank of India" loading="lazy" width="162" height="162"></li>
-      <li><img src="client-ferrari.webp" alt="Ferrari" loading="lazy" width="150" height="201"></li>
-      <li><img src="client-shivam-pharma.webp" alt="Shivam Pharma, Veterinary Medicines India" loading="lazy" width="198" height="52"></li>
-      <li><img src="client-satyam.webp" alt="Satyam" loading="lazy" width="299" height="96"></li>
-    </ul>
+  </div>
+  <div class="marq" aria-label="Client logos">
+    <div class="marqtrack">
+      <ul class="logos">
+        <li><img src="client-reliance-life.webp" alt="Reliance Life Insurance" loading="lazy" width="254" height="74"></li>
+        <li><img src="client-sbi-life.webp" alt="SBI Life" loading="lazy" width="195" height="63"></li>
+        <li><img src="client-rbi.webp" alt="Reserve Bank of India" loading="lazy" width="162" height="162"></li>
+        <li><img src="client-ferrari.webp" alt="Ferrari" loading="lazy" width="150" height="201"></li>
+        <li><img src="client-shivam-pharma.webp" alt="Shivam Pharma, Veterinary Medicines India" loading="lazy" width="198" height="52"></li>
+        <li><img src="client-satyam.webp" alt="Satyam" loading="lazy" width="299" height="96"></li>
+      </ul>
+      <ul class="logos" aria-hidden="true">
+        <li><img src="client-reliance-life.webp" alt="" loading="lazy" width="254" height="74"></li>
+        <li><img src="client-sbi-life.webp" alt="" loading="lazy" width="195" height="63"></li>
+        <li><img src="client-rbi.webp" alt="" loading="lazy" width="162" height="162"></li>
+        <li><img src="client-ferrari.webp" alt="" loading="lazy" width="150" height="201"></li>
+        <li><img src="client-shivam-pharma.webp" alt="" loading="lazy" width="198" height="52"></li>
+        <li><img src="client-satyam.webp" alt="" loading="lazy" width="299" height="96"></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -179,14 +261,34 @@
       <div class="step"><span class="n">02</span><h3>We customise</h3><p>A costed plan with the logistics visible: coach capacities, drive times, room splits, dietary counts, the meeting room&rsquo;s actual dimensions, and the wet-weather alternative for anything outdoors.</p></div>
       <div class="step"><span class="n">03</span><h3>On-ground support</h3><p>A Zubilant coordinator travels with the group, from the first pick-up to the last drop. Changes on the day are handled on the day, and your HR or admin lead gets one number to call.</p></div>
     </div>
+
+    <div class="shape">
+      <div class="shapehead">
+        <div>
+          <div class="label ink500">The shape of a three-day offsite</div>
+          <h3 class="mt8">A rhythm that works. Yours gets built around your agenda.</h3>
+        </div>
+        <p class="ink700" style="max-width:40ch">Not a schedule, a shape. Work in the mornings when people are sharp, something worth remembering in the evenings, and no 6am coach on the last day.</p>
+      </div>
+      <div class="routeband">
+        <div><k>Day 1</k><v>Arrive and settle</v><em>Late-morning arrival &middot; lunch together &middot; one opening session &middot; an easy evening</em></div>
+        <div><k>Day 2</k><v>The working day</v><em>Two sessions before lunch &middot; one after &middot; the activity everyone photographs &middot; dinner out</em></div>
+        <div><k>Day 3</k><v>Close and go home</v><em>A short wrap-up &middot; free time &middot; afternoon departure, not a dawn one</em></div>
+        <div><k>Throughout</k><v>One coordinator</v><em>Rooms, meals, transfers and the wet-weather plan, handled without a WhatsApp group of 40</em></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="routes">
   <div class="wrap">
-    <div class="label ink500">Where teams go</div>
-    <h2 class="mt16">Routes that work <span class="acc">for groups</span>.</h2>
-    <p class="lead ink700 mt16" style="max-width:62ch">Short transfers, hotels that can seat everyone at once, and a place worth the trip. Goa and Coorg for offsites, Rishikesh for training weeks, Dubai and Thailand for incentives, Kerala when the team is staying a while. Every route below is shaped to your dates and headcount.</p>
+    <div class="clhead">
+      <div>
+        <div class="label ink500">Where teams go</div>
+        <h2 class="mt16">Routes that work <span class="acc">for groups</span>.</h2>
+      </div>
+      <p class="ink700" style="max-width:48ch">Short transfers, hotels that can seat everyone at once, and a place worth the trip. Goa and Coorg for offsites, Rishikesh for training weeks, Dubai and Thailand for incentives, Kerala when the team is staying a while.</p>
+    </div>
     <div class="jgrid2">
       <article class="jcard">
         <a class="jhit" href="j-goa-beyond-the-beach.html" aria-label="Goa Beyond the Beach"></a>
@@ -297,41 +399,78 @@
 })();
 </script>
 
-<section id="enquire">
-  <div class="wrap">
-    <div class="label ink500">Plan your next experience</div>
-    <h2 class="mt16">Tell us who&rsquo;s travelling and we&rsquo;ll shape something.</h2>
-    <p class="lead ink700 mt16" style="max-width:56ch">No obligation, no payment, no call centre. One person reads it and replies.</p>
-    <div class="formcard">
-      <form class="fgrid" method="post" action="/api/enquiry">
-        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
-        <div class="field"><label for="f-company">Company</label><input type="text" id="f-company" name="company" autocomplete="organization"></div>
-        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
-        <div class="field"><label for="f-type">Type of trip</label><select id="f-type" name="type"><option>Offsite</option><option>Incentive tour</option><option>Outbound training program</option><option>Workation</option><option>Conference or event</option><option>Not sure yet</option></select></div>
-        <div class="field"><label for="f-size">Rough headcount</label><input type="text" id="f-size" name="headcount" placeholder="ex: 40 to 50 people"></div>
-        <div class="field"><label for="f-when">Roughly when</label><input type="text" id="f-when" name="when" placeholder="ex: last week of November, 3 nights"></div>
-        <div class="field full"><label for="f-notes">Anything we should know</label>
-          <textarea id="f-notes" name="notes" placeholder="What the trip is for, a destination in mind, dietary needs, a budget range if you have one."></textarea></div>
-        <div class="formfoot full">
-          <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
-        </div>
-      </form>
+<section id="enquire" class="tint-forest">
+  <div class="wrap ctaband">
+    <div>
+      <div class="label" style="color:var(--sun)">Plan your next experience</div>
+      <h2 class="mt16">Tell us who&rsquo;s travelling and we&rsquo;ll <span class="acc">shape something</span>.</h2>
+      <p class="lead mt16" style="max-width:52ch">A few questions, two minutes. No obligation, no payment, no call centre. One person reads it and replies.</p>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#enquire" data-open-enquiry>Plan a corporate trip <span class="arw" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-onphoto" href="tel:+918108117770">Call +91 81081 17770</a>
+      </div>
+      <p class="mt24" style="font-size:15px">Also on WhatsApp, or <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
     </div>
-    <p class="mt24">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp. Or <a class="tlink" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
+    <ul class="ctaticks">
+      <li>A costed plan, not a brochure</li>
+      <li>Your dates, your headcount, your agenda</li>
+      <li>One coordinator from first call to last drop</li>
+      <li>India or abroad, any season</li>
+    </ul>
   </div>
 </section>
+</main>
+
+<div class="embd" id="embd" role="dialog" aria-modal="true" aria-labelledby="emt" hidden>
+  <div class="em">
+    <button class="emx" type="button" aria-label="Close">&times;</button>
+    <div class="emhead">
+      <div class="label ink500">Plan a corporate trip</div>
+      <h3 id="emt" class="mt8">Tell us who&rsquo;s travelling.</h3>
+      <p class="ink700 mt8" style="font-size:15px">No obligation. One person reads it and replies.</p>
+    </div>
+    <form class="fgrid" method="post" action="/api/enquiry">
+      <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="f-company">Company</label><input type="text" id="f-company" name="company" autocomplete="organization"></div>
+      <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
+      <div class="field"><label for="f-type">Type of trip</label><select id="f-type" name="type"><option>Offsite</option><option>Incentive tour</option><option>Outbound training program</option><option>Workation</option><option>Conference or event</option><option>Not sure yet</option></select></div>
+      <div class="field"><label for="f-size">Rough headcount</label><input type="text" id="f-size" name="headcount" placeholder="ex: 40 to 50 people"></div>
+      <div class="field"><label for="f-when">Roughly when</label><input type="text" id="f-when" name="when" placeholder="ex: last week of November, 3 nights"></div>
+      <div class="field full"><label for="f-notes">Anything we should know</label>
+        <textarea id="f-notes" name="notes" placeholder="What the trip is for, a destination in mind, dietary needs, a budget range if you have one."></textarea></div>
+      <div class="formfoot full">
+        <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
+        <span class="ink500" style="font-size:14px">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp.</span>
+      </div>
+    </form>
+  </div>
+</div>
 <script>
 (function(){
-  var sel=document.getElementById('f-type'); if(!sel) return;
-  document.querySelectorAll('.ctype[data-type]').forEach(function(a){
-    a.addEventListener('click',function(){
-      var v=a.getAttribute('data-type');
-      for(var i=0;i<sel.options.length;i++){ if(sel.options[i].text===v){ sel.selectedIndex=i; break; } }
-    });
+  var bd=document.getElementById('embd'); if(!bd) return;
+  var sel=document.getElementById('f-type'), last=null;
+  function open(type){
+    last=document.activeElement;
+    if(type&&sel){ for(var i=0;i<sel.options.length;i++){ if(sel.options[i].text===type){ sel.selectedIndex=i; break; } } }
+    bd.hidden=false; requestAnimationFrame(function(){ bd.classList.add('show'); });
+    document.body.style.overflow='hidden';
+    var f=bd.querySelector('#f-name'); if(f) f.focus();
+  }
+  function close(){
+    bd.classList.remove('show'); document.body.style.overflow='';
+    setTimeout(function(){ bd.hidden=true; },220);
+    if(last&&last.focus) last.focus();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-open-enquiry]');
+    if(a){ e.preventDefault(); open(a.getAttribute('data-type')); return; }
+    if(e.target===bd||e.target.closest('.emx')) close();
   });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!bd.hidden) close(); });
+  if(location.hash==='#enquire') open();
 })();
 </script>
-</main>
+
 
 <section class="stepout v2 notop" aria-label="Step outside" id="stepout">
   <canvas class="so-reveal" aria-hidden="true"></canvas>

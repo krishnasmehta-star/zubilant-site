@@ -1190,3 +1190,34 @@ body.navopen .navmenu{display:flex}
 .b-trend{background:var(--sun100);color:#8A4A12}
 .b-zap{background:var(--orange500);color:#fff;letter-spacing:.04em}
 .b-rise{background:var(--sky100);color:#0B5A63}
+
+/* ── Quick view, shared (r15): the journeys-index .jqv/.qv treatment, available on
+   every page that renders a .jcard. journeys.html carries its own identical copy. ── */
+.jqv{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:6px;
+  border:0;border-radius:999px;background:rgba(255,255,255,.94);color:var(--ink900);font:inherit;
+  font-size:11.5px;font-weight:700;padding:5px 10px;cursor:pointer;opacity:0;transform:translateY(5px);
+  transition:opacity var(--t-colour),transform var(--t-move);box-shadow:0 3px 10px rgba(0,20,22,.2)}
+.jqv svg{width:13px;height:13px}
+.jcard:hover .jqv,.jcard:focus-within .jqv{opacity:1;transform:none}
+.jqv:hover{background:#fff;color:var(--orange600)}
+.qvbd{position:fixed;inset:0;background:rgba(0,20,22,.62);z-index:1000;backdrop-filter:blur(2px);display:none;
+  align-items:center;justify-content:center;padding:24px}
+.qvbd.show{display:flex}
+.qv{background:var(--paper);border-radius:18px;max-width:860px;width:100%;max-height:88vh;overflow:auto;
+  display:grid;grid-template-columns:1fr 1fr;box-shadow:var(--e3);position:relative}
+.qv img{width:100%;height:100%;object-fit:cover;min-height:300px}
+.qv .qvb{padding:28px 30px 30px}
+.qv h3{font-size:25px;line-height:1.2}
+.qv .qvrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.qv .qvt{background:var(--teal50);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--ink700)}
+.qv .qvt:nth-child(2){background:var(--moss100)} .qv .qvt:nth-child(3){background:var(--sun100)}
+.qv p{font-size:15px;color:var(--ink700);margin-top:16px}
+.qv .qvp{margin-top:18px;font-size:15px}
+.qv .qvp strong{font-size:22px}
+.qv .qvcta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.qvx{position:absolute;right:12px;top:12px;z-index:5;width:34px;height:34px;border-radius:999px;border:0;
+  background:rgba(255,255,255,.94);font-size:19px;line-height:1;cursor:pointer;box-shadow:var(--e1)}
+@media (max-width:640px){
+  .qv{grid-template-columns:1fr}.qv img{min-height:200px;max-height:240px}
+  .jqv{opacity:1;transform:none}
+}
