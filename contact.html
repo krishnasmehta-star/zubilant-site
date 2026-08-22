@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Zubilant — Mumbai</title>
+<title>Contact Zubilant — Talk to a person, Mumbai</title>
 <meta name="description" content="Call +91 81081 17770 or email experience@zubilant.co.in. Zubilant is a division of Stuti Tourism Pvt. Ltd., Mumbai.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,13 +23,89 @@
 <meta name="twitter:title" content="Contact Zubilant — Mumbai">
 <meta name="twitter:description" content="Call +91 81081 17770 or email experience@zubilant.co.in. Zubilant is a division of Stuti Tourism Pvt. Ltd., Mumbai.">
 <meta name="twitter:image" content="https://zubilant.co.in/hero-home.webp">
+<style>
+/* contact page r1: scoped layout only, tokens from site-v9 */
+.kways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}
+.kway{position:relative;display:flex;flex-direction:column;gap:10px;padding:28px 28px 26px;background:var(--paper);
+  border:1px solid var(--lineSoft);border-radius:var(--r-card);color:inherit;text-decoration:none;overflow:hidden;
+  transition:transform var(--t-move),box-shadow var(--t-move),border-color var(--t-move)}
+.kway::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--teal600)}
+.kway.wa::before{background:var(--sage600)}.kway.mail::before{background:var(--orange500)}
+.kway:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(243,107,33,.16);border-color:#F6C6A8}
+.kway:focus-visible{outline:2px solid var(--orange500);outline-offset:2px}
+.kway .ico{width:44px;height:44px;border-radius:12px;background:var(--teal50);display:grid;place-items:center;color:var(--teal600)}
+.kway.wa .ico{background:var(--sage100);color:var(--sage600)}.kway.mail .ico{background:var(--sun100);color:var(--orange600)}
+.kway .ico svg{width:22px;height:22px}
+.kway k{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink500);margin-top:6px}
+.kway v{display:block;font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.2;color:var(--teal900);word-break:break-word}
+.kway.mail v{font-size:18px;overflow-wrap:anywhere}
+.kway p{font-size:14.5px;line-height:1.5;color:var(--ink700);margin:0;flex:1 1 auto}
+.kway .go{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--teal600);margin-top:6px}
+.kway .go b{transition:transform var(--t-move)}
+.kway:hover .go{color:var(--orange500)}.kway:hover .go b{transform:translateX(4px)}
+.kway.form{cursor:pointer;font:inherit;text-align:left;border-width:1px}
+.cgrid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:48px;align-items:stretch}
+.ocard{background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);padding:32px;box-shadow:var(--e2)}
+.ocard .addr{font-size:18px;line-height:1.5;margin-top:14px;font-style:normal}
+.ocard .addr b{display:block;font-size:20px;color:var(--teal900)}
+.omap{border-radius:var(--r-card);overflow:hidden;border:1px solid var(--lineSoft);background:var(--teal50);min-height:340px;position:relative}
+.omap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:saturate(.85)}
+.ofacts{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin-top:22px;padding-top:20px;border-top:1px solid var(--lineSoft)}
+.ofacts k{display:block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink500)}
+.ofacts v{display:block;font-size:16px;line-height:1.4;margin-top:4px;color:var(--ink900)}
+.afterhead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+#after .routeband{grid-template-columns:repeat(3,1fr);margin-top:36px}
+#after .routeband div:nth-child(3)::before{background:var(--sun)}
+.cclose{background:var(--teal900);color:#fff;border-top:0;position:relative;overflow:hidden}
+.cclose::before{content:"";position:absolute;right:-12%;top:-40%;width:54%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(243,107,33,.22),transparent 65%);pointer-events:none}
+.cclose .btn-primary::after{background:var(--orange500)}.cclose .btn-primary::before{background:var(--orange600)}.cclose .btn-primary{box-shadow:0 6px 18px rgba(243,107,33,.32)}
+.cclose h2{color:#fff}.cclose .acc{color:var(--sun)}.cclose .lead,.cclose p{color:rgba(255,255,255,.86)}
+.ctaband{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:56px;align-items:center}
+.ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);background:rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column;gap:14px}
+.ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
+.ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
+.ctaticks li::after{content:"";position:absolute;left:4px;top:10px;width:6px;height:3px;border-left:2px solid var(--teal900);border-bottom:2px solid var(--teal900);transform:rotate(-45deg)}
+/* enquiry modal (same pattern as corporate.html) */
+.embd{position:fixed;inset:0;z-index:1000;background:rgba(0,20,22,.62);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 200ms ease}
+.embd[hidden]{display:none}
+.embd.show{opacity:1}
+.em{position:relative;background:var(--paper);border-radius:18px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:36px 40px 40px;box-shadow:var(--e3);transform:translateY(14px);transition:transform 220ms cubic-bezier(.2,.7,.3,1)}
+.embd.show .em{transform:none}
+.emhead{margin-bottom:24px;padding-right:40px}
+.emhead h3{font-size:26px;line-height:1.2}
+.emx{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:999px;border:0;background:var(--sand);font-size:20px;line-height:1;cursor:pointer}
+.emx:hover{background:var(--teal50)}
+.em .fgrid{gap:18px}
+.em .field input,.em .field select,.em .field textarea{font-size:16px;min-height:48px}
+.em .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+@media (max-width:1080px){
+  .kways{grid-template-columns:1fr 1fr}
+  .cgrid{grid-template-columns:1fr;gap:24px}
+  .omap{min-height:300px}
+  .ctaband{grid-template-columns:1fr;gap:28px}
+  #after .routeband{grid-template-columns:1fr}
+  #after .routeband div{border-right:0;border-bottom:1px solid var(--sage200)}
+  #after .routeband div:last-child{border-bottom:0}
+}
+@media (max-width:640px){
+  .kways{grid-template-columns:1fr;margin-top:28px}
+  .kway{padding:22px 20px 20px}
+  .kway v{font-size:20px}
+  .ocard{padding:24px 20px}
+  .ofacts{grid-template-columns:1fr}
+  .omap{min-height:260px}
+  .em{padding:26px 20px 28px}
+  .em .fgrid{grid-template-columns:1fr}
+  .embd{padding:12px}
+}
+</style>
 <link rel="stylesheet" href="zubi-chat.css">
 </head>
 <body>
 <div class="ground" aria-hidden="true"></div>
 <div class="stimeline" aria-hidden="true"><i id="sbar"></i></div>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav solid" id="nav">
+<nav class="nav" id="nav">
   <div class="in">
     <a class="brand" href="index.html" aria-label="Zubilant, home">
       <img class="lg-rev" src="logo-reversed.png" alt="Zubilant" width="807" height="212">
@@ -45,27 +121,162 @@
 </nav>
 <main id="main">
 <div class="pipe" aria-hidden="true"><span class="track"></span><span class="fill" id="pipefill"></span></div>
-<section class="notop" style="padding-top:170px">
-  <div class="wrap">
-    <div class="eyebrow" style="color:var(--ink500)">Contact</div>
-    <h1>Talk to a <span class="acc">person</span>.</h1>
-    <p class="lead ink700 mt16" style="max-width:58ch">The phone is answered by someone who designs journeys, not by a call centre.</p>
-    <dl class="deflist" style="max-width:760px">
-      <div><dt>Phone &amp; WhatsApp</dt><dd><a class="tlink" href="tel:+918108117770">+91 81081 17770</a></dd></div>
-      <div><dt>Email</dt><dd><a class="tlink" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a></dd></div>
-      <div><dt>Office</dt><dd>Ground Floor 194, Raghuleela Mega Mall, behind Poinsur depot,<br>Kandivali West, Mumbai, Maharashtra 400067<br><span class="ph">Carried from the current site. Confirm with Sachin before launch.</span></dd></div>
-      <div><dt>Company</dt><dd>Stuti Tourism Pvt. Ltd., founded 2009</dd></div>
-      <div><dt>Follow</dt><dd><a class="tlink" href="https://www.instagram.com/zubilant_travel/">Instagram</a> &middot; <a class="tlink" href="https://www.facebook.com/zubilant">Facebook</a> &middot; <a class="tlink" href="https://www.linkedin.com/company/zubilant/">LinkedIn</a></dd></div>
-    </dl>
+<header class="hero short chero">
+  <img src="hero-home.webp" alt="Looking through the windscreen at a mountain road, a map open on the dashboard." fetchpriority="high" width="2400" height="1350">
+  <div class="in">
+    <div class="eyebrow">Contact</div>
+    <h1>Talk to a person, <span class="acc">not a call centre</span>.</h1>
+    <p class="sub">The phone is answered by someone who designs journeys. Call, WhatsApp or write, whichever you prefer.</p>
+    <div class="btnrow">
+      <a class="btn btn-primary" href="tel:+918108117770">Call +91 81081 17770 <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-onphoto" href="#enquire" data-open-enquiry>Write to us</a>
+    </div>
+    <div class="trust">
+      <div><k>Designing since</k><v>2009</v></div>
+      <div><k>Travellers served</k><v>800,000+</v></div>
+      <div><k>Rated</k><v>4.9 on Google</v></div>
+    </div>
   </div>
-</section><section id="enquire">
-  <div class="wrap shell">
-    <div class="mcol"><span class="num">&sect; 01</span><div class="lab">Or write to us</div>
-      <div class="note">Five fields. Budget is not the first question.</div></div>
-    <div class="ccol">
-  <h2>Tell us who&rsquo;s travelling and we&rsquo;ll shape something.</h2>
-  <p class="lead">No obligation, no payment, no call centre. One person reads it and replies.</p>
-  <div class="formcard">
+</header>
+
+<section id="ways" class="notop" style="padding-top:72px">
+  <div class="wrap">
+    <div class="label ink500">Three ways in</div>
+    <h2 class="mt16">Pick the one <span class="acc">you like</span>.</h2>
+    <p class="lead ink700 mt16" style="max-width:56ch">Every one of them reaches the same small team in Mumbai.</p>
+    <div class="kways">
+      <a class="kway" href="tel:+918108117770">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+        <k>Call</k><v>+91 81081 17770</v>
+        <p>Fastest if you have a date in mind. You speak to the person who will plan it.</p>
+        <span class="go">Call now <b>&rarr;</b></span>
+      </a>
+      <a class="kway wa" href="https://wa.me/918108117770" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5Z"/><path d="M9.2 8.6c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.6 1.5c.1.2 0 .4-.1.6l-.5.6c.5 1 1.4 1.9 2.5 2.4l.6-.6c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5-.1 1-.9 1.6-1.8 1.6-3.2-.2-5.8-2.8-6-6 0-.4.2-.8.4-1.1Z"/></svg></span>
+        <k>WhatsApp</k><v>+91 81081 17770</v>
+        <p>Send a voice note, a screenshot, a place you saw somewhere. We reply in the same thread.</p>
+        <span class="go">Open WhatsApp <b>&rarr;</b></span>
+      </a>
+      <a class="kway mail" href="mailto:experience@zubilant.co.in">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
+        <k>Email</k><v>experience@zubilant.co.in</v>
+        <p>Best for a longer brief, or if several people are deciding together.</p>
+        <span class="go">Write an email <b>&rarr;</b></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="after" class="tint-moss">
+  <div class="wrap">
+    <div class="afterhead">
+      <div>
+        <div class="label ink500">What happens next</div>
+        <h2 class="mt16">No payment, no obligation, <span class="acc">no queue</span>.</h2>
+      </div>
+      <a class="btn btn-primary" href="#enquire" data-open-enquiry>Tell us who&rsquo;s travelling <span class="arw" aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="routeband">
+      <div><k>Step 1</k><v>You tell us who&rsquo;s travelling</v><em>Ages, roughly when, and anything we should know. Two minutes.</em></div>
+      <div><k>Step 2</k><v>One person reads it</v><em>And calls or writes back with questions, not a brochure.</em></div>
+      <div><k>Step 3</k><v>You get a shaped itinerary and a quote</v><em>Change whatever you like. Only then is anything booked.</em></div>
+    </div>
+  </div>
+</section>
+
+<section id="office">
+  <div class="wrap">
+    <div class="label ink500">Visit us</div>
+    <h2 class="mt16">The office in <span class="acc">Mumbai</span>.</h2>
+    <div class="cgrid mt24">
+      <div class="ocard">
+        <div class="label ink500">Zubilant</div>
+        <address class="addr"><b>Raghuleela Mega Mall</b>Ground Floor 194, behind Poinsur depot,<br>Kandivali West, Mumbai, Maharashtra 400067</address>
+        <div class="btnrow" style="margin-top:22px">
+          <a class="btn btn-primary" href="https://maps.google.com/maps?cid=5264561267799496906" target="_blank" rel="noopener">Get directions <span class="arw" aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-secondary" href="tel:+918108117770">Call before you come</a>
+        </div>
+        <div class="ofacts">
+          <div><k>Company</k><v>Stuti Tourism Pvt. Ltd., founded 2009</v></div>
+          <div><k>Travellers from</k><v>Anywhere in India. Most of our planning happens on the phone and WhatsApp.</v></div>
+          <div><k>Follow</k><v><a class="tlink" href="https://www.instagram.com/zubilant_travel/" rel="noopener">Instagram</a> &middot; <a class="tlink" href="https://www.facebook.com/zubilant" rel="noopener">Facebook</a> &middot; <a class="tlink" href="https://www.linkedin.com/company/zubilant/" rel="noopener">LinkedIn</a></v></div>
+          <div><k>Reviews</k><v><a class="tlink" href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">4.9 on Google &rarr;</a></v></div>
+        </div>
+      </div>
+      <div class="omap">
+        <iframe title="Map showing the Zubilant office at Raghuleela Mega Mall, Kandivali West, Mumbai" src="https://www.google.com/maps?q=Raghuleela+Mega+Mall,+Kandivali+West,+Mumbai+400067&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stories" class="tint-moss">
+  <div class="wrap">
+    <h2>Stories from the <span class="acc">road</span>.</h2>
+    <p class="lead ink700" style="margin-top:12px;max-width:56ch">4.9 stars on Google. Quoted verbatim, nothing paraphrased.</p>
+    <div class="tstory">
+      <div class="tquote">
+        <span class="mark">&ldquo;</span>
+        <blockquote id="tq-text">Sachin from Zubilant did an excellent job organizing a tour of the Badami and Hampi area for us. From a comfortable car and driver to hotels, sites and guide. We had a wonderful experience on our first trip to India.</blockquote>
+        <div class="who"><b id="tq-name">Rhina Todd</b><span id="tq-meta">7 months ago &middot; Google review</span></div>
+        <p class="mt24"><a class="tlink" href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews on Google &rarr;</a></p>
+      </div>
+      <div class="timg trot" id="trot">
+        <img class="trot-img is-active" src="traveller-1.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-2.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-3.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-4.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+        <img class="trot-img" src="traveller-5.webp" alt="Zubilant travellers on the road." loading="lazy" width="900" height="675">
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var rot=document.getElementById('trot');
+  if(!rot)return;
+  var imgs=rot.querySelectorAll('.trot-img');
+  if(imgs.length<2)return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var i=0;
+  setInterval(function(){
+    imgs[i].classList.remove('is-active');
+    i=(i+1)%imgs.length;
+    imgs[i].classList.add('is-active');
+  },3000);
+})();
+</script>
+
+<section id="enquire" class="cclose">
+  <div class="wrap ctaband">
+    <div>
+      <div class="label" style="color:var(--sun)">Or write to us</div>
+      <h2 class="mt16">Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
+      <p class="lead mt16" style="max-width:44ch">Five fields. Budget is not the first question. One person reads it and replies.</p>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#enquire" data-open-enquiry>Send an enquiry <span class="arw" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-onphoto" href="https://wa.me/918108117770" target="_blank" rel="noopener">WhatsApp instead</a>
+      </div>
+      <p class="mt24" style="font-size:15px">Or call <a class="tlink" style="color:#fff" href="tel:+918108117770">+91 81081 17770</a>, or email <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
+    </div>
+    <ul class="ctaticks">
+      <li>No payment to enquire</li>
+      <li>A person replies, not a ticket</li>
+      <li>Private journeys, your dates</li>
+      <li>India or abroad</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<div class="embd" id="embd" role="dialog" aria-modal="true" aria-labelledby="emt" hidden>
+  <div class="em">
+    <button class="emx" type="button" aria-label="Close">&times;</button>
+    <div class="emhead">
+      <div class="label ink500">Write to us</div>
+      <h3 id="emt" class="mt8">Tell us who&rsquo;s travelling.</h3>
+      <p class="ink700 mt8" style="font-size:15px">Five fields. No obligation, no payment, no call centre.</p>
+    </div>
     <form class="fgrid" method="post" action="/api/enquiry">
       <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
       <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
@@ -75,13 +286,36 @@
         <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
       <div class="formfoot full">
         <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
-        <span class="ph-block" style="max-width:46ch">The reply-time promise appears here only once someone internally owns it. Until then this page makes no promise it cannot keep.</span>
+        <span class="ink500" style="font-size:14px">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp.</span>
       </div>
     </form>
   </div>
-  <p class="mt24">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a> &mdash; also on WhatsApp. Or <a class="tlink" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p></div>
-  </div>
-</section></main>
+</div>
+<script>
+(function(){
+  var bd=document.getElementById('embd'); if(!bd) return;
+  var last=null;
+  function open(){
+    last=document.activeElement;
+    bd.hidden=false; requestAnimationFrame(function(){ bd.classList.add('show'); });
+    document.body.style.overflow='hidden';
+    var f=bd.querySelector('#f-name'); if(f) f.focus();
+  }
+  function close(){
+    bd.classList.remove('show'); document.body.style.overflow='';
+    setTimeout(function(){ bd.hidden=true; },220);
+    if(last&&last.focus) last.focus();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-open-enquiry]');
+    if(a){ e.preventDefault(); open(); return; }
+    if(e.target===bd||e.target.closest('.emx')) close();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!bd.hidden) close(); });
+  if(location.hash==='#enquire') open();
+})();
+</script>
+
 <section class="stepout v2 notop" aria-label="Step outside" id="stepout">
   <canvas class="so-reveal" aria-hidden="true"></canvas>
   <div class="so-in">
