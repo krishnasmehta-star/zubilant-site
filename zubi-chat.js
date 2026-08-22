@@ -90,14 +90,14 @@
     [R('\\b(what (is|does) zubilant|who are you|about (you|zubilant|the company)|stuti|since when|how long|how old|trust|legit|genuine|reviews?|rating|google)\\b'), function(){return {html:F.about,links:[['about.html','About Zubilant →']]};}],
     [R('\\b(group|fixed departure|batch|join (a|the) group|other (people|travell?ers)|private|custom|tailor|bespoke|personali[sz]ed)\\b'), function(){return {html:F.fit,chips:['Show me journeys','Request a call back']};}],
     [R('\\b(cancel\\w*|refund\\w*|payments?|pay|paid|emi|instal?l?ments?|advance|deposit|terms|policy|policies|insurance|insured)\\b'), function(){return {html:F.unknown_policy,chips:['Request a call back','Call '+PHONE]};}],
-    [R('\\b(includ|inclusion|exclu|flight|airfare|air ?fare|land.?only|what do i get|covered|meals|hotel category)\\b'), function(){
+    [R('\\b(includ\\w*|inclusions?|exclu\\w*|flights?|airfare|air ?fare|land.?only|what do i get|covered|meals|hotel category)\\b'), function(){
       var h=F.incl; if(HERE) h+='<p>For <b>'+esc(HERE.t)+'</b>, scroll down to the inclusions on this page, or ask me for a quote.</p>';
       return {html:h,chips:['Get a quote for this trip','Request a call back']};}],
     [R('\\b(visa|passport|visa.?free|on.?arrival)\\b'), function(q){var r=poolAnswer(q,'visa-free','visa-free journey','journeys.html?f=visa-free',F.visa);
       if(!budget(q)){ var named=search(q.replace(/visa[- ]?free|visa|passport|on[- ]?arrival/gi,' '),2).filter(function(d){return d.tags.indexOf('visa-free')<0;}); if(named.length){ r.cards=named.concat(r.cards||[]).slice(0,3); r.html='<p>For <b>'+esc(named[0].t)+'</b> the visa is handled with you on the call — I won’t guess at rules that change.</p>'+F.visa; } r.links=[['journeys.html?f=visa-free','Visa-free escapes →']]; }
       return r;}],
     [R('\\b(safe|safety|medical|doctor|emergency|security)\\b'), function(){return {html:F.safety,links:[['safety-and-logistics.html','Safety &amp; Logistics →']]};}],
-    [R('\\b(corporate|compan(y|ies)|offsite|off-site|team|incentive|mice|employees|conference)\\b'), function(){return {html:F.corporate,links:[['corporate.html','Corporate travel →']]};}],
+    [R('\\b(corporate|compan(y|ies)|offsite|outbound|training|workation|incentive|per head|off-site|team|incentive|mice|employees|conference)\\b'), function(){return {html:F.corporate,links:[['corporate.html','Corporate travel →']]};}],
     [R('\\b(inbound|foreign(er)?s? (visiting|coming)|visit(ing)? india|coming to india|international (guests|visitors)|nri)\\b'), function(){return {html:F.inbound,links:[['inbound-india.html','Inbound India →']]};}],
     [R('\\b(price|cost|how much|budget|rate|charges?|expensive|cheap|afford|under|below|within|₹|rs\\.?|inr)\\b'), priceIntent],
     [R('\\b(how many (days|nights)|enough (days|nights)|ideal duration|how long (is|should|does) (the )?(trip|journey|tour)|duration)\\b'), function(q){
@@ -126,10 +126,15 @@
       return {html:'<p>We have <b>'+J.length+' journeys</b> across India and abroad. Tell me who’s going, a month or a budget and I’ll narrow it — or browse them all.</p>',links:[['journeys.html','All journeys →']],chips:startChips()};}],
   ];
 
+  /* The questions Indian travellers actually ask (research, doc 36 §5): cost with a
+     number attached, parents, visa-free abroad, how many days, flights, EMI, safety.
+     Home shows all six; the greeting in Messages shows the first four. */
   function startChips(){
-    if(HERE) return ['Price for this trip','Best time to go','Is it right for older parents?','Get a quote for this trip'];
-    if(PAGE==='corporate') return ['What do you do for companies?','Request a call back','Visa-free team offsites'];
-    return ['Plan a trip for my parents','Visa-free holidays under ₹80,000','What does Zubilant actually do?','Request a call back'];
+    if(HERE) return ['Price for this trip','Best month to go','How many days are enough?','Is it okay for my parents?','Flights included or not?','Get a quote for this trip'];
+    if(PAGE==='corporate') return ['Offsite for 40 people near Mumbai','Do you do outbound training?','How much per head for 3 days?','Request a call back'];
+    if(PAGE==='senior-travel-saathi') return ['Trip for my parents under ₹50,000','Is Char Dham okay for 70-year-olds?','Wheelchair and short drives?','Can my family join my parents?','Request a call back'];
+    if(PAGE==='spiritual-journeys') return ['Char Dham from Mumbai, how many days?','Tirupati darshan without the queue?','Ayodhya for my parents','Request a call back'];
+    return ['Trip for my parents under ₹50,000','Which international trips are visa-free?','How many days for Kashmir?','Are flights included in the price?','Can I pay in EMI?','Is it a group tour or private?'];
   }
 
   /* pool answer that respects a stated budget honestly: never show ₹95,000 to someone who said ₹60,000 */
@@ -146,6 +151,7 @@
     return {html:'<p>'+under.length+' '+label+(under.length>1?'s':'')+' start under <b>'+inr(b)+'</b>:</p>',cards:hits,more:more};
   }
   function priceIntent(q){
+    if(PAGE==='corporate') return {html:'<p>Offsites are costed per head on the real brief — headcount, nights, city and what the days need to achieve — rather than off a rate card. Tell us those four things and you get a costed plan, not a brochure price.</p>',links:[['corporate.html#enquire','Get a costed plan']],chips:['Request a call back']};
     var b=budget(q), c=search(q,3);
     if(HERE&&!/\b(under|below|within|budget)\b/i.test(q)){
       return {html:'<p><b>'+esc(HERE.t)+'</b> starts from <b>'+inr(HERE.p)+' per person</b> for '+HERE.n+' nights — an indicative price, confirmed on your dates before anything is booked.</p>',chips:['What’s included?','Get a quote for this trip']};
@@ -192,7 +198,7 @@
   /* ── answer(): the router ── */
   function answer(q){
     var s=q.trim(); if(!s) return null;
-    var fq=faq(s); if(fq&&/(^(thank|zubi|who are you|are you (a )?(bot|human|ai)|awards?|un.?cefact|sachin|founder|stuti|how do i book|languages?)|\b(hours|timings?|altitude|acclimati|oxygen|child (discount|price|pricing|fare)|infant|room|sharing|complaint|escalat|documents?|passport|confirmation|voucher)\b)/i.test(s)) return fq;
+    var fq=faq(s); if(fq&&/(^(thank|zubi|who are you|are you (a )?(bot|human|ai)|awards?|un.?cefact|sachin|founder|stuti|how do i book|languages?)|\b(hours|timings?|altitude|acclimati|oxygen|child (discount|price|pricing|fare)|infant|room|sharing|complaint|escalat|documents?|passport|confirmation|voucher|wheelchair|mobility)\b)/i.test(s)) return fq;
     for(var i=0;i<INTENTS.length;i++){
       if(INTENTS[i][0].test(s)){ var r=INTENTS[i][1](s); if(r) return r; }
     }
@@ -376,7 +382,7 @@
     if(greeted) return; greeted=true;
     var h=HERE?'<p>Hi, I’m Zubi. You’re looking at <b>'+esc(HERE.t)+'</b> — '+HERE.n+' nights, from '+inr(HERE.p)+' per person. What would you like to know?</p>'
                 :'<p>Hi, I’m Zubi. Ask me about a place, a month, a budget, or who’s travelling.</p>';
-    bot(h); chips(startChips()); save();
+    bot(h); chips(startChips().slice(0,4)); save();
   }
 
   function open(){
