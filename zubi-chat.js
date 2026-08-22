@@ -28,6 +28,12 @@
   function byHref(h){for(var i=0;i<J.length;i++){if(J[i].h===h) return J[i];} return null;}
   function href(u,extra){return u+(extra||'');}
 
+  /* session memory — the conversation follows the visitor from page to page (sessionStorage: this tab, this visit) */
+  var SS=null; try{ SS=window.sessionStorage; SS.setItem('zbc-t','1'); SS.removeItem('zbc-t'); }catch(e){ SS=null; }
+  function sget(k,d){ try{ var v=SS&&SS.getItem('zbc:'+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } }
+  function sset(k,v){ try{ SS&&SS.setItem('zbc:'+k,JSON.stringify(v)); }catch(e){} }
+  function emit(name,detail){ try{ window.dispatchEvent(new CustomEvent('zubi:'+name,{detail:detail||{}})); }catch(e){} }
+
   /* current page context */
   var path=(location.pathname.split('/').pop()||'index.html');
   var HERE=byHref(path);                         // a journey page?
@@ -199,35 +205,125 @@
     return {html:pick(F.fallback),chips:startChips().slice(0,3).concat(['Request a call back'])};
   }
 
-  /* ── DOM ── */
+  /* ── DOM · Intercom-style messenger: Home / Messages / Help + bottom tabs ── */
+  var ICON={
+    home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>',
+    msgs:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10H9l-5 4z"/></svg>',
+    help:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.8"/><path d="M12 17h.01"/></svg>',
+    back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+    x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>',
+    chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+    search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>'
+  };
+  function av(n){ return '<span class="zbc-av"><img src="'+AVATAR+'" alt="" width="'+n+'" height="'+n+'"></span>'; }
+
   var root=document.createElement('div'); root.className='zbc-root';
   root.innerHTML=
-    '<div class="zbc-nudge" role="status" aria-live="polite"><b>Zubi here.</b> '+(HERE?'Questions about '+esc(HERE.t)+'? Ask away.':'Looking for the right journey? I can help you find it.')+'<button type="button" aria-label="Dismiss">&times;</button></div>'+
-    '<button type="button" class="zbc-launch" aria-haspopup="dialog" aria-expanded="false" aria-controls="zbc-panel"><span class="zbc-av"><img src="'+AVATAR+'" alt="" width="34" height="34"></span><span class="zbc-lbl">Ask Zubi</span><span class="zbc-dot" aria-hidden="true"></span></button>'+
+    '<div class="zbc-nudge" role="status" aria-live="polite"><b>Zubi here.</b> '+(HERE?'Questions about '+esc(HERE.t)+'? Ask away.':'Looking for the right journey? I can help.')+'<button type="button" aria-label="Dismiss">&times;</button></div>'+
+    '<button type="button" class="zbc-launch" aria-haspopup="dialog" aria-expanded="false" aria-controls="zbc-panel" aria-label="Open Ask Zubi"><span class="zbc-li zbc-li-open">'+av(32)+'</span><span class="zbc-li zbc-li-close">'+ICON.down+'</span><span class="zbc-badge" hidden aria-hidden="true">1</span></button>'+
     '<div class="zbc-panel" id="zbc-panel" role="dialog" aria-modal="false" aria-label="Ask Zubi" tabindex="-1">'+
-      '<div class="zbc-head"><span class="zbc-av"><img src="'+AVATAR+'" alt="" width="36" height="36"></span><div class="zbc-who"><b>Zubi</b><span><i></i>Zubilant’s guide · replies instantly</span></div>'+
-      '<button type="button" class="zbc-x" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'+
-      '<div class="zbc-log" aria-live="polite" aria-relevant="additions"></div>'+
-      '<form class="zbc-in" autocomplete="off"><input type="text" name="q" placeholder="Ask about a place, a month, a budget…" aria-label="Your question" maxlength="240"><button type="submit" class="zbc-send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></form>'+
-      '<div class="zbc-foot">Zubi answers from this site. For anything specific, a person calls you back.</div>'+
+
+      /* HOME */
+      '<div class="zbc-view zbc-home" role="region" data-view="home">'+
+        '<div class="zbc-hero">'+
+          '<div class="zbc-hero-top"><img class="zbc-logo" src="logo-reversed.png" alt="Zubilant" height="22"><button type="button" class="zbc-x" aria-label="Close">'+ICON.x+'</button></div>'+
+          '<h2>Hi there.</h2><p>How can we help?</p>'+
+        '</div>'+
+        '<div class="zbc-home-body">'+
+          '<button type="button" class="zbc-card zbc-start zbc-continue" data-go="msgs" hidden>'+av(36)+'<span><b>Continue your conversation</b><em class="zbc-last"></em></span><i>'+ICON.arrow+'</i></button>'+
+          '<button type="button" class="zbc-card zbc-start" data-go="msgs">'+av(36)+'<span><b>Ask Zubi a question</b><em>Zubilant’s guide · replies instantly</em></span><i>'+ICON.arrow+'</i></button>'+
+          '<label class="zbc-search"><span class="zbc-sico">'+ICON.search+'</span><input type="search" placeholder="Search for help" aria-label="Search for help"></label>'+
+          '<div class="zbc-block"><h3>'+(HERE?'About '+esc(HERE.t):'Popular questions')+'</h3><ul class="zbc-list zbc-popular"></ul></div>'+
+        '</div>'+
+      '</div>'+
+
+      /* MESSAGES */
+      '<div class="zbc-view zbc-msgs" role="region" data-view="msgs" hidden>'+
+        '<div class="zbc-bar"><button type="button" class="zbc-ib zbc-back" aria-label="Back" data-go="home">'+ICON.back+'</button>'+av(30)+'<div class="zbc-who"><b>Zubi</b><span><i></i>Zubilant · replies instantly</span></div><button type="button" class="zbc-ib zbc-x" aria-label="Close">'+ICON.x+'</button></div>'+
+        '<div class="zbc-log" aria-live="polite" aria-relevant="additions"></div>'+
+        '<form class="zbc-in" autocomplete="off"><input type="text" name="q" placeholder="Send a message…" aria-label="Your message" maxlength="240"><button type="submit" class="zbc-send" aria-label="Send">'+ICON.arrow+'</button></form>'+
+      '</div>'+
+
+      /* HELP */
+      '<div class="zbc-view zbc-help" role="region" data-view="help" hidden>'+
+        '<div class="zbc-bar zbc-bar-help"><div class="zbc-who"><b>Help</b></div><button type="button" class="zbc-ib zbc-x" aria-label="Close">'+ICON.x+'</button></div>'+
+        '<div class="zbc-help-body"><label class="zbc-search"><span class="zbc-sico">'+ICON.search+'</span><input type="search" placeholder="Search for help" aria-label="Search help articles"></label><ul class="zbc-list zbc-faqlist"></ul><p class="zbc-none" hidden>Nothing matches that. Ask Zubi instead — a person is one tap away.</p></div>'+
+      '</div>'+
+
+      /* TABS */
+      '<nav class="zbc-tabs" aria-label="Messenger sections">'+
+        '<button type="button" class="zbc-tab is-on" data-go="home">'+ICON.home+'<span>Home</span></button>'+
+        '<button type="button" class="zbc-tab" data-go="msgs">'+ICON.msgs+'<span>Messages</span></button>'+
+        '<button type="button" class="zbc-tab" data-go="help">'+ICON.help+'<span>Help</span></button>'+
+      '</nav>'+
     '</div>';
   document.body.appendChild(root);
 
   var launch=root.querySelector('.zbc-launch'), panel=root.querySelector('.zbc-panel'), log=root.querySelector('.zbc-log'),
-      form=root.querySelector('.zbc-in'), input=form.querySelector('input'), xbtn=root.querySelector('.zbc-x'), nudge=root.querySelector('.zbc-nudge');
-  var opened=false, greeted=false, nudgeShown=false;
+      form=root.querySelector('.zbc-in'), input=form.querySelector('input'), nudge=root.querySelector('.zbc-nudge'),
+      popular=root.querySelector('.zbc-popular'), faqlist=root.querySelector('.zbc-faqlist'), none=root.querySelector('.zbc-none');
+  var badge=root.querySelector('.zbc-badge'), cont=root.querySelector('.zbc-continue'), lastEl=root.querySelector('.zbc-last');
+  var opened=false, greeted=sget('greeted',false), nudgeShown=sget('nudged',false), view=sget('view','home'), unread=sget('unread',0);
+  if(view==='msgs'&&!sget('log','')) view='home';
 
+  /* restore the transcript from this visit */
+  (function(){ var h=sget('log',''); if(h){ log.innerHTML=h; var chips0=log.querySelectorAll('.zbc-chip'); for(var i=0;i<chips0.length;i++){ (function(b){ b.addEventListener('click',function(){ b.parentNode.remove(); ask(b.textContent); }); })(chips0[i]); } var f=log.querySelector('.zbc-form'); if(f) f.remove(); } })();
+  function save(){ sset('log',log.innerHTML); sset('greeted',greeted); sset('view',view); sset('unread',unread); }
+  function setUnread(n){ unread=n; badge.hidden=!n; badge.textContent=n>9?'9+':String(n); launch.setAttribute('aria-label',(root.classList.contains('zbc-open')?'Close':'Open')+' Ask Zubi'+(n?', '+n+' unread':'')); sset('unread',n); }
+  function refreshContinue(){ var bots=log.querySelectorAll('.zbc-bot:not(.zbc-typing) .zbc-b'); var last=bots.length?bots[bots.length-1].textContent.trim():''; cont.hidden=!last; if(last) lastEl.textContent='Zubi: '+(last.length>64?last.slice(0,62)+'…':last); }
+  setUnread(unread); refreshContinue();
+
+  /* ── views ── */
+  function go(v){
+    view=v;
+    root.querySelectorAll('.zbc-view').forEach(function(s){ s.hidden=s.getAttribute('data-view')!==v; });
+    root.querySelectorAll('.zbc-tab').forEach(function(t){ t.classList.toggle('is-on',t.getAttribute('data-go')===v); });
+    panel.setAttribute('data-view',v); sset('view',v);
+    if(v==='msgs'){ greet(); setUnread(0); setTimeout(function(){ input.focus(); scroll(); },40); }
+    if(v==='help'){ renderFaq(''); setTimeout(function(){ root.querySelector('.zbc-help .zbc-search input').focus(); },40); }
+  }
+  root.addEventListener('click',function(e){
+    var g=e.target.closest&&e.target.closest('[data-go]'); if(g&&root.contains(g)){ go(g.getAttribute('data-go')); return; }
+    if(e.target.closest&&e.target.closest('.zbc-x')) close();
+  });
+
+  /* home: popular questions */
+  function li(text,sub){ return '<li><button type="button"><span><b>'+esc(text)+'</b>'+(sub?'<em>'+esc(sub)+'</em>':'')+'</span><i>'+ICON.chev+'</i></button></li>'; }
+  popular.innerHTML=startChips().map(function(t){return li(t);}).join('');
+  popular.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; go('msgs'); ask(b.querySelector('b').textContent); });
+
+  /* home search → help with the query */
+  var homeSearch=root.querySelector('.zbc-home .zbc-search input'), helpSearch=root.querySelector('.zbc-help .zbc-search input');
+  homeSearch.addEventListener('input',function(){ if(homeSearch.value.length>1){ go('help'); helpSearch.value=homeSearch.value; homeSearch.value=''; renderFaq(helpSearch.value); } });
+  helpSearch.addEventListener('input',function(){ renderFaq(helpSearch.value); });
+
+  /* help: browse the FAQ repository; tap to expand; "Ask Zubi about this" hands to Messages */
+  function title(f){ var t=f.q[0].replace(/\bi\b/g,'I').replace(/\bun cefact\b/i,'UN/CEFACT'); return t.charAt(0).toUpperCase()+t.slice(1)+(/[?.!]$/.test(t)?'':'?'); }
+  function renderFaq(q){
+    var list=FAQ; q=(q||'').trim();
+    if(q){ var qw=fwords(q); list=FAQ.map(function(f){ var sc=0; f.q.forEach(function(v){ var vw=fwords(v); vw.forEach(function(w){ if(qw.some(function(x){return w.indexOf(x)===0||x.indexOf(w)===0;})) sc++; }); }); if(f.a.toLowerCase().indexOf(q.toLowerCase())>-1) sc+=2; return {f:f,sc:sc}; }).filter(function(x){return x.sc>0;}).sort(function(a,b){return b.sc-a.sc;}).map(function(x){return x.f;}); }
+    none.hidden=!!list.length;
+    faqlist.innerHTML=list.map(function(f){ var i=FAQ.indexOf(f); return '<li data-i="'+i+'"><button type="button" aria-expanded="false"><span><b>'+esc(title(f))+'</b></span><i>'+ICON.chev+'</i></button><div class="zbc-ans" hidden>'+f.a+(f.links?f.links.map(function(l){return '<a class="zbc-more" href="'+l[0]+'">'+l[1]+'</a>';}).join(''):'')+'<button type="button" class="zbc-askthis">Ask Zubi about this</button></div></li>'; }).join('');
+  }
+  faqlist.addEventListener('click',function(e){
+    var ask1=e.target.closest('.zbc-askthis'); if(ask1){ var li1=ask1.closest('li'); go('msgs'); ask(title(FAQ[+li1.getAttribute('data-i')]).replace(/\?$/,'')); return; }
+    var b=e.target.closest('li > button'); if(!b) return; var ans=b.nextElementSibling; var open1=ans.hidden; faqlist.querySelectorAll('.zbc-ans').forEach(function(a){a.hidden=true;}); faqlist.querySelectorAll('li > button').forEach(function(x){x.setAttribute('aria-expanded','false');}); ans.hidden=!open1; b.setAttribute('aria-expanded',String(open1)); if(open1) b.closest('li').scrollIntoView({block:'nearest'});
+  });
+
+  /* ── conversation primitives ── */
   function scroll(){ log.scrollTop=log.scrollHeight; }
-  function bot(html){ var m=document.createElement('div'); m.className='zbc-msg zbc-bot'; m.innerHTML='<span class="zbc-av"><img src="'+AVATAR+'" alt="" width="22" height="22"></span><div class="zbc-b">'+html+'</div>'; log.appendChild(m); scroll(); return m; }
-  function me(text){ var m=document.createElement('div'); m.className='zbc-msg zbc-me'; m.innerHTML='<div class="zbc-b">'+esc(text)+'</div>'; log.appendChild(m); scroll(); }
-  function typing(){ var m=document.createElement('div'); m.className='zbc-msg zbc-bot zbc-typing'; m.innerHTML='<span class="zbc-av"><img src="'+AVATAR+'" alt="" width="22" height="22"></span><div class="zbc-b"><i></i><i></i><i></i></div>'; log.appendChild(m); scroll(); return m; }
+  function bot(html){ var m=document.createElement('div'); m.className='zbc-msg zbc-bot'; m.innerHTML=av(22)+'<div class="zbc-b">'+html+'</div>'; log.appendChild(m); scroll(); if(!root.classList.contains('zbc-open')||view!=='msgs') setUnread(unread+1); refreshContinue(); save(); return m; }
+  function me(text){ var m=document.createElement('div'); m.className='zbc-msg zbc-me'; m.innerHTML='<div class="zbc-b">'+esc(text)+'</div>'; log.appendChild(m); scroll(); save(); }
+  function typing(){ var m=document.createElement('div'); m.className='zbc-msg zbc-bot zbc-typing'; m.innerHTML=av(22)+'<div class="zbc-b"><i></i><i></i><i></i></div>'; log.appendChild(m); scroll(); return m; }
   function cards(list){ if(!list||!list.length) return; var w=document.createElement('div'); w.className='zbc-cards';
-    w.innerHTML=list.map(function(d){return '<a class="zbc-card" href="'+esc(d.h)+'"><img src="'+esc(d.g)+'" alt="" loading="lazy" width="68" height="52"><span><b>'+esc(d.t)+'</b><em>'+esc(d.r)+' · '+d.n+' nights · from '+inr(d.p)+'</em></span><i aria-hidden="true">→</i></a>';}).join(''); log.appendChild(w); scroll(); }
-  function links(list){ if(!list||!list.length) return; list.forEach(function(l){ var a=document.createElement('a'); a.className='zbc-more'; a.href=l[0]; a.innerHTML=l[1]; log.appendChild(a); }); scroll(); }
+    w.innerHTML=list.map(function(d){return '<a class="zbc-jcard" href="'+esc(d.h)+'"><img src="'+esc(d.g)+'" alt="" loading="lazy" width="64" height="48"><span><b>'+esc(d.t)+'</b><em>'+esc(d.r)+' · '+d.n+' nights · from '+inr(d.p)+'</em></span><i>'+ICON.chev+'</i></a>';}).join(''); log.appendChild(w); scroll(); }
+  function links(list){ if(!list||!list.length) return; var w=document.createElement('div'); w.className='zbc-links'; w.innerHTML=list.map(function(l){return '<a class="zbc-more" href="'+l[0]+'">'+l[1]+'</a>';}).join(''); log.appendChild(w); scroll(); }
   function chips(list){ if(!list||!list.length) return; var w=document.createElement('div'); w.className='zbc-chips';
     list.forEach(function(t){ var b=document.createElement('button'); b.type='button'; b.className='zbc-chip'; b.textContent=t; b.addEventListener('click',function(){ w.remove(); ask(t); }); w.appendChild(b); });
-    log.appendChild(w); scroll(); }
-  function clearChips(){ var old=log.querySelectorAll('.zbc-chips'); for(var i=0;i<old.length;i++) old[i].remove(); }
+    log.appendChild(w); scroll(); save(); }
+  function clearChips(){ var old=log.querySelectorAll('.zbc-chips'); for(var i=0;i<old.length;i++) old[i].remove(); save(); }
 
   function callbackForm(){
     var w=document.createElement('form'); w.className='zbc-form'; w.noValidate=true;
@@ -250,7 +346,8 @@
   function sendCallback(d){
     var notes='Call back requested via Zubi · best time: '+d.when+(HERE?' · about: '+HERE.t:'')+' · from: '+path;
     var qs='?via=zubi&name='+encodeURIComponent(d.name)+'&contact='+encodeURIComponent(d.phone)+'&when='+encodeURIComponent(d.when)+'&notes='+encodeURIComponent(notes)+(HERE?'&journey='+encodeURIComponent(HERE.t):'');
-    bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. Taking you to one last step so this reaches a person — your details are already filled in.</p>');
+    emit('callback',{page:path,journey:HERE?HERE.t:null});
+    bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. One last step so this reaches a person — your details are already filled in.</p>');
     setTimeout(function(){ location.href=PLAN+qs; },900);
   }
 
@@ -260,14 +357,16 @@
       t.remove();
       if(r.html) bot(r.html);
       cards(r.cards);
-      if(r.more) links([[r.more,'See all matching journeys →']]);
-      links(r.links);
+      var ls=(r.more?[[r.more,'See all matching journeys']]:[]).concat(r.links||[]);
+      links(ls.map(function(l){return [l[0],l[1].replace(/\s*→$/,'')];}));
       if(r.form) callbackForm();
       chips(r.chips);
     }, 420+Math.min(600,(r.html||'').length*2));
   }
   function ask(text){
     text=(text||'').trim(); if(!text) return;
+    if(view!=='msgs') go('msgs');
+    emit('ask',{q:text,page:path});
     clearChips(); me(text);
     if(/^call \+?91/i.test(text)){ location.href=TEL; return; }
     var r=answer(text)||{html:pick(F.fallback),chips:startChips()};
@@ -276,31 +375,43 @@
   function greet(){
     if(greeted) return; greeted=true;
     var h=HERE?'<p>Hi, I’m Zubi. You’re looking at <b>'+esc(HERE.t)+'</b> — '+HERE.n+' nights, from '+inr(HERE.p)+' per person. What would you like to know?</p>'
-                :'<p>Hi, I’m Zubi — Zubilant’s guide. I can point you to the right journey, explain prices, or get a person to call you. Where shall we start?</p>';
-    bot(h); chips(startChips());
+                :'<p>Hi, I’m Zubi. Ask me about a place, a month, a budget, or who’s travelling.</p>';
+    bot(h); chips(startChips()); save();
   }
 
   function open(){
-    root.classList.add('zbc-open'); launch.setAttribute('aria-expanded','true'); hideNudge(); opened=true;
+    root.classList.add('zbc-open'); launch.setAttribute('aria-expanded','true'); launch.setAttribute('aria-label','Close Ask Zubi'); hideNudge(); opened=true;
     if(window.innerWidth<=640) document.documentElement.classList.add('zbc-lock');
-    greet(); setTimeout(function(){ input.focus(); },50);
+    go(view); if(view==='home') setTimeout(function(){ panel.focus(); },40);
+    emit('open',{page:path,view:view});
   }
   function close(){
-    root.classList.remove('zbc-open'); launch.setAttribute('aria-expanded','false');
-    document.documentElement.classList.remove('zbc-lock'); launch.focus();
+    root.classList.remove('zbc-open'); launch.setAttribute('aria-expanded','false'); launch.setAttribute('aria-label','Open Ask Zubi');
+    document.documentElement.classList.remove('zbc-lock'); launch.focus(); emit('close',{page:path});
   }
-  function hideNudge(){ nudge.classList.remove('show'); }
+  function hideNudge(){ nudge.classList.remove('show'); nudgeShown=true; sset('nudged',true); }
+  /* click or tap anywhere outside the messenger closes it */
+  document.addEventListener('pointerdown',function(e){ if(!root.classList.contains('zbc-open')) return; if(root.contains(e.target)) return; close(); },true);
 
-  launch.addEventListener('click',open);
-  xbtn.addEventListener('click',close);
+  launch.addEventListener('click',function(){ root.classList.contains('zbc-open')?close():open(); });
   nudge.querySelector('button').addEventListener('click',function(e){ e.stopPropagation(); hideNudge(); });
-  nudge.addEventListener('click',open);
+  nudge.addEventListener('click',function(){ open(); go('msgs'); });
   form.addEventListener('submit',function(e){ e.preventDefault(); var v=input.value; input.value=''; ask(v); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&root.classList.contains('zbc-open')) close(); });
 
-  /* nudge once, 7s in, only if the visitor hasn't opened it and isn't mid-scroll on a phone */
-  /* no nudge on the enquiry page (the visitor is already where Zubi sends people) or after a Zubi hand-off */
-  if(PAGE!=='plan-your-journey'&&!/[?&]via=zubi/.test(location.search)) setTimeout(function(){ if(!opened&&!nudgeShown){ nudgeShown=true; nudge.classList.add('show'); setTimeout(hideNudge,9000); } },7000);
+  /* nudge once, 7s in — not on the enquiry page, not after a Zubi hand-off */
+  if(PAGE!=='plan-your-journey'&&!/[?&]via=zubi/.test(location.search)&&!nudgeShown) setTimeout(function(){ if(!opened&&!nudgeShown){ nudge.classList.add('show'); if(!unread) setUnread(1); setTimeout(function(){ nudge.classList.remove('show'); },9000); sset('nudged',true); nudgeShown=true; } },7000);
+  /* one proactive message per visit: on a journey page, once the visitor has read 60% of it */
+  if(HERE&&!sget('proactive',false)){
+    var fired=false;
+    var onScroll=function(){ if(fired) return; var d=document.documentElement; var pct=(window.scrollY+window.innerHeight)/Math.max(1,d.scrollHeight); if(pct<0.6) return; fired=true; window.removeEventListener('scroll',onScroll); sset('proactive',true);
+      if(root.classList.contains('zbc-open')) return; greet(); bot('<p>Still reading about <b>'+esc(HERE.t)+'</b>? If you’d like a quote on your dates, I can have someone call you.</p>'); chips(['Get a quote for this trip','Best time to go']); nudge.innerHTML='<b>Zubi:</b> Want a quote for '+esc(HERE.t)+'?<button type="button" aria-label="Dismiss">&times;</button>'; nudge.querySelector('button').addEventListener('click',function(e){ e.stopPropagation(); hideNudge(); }); nudge.classList.add('show'); setTimeout(function(){ nudge.classList.remove('show'); },9000); };
+    window.addEventListener('scroll',onScroll,{passive:true});
+  }
+  /* hide the launcher while the phone nav overlay is open */
+  if('MutationObserver' in window) new MutationObserver(function(){ root.classList.toggle('zbc-hidden',document.body.classList.contains('navopen')); }).observe(document.body,{attributes:true,attributeFilter:['class']});
+  /* send button only lights up with text */
+  var sendBtn=form.querySelector('.zbc-send'); var syncSend=function(){ sendBtn.classList.toggle('is-off',!input.value.trim()); }; input.addEventListener('input',syncSend); syncSend();
 
   /* lift above the journey-page sticky bar when it is showing */
   var bar=document.querySelector('.stickybar');
