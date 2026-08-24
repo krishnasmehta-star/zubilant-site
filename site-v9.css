@@ -1231,12 +1231,23 @@ body.navopen .navmenu{display:flex}
    z-index 1 puts him BEHIND the Find button, which is the original intent
    ("pops up from behind the Find CTA") rather than sitting on top of it. */
 .intent form .zubi{right:30px;bottom:64px;z-index:1}
-.iqrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;justify-content:center}
-.iqchip{border:1px solid var(--lineSoft);background:var(--teal50);border-radius:999px;padding:7px 14px;
-  font-family:inherit;font-size:14px;font-weight:600;color:var(--ink700);cursor:pointer;
+/* One line at 1440 and 810. Below that the row scrolls sideways rather than
+   wrapping into a second and third row, which was eating the card. */
+.iqrow{display:flex;flex-wrap:nowrap;gap:6px;margin-top:16px;justify-content:center;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.iqrow::-webkit-scrollbar{display:none}
+.iqchip{flex:none;white-space:nowrap;border:1px solid var(--lineSoft);background:var(--teal50);
+  border-radius:999px;padding:6px 12px;
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--ink700);cursor:pointer;
   transition:border-color var(--t-colour),color var(--t-colour)}
 .iqchip:nth-child(3n+2){background:var(--moss100)} .iqchip:nth-child(3n+3){background:var(--sun100)}
 .iqchip:hover{border-color:var(--orange500);color:var(--ink900)}
+.itrust{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px;
+  font-size:14px;color:var(--ink700)}
+.itrust svg{width:15px;height:15px;color:var(--orange500);flex:none}
+.itrust b{color:var(--ink900)}
+.itrust a{color:var(--ink700);text-decoration:none;border-bottom:1px solid var(--lineStrong)}
+.itrust a:hover{color:var(--orange600);border-color:var(--orange500)}
 .zsr{margin-top:24px;border-top:1px solid var(--lineSoft);padding-top:20px}
 .zsrhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .zsrhead b{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink500)}
@@ -1261,6 +1272,8 @@ body.navopen .navmenu{display:flex}
   .zsrlist a{padding:8px 12px 8px 8px;gap:10px}
   .zsrt{font-size:15px;line-height:1.3}
   .zsrm{font-size:13px;line-height:1.35;margin-top:2px}
-  .iqrow{gap:6px}.iqchip{font-size:13px;padding:6px 12px}
+  .iqrow{gap:6px;justify-content:flex-start;padding-bottom:2px}
+  .iqchip{font-size:13px;padding:6px 12px}
   .zsrhead{gap:6px}.zsrhead a{font-size:14px}
+  .itrust{font-size:13px}
 }

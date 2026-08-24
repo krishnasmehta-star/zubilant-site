@@ -67,7 +67,7 @@
 </header>
 <div class="intent-band"><div class="wrap"><div class="intent">
   <h2 class="h1" style="font-size:46px;text-align:center">What&rsquo;s on your mind?</h2>
-  <p class="sub">Tell us in a line. Zubi narrows the fifty-nine journeys to what fits &mdash; and a person reads every enquiry, no chatbot, no auto-reply.</p>
+  <p class="sub">Say where you want to go, in plain language. Zubi takes it from there.</p>
   <form id="intentform" role="search" autocomplete="off">
     <div class="zubi" id="zubi"><button type="button" class="zubipoke" aria-label="Show me another example"><span class="cloud">Hi, I&rsquo;m Zubi!</span><img src="zubi-bird.webp" alt="" width="662" height="511"></button></div>
     <label class="skip" for="intent">Describe the journey you have in mind</label>
@@ -75,7 +75,11 @@
     <button type="submit" class="btn btn-primary">Find <span class="arw" aria-hidden="true">&rarr;</span></button>
   </form>
   <div class="iqrow">
-    <button class="iqchip" type="button" data-q="family trip in December">Family in December</button><button class="iqchip" type="button" data-q="spiritual journey">Spiritual</button><button class="iqchip" type="button" data-q="beach trip under 80k">Beach under &#8377;80,000</button><button class="iqchip" type="button" data-q="honeymoon">Honeymoon</button><button class="iqchip" type="button" data-q="short break, 4 nights">A short break</button><button class="iqchip" type="button" data-q="mountains and trekking">Mountains</button>
+    <button class="iqchip" type="button" data-q="family trip in December">Family, December</button><button class="iqchip" type="button" data-q="spiritual journey">Spiritual</button><button class="iqchip" type="button" data-q="beach trip under 80k">Beach under &#8377;80k</button><button class="iqchip" type="button" data-q="honeymoon">Honeymoon</button><button class="iqchip" type="button" data-q="short break, 4 nights">Short break</button><button class="iqchip" type="button" data-q="mountains and trekking">Mountains</button>
+  </div>
+  <div class="itrust">
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>
+    <b>4.9</b> on Google &middot; <a href="https://maps.google.com/maps?cid=5264561267799496906" rel="noopener">Read our reviews &rarr;</a>
   </div>
   <div id="zsr" class="zsr" hidden></div>
   <p id="zsrlive" class="skip" aria-live="polite"></p>
@@ -715,6 +719,38 @@
     return out.map(function(x){return x.d;});
   }
 
+  /* When nothing matches, do not stop at "no". Relax every constraint in turn —
+     drop the budget and the duration, then require only one word instead of most
+     — and offer the closest things the catalogue actually has. */
+  function nearest(q){
+    var raw=(q||'').toLowerCase();
+    var clean=raw.replace(/[^a-z0-9\s]/g,' ');
+    var toks=clean.split(/\s+/).filter(function(w){
+      return w.length>2 && STOP.indexOf(w)<0 && !/^\d+$/.test(w) && !/^\d+k$/.test(w)
+        && !/^(under|below|less|than|upto|within|max|budget|around|nights?|nites?|days?|week|weeks|weekend|fortnight)$/.test(w);
+    });
+    function rx2(w){return new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i');}
+    var terms=[]; toks.forEach(function(w){
+      terms.push(rx2(w));
+      if(SYN[w]) SYN[w].split(' ').forEach(function(x){terms.push(rx2(x));});
+    });
+    var out=[];
+    if(terms.length){
+      out=JINDEX.map(function(d){
+        var s=0;
+        terms.forEach(function(r){ if(r.test(d.t)) s+=3; else if(r.test(d.k)) s+=2; });
+        return {d:d,s:s};
+      }).filter(function(x){return x.s>0;}).sort(function(a,b){return b.s-a.s;});
+    }
+    /* Still nothing the words can reach — fall back to the trending seven, which
+       is a real answer ("here is what people are booking") rather than a shrug. */
+    if(!out.length){
+      var TR=['j-ladakh-by-road.html','j-rajasthan-first-timers.html','j-kerala-backwaters-slowly.html'];
+      return JINDEX.filter(function(d){return TR.indexOf(d.h)>-1;}).slice(0,3);
+    }
+    return out.slice(0,3).map(function(x){return x.d;});
+  }
+
   function card(d,i){
     return '<li role="option" aria-selected="false"><a href="'+d.h+'" data-i="'+i+'">'
       +'<img src="'+d.g+'" alt="" width="72" height="54" loading="lazy">'
@@ -741,13 +777,16 @@
       results=zsearch(q);
       if(!results.length){
         if(!full){close();return;}
+        var near=nearest(q);
         srBox.hidden=false;
-        srBox.innerHTML='<div class="zsrnone"><b>Nothing in the fifty-nine matches that &mdash; yet.</b>'
-          +'<p>That is an honest answer, not a dead end. Zubilant plans trips that are not on the site; tell a person what you are after and you will hear back from a human.</p>'
+        srBox.innerHTML='<div class="zsrnone"><b>Zubi hasn&rsquo;t got that one on the shelf.</b>'
+          +'<p>Not a dead end though &mdash; Zubilant plans plenty that never makes it onto the site. Have a look at these, or just tell a person what you are after.</p>'
           +'<div class="btnrow"><a class="btn btn-primary" href="plan-your-journey.html?q='+encodeURIComponent(q)+'">Tell us what you want <span class="arw" aria-hidden="true">&rarr;</span></a>'
-          +'<a class="btn btn-secondary" href="journeys.html">Browse all 59 journeys</a></div></div>';
+          +'<a class="btn btn-secondary" href="journeys.html">Browse all 59 journeys</a></div></div>'
+          +(near.length?'<div class="zsrhead" style="margin-top:22px"><b>You might like these</b></div>'
+            +'<ul class="zsrlist">'+near.map(card).join('')+'</ul>':'');
         intentInput.setAttribute('aria-expanded','false');
-        announce('No journeys match that. A link to speak to a person is below the box.');
+        announce('No exact match. Some near ones and a link to speak to a person are below the box.');
         return;
       }
       var n=full?6:3, show=results.slice(0,n);
