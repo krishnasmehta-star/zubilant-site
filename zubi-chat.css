@@ -31,10 +31,12 @@
 .zbc-root.zbc-open .zbc-li-open{opacity:0;transform:rotate(90deg) scale(.6)}
 .zbc-root.zbc-open .zbc-li-close{opacity:1;transform:none}
 
-/* unread badge — WhatsApp-style */
-.zbc-badge{position:absolute;top:-16px;right:-10px;min-width:22px;padding:0 2px;border-radius:0;background:transparent;color:#E4000F;
-  font-size:22px;font-weight:700;line-height:1;text-align:center;border:0;text-shadow:0 1px 0 rgba(255,255,255,.9),0 0 6px rgba(255,255,255,.9);animation:zbc-pop .3s cubic-bezier(.3,1.4,.5,1)}
-  font-size:12px;font-weight:700;line-height:20px;text-align:center;border:2px solid var(--paper,#fff);box-sizing:content-box;animation:zbc-pop .3s cubic-bezier(.3,1.4,.5,1)}
+/* unread badge: Notion/WhatsApp pattern. Red pill pinned to the launcher's
+   top-right corner, white count, paper ring so it reads as sitting on the
+   circle. Count semantics live in zubi-chat.js setUnread(). */
+.zbc-badge{position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#E4000F;color:#fff;
+  font-size:12px;font-weight:700;line-height:20px;text-align:center;border:2px solid var(--paper,#FFFFFF);box-sizing:content-box;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);animation:zbc-pop .3s cubic-bezier(.3,1.4,.5,1)}
 .zbc-badge[hidden]{display:none}
 @keyframes zbc-pop{from{transform:scale(.4)}to{transform:scale(1)}}
 .zbc-root.zbc-open .zbc-badge{display:none}

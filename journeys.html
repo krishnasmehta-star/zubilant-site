@@ -348,7 +348,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
   <div class="jask">
     <div class="zubi" aria-hidden="true"><img src="zubi-bird.webp" alt="" width="662" height="511"></div>
     <h2>What&rsquo;s on your mind?</h2>
-    <p class="sub">Tell Zubi in a line and the fifty-nine below narrow to what fits. Nothing right? A person reads every enquiry &mdash; no chatbot, no auto&#8209;reply.</p>
+    <p class="sub">Tell Zubi in a line and the fifty-nine below narrow to what fits. Nothing right? A person reads every enquiry: no chatbot, no auto&#8209;reply.</p>
     <form id="jaskform" autocomplete="off">
       <label class="skip" for="jq">Describe the journey you have in mind</label>
       <input type="text" id="jq" placeholder="ex: beach trip with my parents in December, under 60k">
@@ -503,7 +503,7 @@ details.fwhen .fchips .fchip{min-height:40px;padding:7px 13px;font-size:14px}
     </div>
     <div class="jmoreWrap"><button class="btn btn-secondary" id="jmore" hidden>Show more journeys</button></div>
     <p class="jnote">Prices are indicative, per person on twin sharing.
-      <span class="ph">Land-only vs flights-included, and final 2026-27 rates &mdash; pending confirmation.</span></p>
+      <span class="ph">Land-only vs flights-included, and final 2026-27 rates, pending confirmation.</span></p>
     </div>
   </div>
 </section>
@@ -771,7 +771,7 @@ function syncFinder(){
   var cb=document.querySelector('#jcount b'),n=cb?+cb.textContent:59;
   var narrowed=['who','whr','bud','mon'].some(function(g){return fInputs(g).some(function(i){return i.checked;});});
   var btn=document.getElementById('fbtn');
-  if(n===0)btn.innerHTML='Nothing matches everything &mdash; see what&rsquo;s close <span class="arw" aria-hidden="true">&darr;</span>';
+  if(n===0)btn.innerHTML='Nothing matches everything. See what&rsquo;s close <span class="arw" aria-hidden="true">&darr;</span>';
   else btn.innerHTML=(narrowed?'See '+(n===1?'the one journey that fits':'my '+n+' journeys'):'See all 59 journeys')+' <span class="arw" aria-hidden="true">&darr;</span>';
   document.getElementById('freset').hidden=!(active().length||query);
 }

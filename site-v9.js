@@ -147,13 +147,13 @@
      auto-cycles until the visitor interacts. */
   var ZREC=[
     {href:'j-ladakh-by-road.html',img:'j-ladakh.webp',meta:'Ladakh · Moderate · 9 nights',title:'Ladakh by Road',
-     desc:'Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude — oxygen in every vehicle, doctors’ numbers in every driver’s phone.',
+     desc:'Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude: oxygen in every vehicle, doctors’ numbers in every driver’s phone.',
      from:'From ₹70,000 per person'},
     {href:'j-kashmir-tulip-season.html',img:'j-kashmir.webp',meta:'Kashmir · Gentle · 6 nights',title:'Kashmir in Tulip Season',
-     desc:'Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out — with a houseboat night your children will talk about for years.',
+     desc:'Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.',
      from:'Price pending'},
     {href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp',meta:'Kerala · Gentle · 7 nights',title:'Kerala Backwaters, Slowly',
-     desc:'Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills — a houseboat, a spice garden, and afternoons with nothing in them, on purpose.',
+     desc:'Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills: a houseboat, a spice garden, and afternoons with nothing in them, on purpose.',
      from:'From ₹58,000 per person'}
   ];
   var minis=Array.prototype.slice.call(document.querySelectorAll('.zmini'));

@@ -65,20 +65,20 @@
   /* ── CONFIRMED facts. Board §11 and live site copy only. Never add a number
         or claim here that is not on the board as confirmed. ── */
   var F={
-    about:'<p>Zubilant is the experiences division of <b>Stuti Tourism Pvt. Ltd.</b>, designing journeys since <b>2009</b> — <b>800,000+</b> travellers so far, rated <b>4.9 on Google</b>.</p><p>We plan <b>private, FIT trips</b> (free independent travel): your dates, your pace, no fixed group departure. Family holidays, spiritual journeys, Senior Travel Saathi for older parents, couples, friends and company teams.</p>',
-    fit:'<p>Every Zubilant journey is <b>private and on your dates</b> — we don’t run fixed group departures. The itinerary on each page is the shape; we fit it to the people actually travelling.</p>',
-    price:'<p>Every journey page shows a <b>starting price per person</b>. Those are <b>indicative</b> — the final number depends on your dates, hotels and how many are travelling, and we confirm it on a quick call before anything is booked.</p>',
-    incl:'<p>Inclusions differ journey by journey, so the honest answer lives on each journey page. What’s <b>not</b> settled on the site yet is flights versus land-only for every trip — that’s confirmed on the call with your quote.</p>',
+    about:'<p>Zubilant is the experiences division of <b>Stuti Tourism Pvt. Ltd.</b>, designing journeys since <b>2009</b>: <b>800,000+</b> travellers so far, rated <b>4.9 on Google</b>.</p><p>We plan <b>private, FIT trips</b> (free independent travel): your dates, your pace, no fixed group departure. Family holidays, spiritual journeys, Senior Travel Saathi for older parents, couples, friends and company teams.</p>',
+    fit:'<p>Every Zubilant journey is <b>private and on your dates</b>; we don’t run fixed group departures. The itinerary on each page is the shape; we fit it to the people actually travelling.</p>',
+    price:'<p>Every journey page shows a <b>starting price per person</b>. Those are <b>indicative</b>: the final number depends on your dates, hotels and how many are travelling, and we confirm it on a quick call before anything is booked.</p>',
+    incl:'<p>Inclusions differ journey by journey, so the honest answer lives on each journey page. What’s <b>not</b> settled on the site yet is flights versus land-only for every trip; that’s confirmed on the call with your quote.</p>',
     contact:'<p>Call or WhatsApp <a href="'+TEL+'">'+PHONE+'</a> (<a href="'+WA+'" target="_blank" rel="noopener">open WhatsApp</a>), or email <a href="mailto:'+MAIL+'">'+MAIL+'</a>. One person reads it and replies.</p>',
     seniors:'<p><b>Senior Travel Saathi</b> is built for older parents: gentler pacing, shorter drives, doctors’ numbers with every driver and managed darshan on pilgrimages. Many families send their parents with us while they stay home.</p>',
-    family:'<p>Family holidays are most of what we do — including three generations at once. Tell me roughly who’s going and when, and I’ll point at the right journeys.</p>',
-    spiritual:'<p>Spiritual journeys are paced for elders, with managed darshan where that matters — Char Dham, Ayodhya, Varanasi, Tirupati, Vaishno Devi, Dwarka–Somnath and more.</p>',
-    corporate:'<p>For companies we do offsites, incentive trips and team travel — planned around the group and the budget. The corporate page has the tour types and clients.</p>',
-    inbound:'<p>Yes — we host international visitors to India too. The Inbound India page is the place to start.</p>',
-    visa:'<p>We keep a <b>visa-free escapes</b> list for Indian passport holders who want abroad without the paperwork. For other destinations, visa requirements are confirmed with you on the call — I won’t guess at rules that change.</p>',
-    safety:'<p>How we handle safety, medical cover and logistics is written up on the Safety &amp; Logistics page — oxygen in vehicles at altitude, doctors’ numbers with drivers, that sort of thing.</p>',
-    unknown_policy:'<p>That’s a question I’d rather a human answered precisely than I answered approximately — payment terms, cancellations and refunds are confirmed in writing with your quote.</p>',
-    fallback:['<p>I may not have that one. I’m best at pointing you to the right journey, prices and the basics — for anything specific, a real person is one tap away.</p>','<p>Not sure I caught that. Try a place, a month, a budget, or who’s travelling — or ask for a call back.</p>']
+    family:'<p>Family holidays are most of what we do, including three generations at once. Tell me roughly who’s going and when, and I’ll point at the right journeys.</p>',
+    spiritual:'<p>Spiritual journeys are paced for elders, with managed darshan where that matters: Char Dham, Ayodhya, Varanasi, Tirupati, Vaishno Devi, Dwarka–Somnath and more.</p>',
+    corporate:'<p>For companies we do offsites, incentive trips and team travel, planned around the group and the budget. The corporate page has the tour types and clients.</p>',
+    inbound:'<p>Yes, we host international visitors to India too. The Inbound India page is the place to start.</p>',
+    visa:'<p>We keep a <b>visa-free escapes</b> list for Indian passport holders who want abroad without the paperwork. For other destinations, visa requirements are confirmed with you on the call; I won’t guess at rules that change.</p>',
+    safety:'<p>How we handle safety, medical cover and logistics is written up on the Safety &amp; Logistics page: oxygen in vehicles at altitude, doctors’ numbers with drivers, that sort of thing.</p>',
+    unknown_policy:'<p>That’s a question I’d rather a human answered precisely than I answered approximately: payment terms, cancellations and refunds are confirmed in writing with your quote.</p>',
+    fallback:['<p>I may not have that one. I’m best at pointing you to the right journey, prices and the basics; for anything specific, a real person is one tap away.</p>','<p>Not sure I caught that. Try a place, a month, a budget, or who’s travelling, or ask for a call back.</p>']
   };
 
   /* ── intents: [regex, handler]. First match wins; order matters. ── */
@@ -86,7 +86,7 @@
   var INTENTS=[
     [R('^(hi|hello|hey|namaste|hola|good (morning|afternoon|evening))\\b'), function(){return {html:'<p>'+pick(['Namaste! ','Hello! ','Hi there! '])+'I’m Zubi. Where are we thinking of going?</p>',chips:startChips()};}],
     [R('\\b(call ?back|call me|ring me|talk to (a )?(human|person|someone|expert)|speak (to|with)|human|agent|advisor|consultant|get a quote|quote|request a call|contact me)\\b'), callbackIntent],
-    [R('\\b(phone|whatsapp|email|e-mail|number|contact|reach (you|zubilant)|office|address|where are you (based|located))\\b'), function(){return {html:F.contact+'<p>Or I can have someone call you — just say <b>call me back</b>.</p>',links:[['contact.html','Contact page →']]};}],
+    [R('\\b(phone|whatsapp|email|e-mail|number|contact|reach (you|zubilant)|office|address|where are you (based|located))\\b'), function(){return {html:F.contact+'<p>Or I can have someone call you; just say <b>call me back</b>.</p>',links:[['contact.html','Contact page →']]};}],
     [R('\\b(what (is|does) zubilant|who are you|about (you|zubilant|the company)|stuti|since when|how long|how old|trust|legit|genuine|reviews?|rating|google)\\b'), function(){return {html:F.about,links:[['about.html','About Zubilant →']]};}],
     [R('\\b(group|fixed departure|batch|join (a|the) group|other (people|travell?ers)|private|custom|tailor|bespoke|personali[sz]ed)\\b'), function(){return {html:F.fit,chips:['Show me journeys','Request a call back']};}],
     [R('\\b(cancel\\w*|refund\\w*|payments?|pay|paid|emi|instal?l?ments?|advance|deposit|terms|policy|policies|insurance|insured)\\b'), function(){return {html:F.unknown_policy,chips:['Request a call back','Call '+PHONE]};}],
@@ -94,7 +94,7 @@
       var h=F.incl; if(HERE) h+='<p>For <b>'+esc(HERE.t)+'</b>, scroll down to the inclusions on this page, or ask me for a quote.</p>';
       return {html:h,chips:['Get a quote for this trip','Request a call back']};}],
     [R('\\b(visa|passport|visa.?free|on.?arrival)\\b'), function(q){var r=poolAnswer(q,'visa-free','visa-free journey','journeys.html?f=visa-free',F.visa);
-      if(!budget(q)){ var named=search(q.replace(/visa[- ]?free|visa|passport|on[- ]?arrival/gi,' '),2).filter(function(d){return d.tags.indexOf('visa-free')<0;}); if(named.length){ r.cards=named.concat(r.cards||[]).slice(0,3); r.html='<p>For <b>'+esc(named[0].t)+'</b> the visa is handled with you on the call — I won’t guess at rules that change.</p>'+F.visa; } r.links=[['journeys.html?f=visa-free','Visa-free escapes →']]; }
+      if(!budget(q)){ var named=search(q.replace(/visa[- ]?free|visa|passport|on[- ]?arrival/gi,' '),2).filter(function(d){return d.tags.indexOf('visa-free')<0;}); if(named.length){ r.cards=named.concat(r.cards||[]).slice(0,3); r.html='<p>For <b>'+esc(named[0].t)+'</b> the visa is handled with you on the call; I won’t guess at rules that change.</p>'+F.visa; } r.links=[['journeys.html?f=visa-free','Visa-free escapes →']]; }
       return r;}],
     [R('\\b(safe|safety|medical|doctor|emergency|security)\\b'), function(){return {html:F.safety,links:[['safety-and-logistics.html','Safety &amp; Logistics →']]};}],
     [R('\\b(corporate|compan(y|ies)|offsite|outbound|training|workation|incentive|per head|off-site|team|incentive|mice|employees|conference)\\b'), function(){return {html:F.corporate,links:[['corporate.html','Corporate travel →']]};}],
@@ -102,15 +102,15 @@
     [R('\\b(price|cost|how much|budget|rate|charges?|expensive|cheap|afford|under|below|within|₹|rs\\.?|inr)\\b'), priceIntent],
     [R('\\b(how many (days|nights)|enough (days|nights)|ideal duration|how long (is|should|does) (the )?(trip|journey|tour)|duration)\\b'), function(q){
       var c=search(q,3);
-      if(HERE&&(!c.length||c[0]===HERE)) return {html:'<p><b>'+esc(HERE.t)+'</b> is built as <b>'+HERE.n+' nights</b> at a '+esc(HERE.pace.toLowerCase())+' pace — that’s the length we think it needs to be done properly, not rushed. It can stretch; it shouldn’t shrink much.</p>',chips:['Best time to go','Price for this trip']};
-      if(c.length) return {html:'<p>How long we think these need:</p><p>'+c.map(function(d){return '<b>'+esc(d.t)+'</b> — '+d.n+' nights, '+esc(d.pace.toLowerCase());}).join('<br>')+'</p>',cards:c};
+      if(HERE&&(!c.length||c[0]===HERE)) return {html:'<p><b>'+esc(HERE.t)+'</b> is built as <b>'+HERE.n+' nights</b> at a '+esc(HERE.pace.toLowerCase())+' pace. That’s the length we think it needs to be done properly, not rushed. It can stretch; it shouldn’t shrink much.</p>',chips:['Best time to go','Price for this trip']};
+      if(c.length) return {html:'<p>How long we think these need:</p><p>'+c.map(function(d){return '<b>'+esc(d.t)+'</b>: '+d.n+' nights, '+esc(d.pace.toLowerCase());}).join('<br>')+'</p>',cards:c};
       return {html:'<p>Tell me the place and I’ll tell you how many nights our itinerary gives it.</p>'};}],
     [R('\\b(best (time|month|season)|when (to|should) (go|visit|travel)|weather|monsoon|season)\\b'), seasonIntent],
     [R('\\b(parent|parents|senior|seniors|elderly|older|mother|father|mom|dad|mummy|papa|aged|retire|saathi)\\b'), function(q){
       if(HERE&&/\b(this|it|here|suit|right for|ok for|fine for)\b/i.test(q)){
         var ok=HERE.tags.some(function(t){return /^(seniors|senior-citizen-friendly|multi-generational)$/.test(t);});
-        var h=ok?'<p><b>'+esc(HERE.t)+'</b> is one we plan for older travellers — '+esc(HERE.pace)+' pace, and the day-by-day on this page shows the drive lengths. Tell us ages and mobility in the enquiry and we shape it around them.</p>'
-                :'<p><b>'+esc(HERE.t)+'</b> is listed as <b>'+esc(HERE.pace)+'</b> pace and isn’t tagged as a seniors journey. That doesn’t rule it out — because every trip is private, pace and drives can be softened. Best confirmed on a quick call.</p>';
+        var h=ok?'<p><b>'+esc(HERE.t)+'</b> is one we plan for older travellers: '+esc(HERE.pace)+' pace, and the day-by-day on this page shows the drive lengths. Tell us ages and mobility in the enquiry and we shape it around them.</p>'
+                :'<p><b>'+esc(HERE.t)+'</b> is listed as <b>'+esc(HERE.pace)+'</b> pace and isn’t tagged as a seniors journey. That doesn’t rule it out: because every trip is private, pace and drives can be softened. Best confirmed on a quick call.</p>';
         return {html:h,links:[['senior-travel-saathi.html','Senior Travel Saathi →']],chips:['Gentler journeys for parents','Request a call back']};
       }
       return {html:F.seniors,links:[['senior-travel-saathi.html','Senior Travel Saathi →']],cards:search(q+' seniors senior-citizen-friendly gentle',3),more:'journeys.html?f=seniors'};}],
@@ -118,12 +118,12 @@
     [R('\\b(kid|kids|child|children|toddler|family|families|grandparents|three generations|multi.?gen)\\b'), function(q){return {html:F.family,links:[['family-holidays.html','Family holidays →']],cards:search(q+' family-travel',3),more:'journeys.html?f=family-travel'};}],
     [R('\\b(honeymoon|couple|anniversary|romantic|wife|husband|partner)\\b'), function(q){return {html:'<p>For two, these are the ones people keep choosing:</p>',cards:search(q+' honeymoon couples',3),more:'journeys.html?f=honeymoon'};}],
     [R('\\b(short|weekend|long weekend|quick|few days|3 nights|4 nights)\\b'), function(q){return {html:'<p>Short breaks, four nights or under:</p>',cards:search(q+' gentle',3),more:'journeys.html?f=n:0-4'};}],
-    [R('\\b(abroad|international|overseas|outside india|foreign|europe|asia|africa)\\b'), function(q){return {html:'<p>International journeys — many are first-trip-abroad friendly:</p>',cards:search(q+' intl first-international-trip',3),more:'journeys.html?f=intl'};}],
+    [R('\\b(abroad|international|overseas|outside india|foreign|europe|asia|africa)\\b'), function(q){return {html:'<p>International journeys, many of them first-trip-abroad friendly:</p>',cards:search(q+' intl first-international-trip',3),more:'journeys.html?f=intl'};}],
     [R('\\b(this (trip|journey|one|page|itinerary)|here)\\b'), function(q){ if(HERE) return hereIntent(q); return null; }],
     [R('\\b(journeys?|destinations?|places?|where (can|should|do)|options|catalog|list|all)\\b'), function(q){
       var c=search(q,3);
       if(c.length) return {html:'<p>Here’s what matches:</p>',cards:c,more:'journeys.html'};
-      return {html:'<p>We have <b>'+J.length+' journeys</b> across India and abroad. Tell me who’s going, a month or a budget and I’ll narrow it — or browse them all.</p>',links:[['journeys.html','All journeys →']],chips:startChips()};}],
+      return {html:'<p>We have <b>'+J.length+' journeys</b> across India and abroad. Tell me who’s going, a month or a budget and I’ll narrow it, or browse them all.</p>',links:[['journeys.html','All journeys →']],chips:startChips()};}],
   ];
 
   /* The questions Indian travellers actually ask (research, doc 36 §5): cost with a
@@ -144,17 +144,17 @@
     var under=pool.filter(function(d){return d.p<=b;}).sort(function(x,y){return y.p-x.p;});
     if(!under.length){
       var cheapest=pool.slice().sort(function(x,y){return x.p-y.p;}).slice(0,3);
-      return {html:'<p>Straight answer: no '+label+' starts under <b>'+inr(b)+'</b> right now — the lowest is <b>'+inr(cheapest[0].p)+'</b>. These are the closest, and because every trip is private, a shorter version is often possible.</p>',cards:cheapest,more:more,chips:['Request a call back','Journeys under '+inr(b)]};
+      return {html:'<p>Straight answer: no '+label+' starts under <b>'+inr(b)+'</b> right now; the lowest is <b>'+inr(cheapest[0].p)+'</b>. These are the closest, and because every trip is private, a shorter version is often possible.</p>',cards:cheapest,more:more,chips:['Request a call back','Journeys under '+inr(b)]};
     }
     var hits=search(q+' '+(poolTag||''),6).filter(function(d){return d.p<=b;}).slice(0,3);
     under.forEach(function(d){ if(hits.length<3&&hits.indexOf(d)<0) hits.push(d); });
     return {html:'<p>'+under.length+' '+label+(under.length>1?'s':'')+' start under <b>'+inr(b)+'</b>:</p>',cards:hits,more:more};
   }
   function priceIntent(q){
-    if(PAGE==='corporate') return {html:'<p>Offsites are costed per head on the real brief — headcount, nights, city and what the days need to achieve — rather than off a rate card. Tell us those four things and you get a costed plan, not a brochure price.</p>',links:[['corporate.html#enquire','Get a costed plan']],chips:['Request a call back']};
+    if(PAGE==='corporate') return {html:'<p>Offsites are costed per head on the real brief (headcount, nights, city and what the days need to achieve) rather than off a rate card. Tell us those four things and you get a costed plan, not a brochure price.</p>',links:[['corporate.html#enquire','Get a costed plan']],chips:['Request a call back']};
     var b=budget(q), c=search(q,3);
     if(HERE&&!/\b(under|below|within|budget)\b/i.test(q)){
-      return {html:'<p><b>'+esc(HERE.t)+'</b> starts from <b>'+inr(HERE.p)+' per person</b> for '+HERE.n+' nights — an indicative price, confirmed on your dates before anything is booked.</p>',chips:['What’s included?','Get a quote for this trip']};
+      return {html:'<p><b>'+esc(HERE.t)+'</b> starts from <b>'+inr(HERE.p)+' per person</b> for '+HERE.n+' nights: an indicative price, confirmed on your dates before anything is booked.</p>',chips:['What’s included?','Get a quote for this trip']};
     }
     if(b) return poolAnswer(q,null,'journey','journeys.html?f=p:0-'+(b<=50000?'50000':'100000'),'');
     if(c.length) return {html:F.price+'<p>Starting prices for what you mentioned:</p>',cards:c};
@@ -162,8 +162,8 @@
   }
   function seasonIntent(q){
     var c=search(q,3);
-    if(HERE&&!c.length||HERE&&c[0]===HERE) return {html:'<p><b>'+esc(HERE.t)+'</b> is planned for <b>'+esc(HERE.season||'its best season')+'</b> — the itinerary is timed around that window.</p>',chips:['Price for this trip','Get a quote for this trip']};
-    if(c.length) return {html:'<p>Best windows, from the journey pages:</p><p>'+c.map(function(d){return '<b>'+esc(d.t)+'</b> — '+esc(d.season||'see page');}).join('<br>')+'</p>',cards:c};
+    if(HERE&&!c.length||HERE&&c[0]===HERE) return {html:'<p><b>'+esc(HERE.t)+'</b> is planned for <b>'+esc(HERE.season||'its best season')+'</b>; the itinerary is timed around that window.</p>',chips:['Price for this trip','Get a quote for this trip']};
+    if(c.length) return {html:'<p>Best windows, from the journey pages:</p><p>'+c.map(function(d){return '<b>'+esc(d.t)+'</b>: '+esc(d.season||'see page');}).join('<br>')+'</p>',cards:c};
     var m=q.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/i);
     if(m) return {html:'<p>Good in '+m[1].charAt(0).toUpperCase()+m[1].slice(1).toLowerCase()+':</p>',cards:search(m[1].toLowerCase(),3),more:'journeys.html?f='+m[1].toLowerCase()};
     return {html:'<p>Tell me a month or a place and I’ll tell you what’s in season.</p>',chips:['December holidays','Summer in the mountains','October long weekend']};
@@ -171,7 +171,7 @@
   function hereIntent(q){
     return {html:'<p><b>'+esc(HERE.t)+'</b>: '+esc(HERE.d)+'</p><p>'+HERE.n+' nights · '+esc(HERE.pace)+' pace · from '+inr(HERE.p)+' per person (indicative).</p>',chips:['Is it right for older parents?','What’s included?','Get a quote for this trip']};
   }
-  function callbackIntent(){ return {html:'<p>Happy to. Leave a name and number and someone from Zubilant will call you — no call centre, no script.</p>',form:true}; }
+  function callbackIntent(){ return {html:'<p>Happy to. Leave a name and number and someone from Zubilant will call you. No call centre, no script.</p>',form:true}; }
 
   /* ── FAQ repository (zubi-faq.js): word-overlap match against q[] variants ── */
   var FAQ=window.ZUBI_FAQ||[];
@@ -255,7 +255,7 @@
       /* HELP */
       '<div class="zbc-view zbc-help" role="region" data-view="help" hidden>'+
         '<div class="zbc-bar zbc-bar-help"><div class="zbc-who"><b>Help</b></div><button type="button" class="zbc-ib zbc-x" aria-label="Close">'+ICON.x+'</button></div>'+
-        '<div class="zbc-help-body"><label class="zbc-search"><span class="zbc-sico">'+ICON.search+'</span><input type="search" placeholder="Search for help" aria-label="Search help articles"></label><ul class="zbc-list zbc-faqlist"></ul><p class="zbc-none" hidden>Nothing matches that. Ask Zubi instead — a person is one tap away.</p></div>'+
+        '<div class="zbc-help-body"><label class="zbc-search"><span class="zbc-sico">'+ICON.search+'</span><input type="search" placeholder="Search for help" aria-label="Search help articles"></label><ul class="zbc-list zbc-faqlist"></ul><p class="zbc-none" hidden>Nothing matches that. Ask Zubi instead; a person is one tap away.</p></div>'+
       '</div>'+
 
       /* TABS */
@@ -335,7 +335,7 @@
     var w=document.createElement('form'); w.className='zbc-form'; w.noValidate=true;
     w.innerHTML='<label for="zbc-n">Your name</label><input id="zbc-n" name="name" type="text" autocomplete="name" required>'+
       '<label for="zbc-p">Phone (WhatsApp is fine)</label><input id="zbc-p" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>'+
-      '<div class="zbc-err">A name and a phone number, please — that’s all we need to call.</div>'+
+      '<div class="zbc-err">A name and a phone number, please: that’s all we need to call.</div>'+
       '<label for="zbc-t">Best time to call</label><select id="zbc-t" name="when"><option>Any time today</option><option>Morning (10–1)</option><option>Afternoon (1–5)</option><option>Evening (5–8)</option></select>'+
       '<button type="submit" class="zbc-go">Request my call back</button>';
     w.addEventListener('submit',function(e){
@@ -353,7 +353,7 @@
     var notes='Call back requested via Zubi · best time: '+d.when+(HERE?' · about: '+HERE.t:'')+' · from: '+path;
     var qs='?via=zubi&name='+encodeURIComponent(d.name)+'&contact='+encodeURIComponent(d.phone)+'&when='+encodeURIComponent(d.when)+'&notes='+encodeURIComponent(notes)+(HERE?'&journey='+encodeURIComponent(HERE.t):'');
     emit('callback',{page:path,journey:HERE?HERE.t:null});
-    bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. One last step so this reaches a person — your details are already filled in.</p>');
+    bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. One last step so this reaches a person; your details are already filled in.</p>');
     setTimeout(function(){ location.href=PLAN+qs; },900);
   }
 
@@ -380,7 +380,7 @@
   }
   function greet(){
     if(greeted) return; greeted=true;
-    var h=HERE?'<p>Hi, I’m Zubi. You’re looking at <b>'+esc(HERE.t)+'</b> — '+HERE.n+' nights, from '+inr(HERE.p)+' per person. What would you like to know?</p>'
+    var h=HERE?'<p>Hi, I’m Zubi. You’re looking at <b>'+esc(HERE.t)+'</b>: '+HERE.n+' nights, from '+inr(HERE.p)+' per person. What would you like to know?</p>'
                 :'<p>Hi, I’m Zubi. Ask me about a place, a month, a budget, or who’s travelling.</p>';
     bot(h); chips(startChips().slice(0,4)); save();
   }
