@@ -17,7 +17,7 @@ window.ZUBI_FAQ=[
   /* ── booking & how it works ── */
   { q:['how do i book','how does booking work','how to book a trip','how do i start','what happens after i enquire','process','next steps','how does it work'],
     a:'<p>Three steps. You tell us who’s travelling and roughly when, via the enquiry form, a call or WhatsApp. One person reads it and comes back with a shaped itinerary and a quote. You change whatever you like, and only then is anything booked.</p>',
-    links:[['plan-your-journey.html','Plan your journey →']], chips:['Request a call back','Show me journeys'] },
+    links:[['contact.html#enquire','Plan your journey →']], chips:['Request a call back','Show me journeys'] },
   { q:['can i customise','can i customize','change the itinerary','add a day','remove a day','tailor made','make my own trip','different hotels','can we modify'],
     a:'<p>Yes: every itinerary on this site is a starting shape, not a fixed product. Add nights, drop a city, change the hotel category, slow the pace. Because trips are private and on your dates, nothing is locked until you say so.</p>',
     chips:['Request a call back','Is it a group tour?'] },

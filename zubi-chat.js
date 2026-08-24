@@ -7,8 +7,8 @@
      2. the CONFIRMED facts block below (every line traceable to the board)
    Anything outside those two routes to a human: the callback hand-off.
 
-   Callback hand-off: per the 21 Aug ruling all CTAs lead to one journey —
-   plan-your-journey.html — so Zubi prefills that page via the query string.
+   Callback hand-off: per the 24 Aug one-flow ruling every CTA leads to the
+   contact.html enquiry form, so Zubi prefills that page via the query string.
    When 2.1 #6 (where enquiries land) is answered, swap sendCallback() for a
    fetch() to the Worker. Nothing else needs to change.
    ═══════════════════════════════════════════════════════════════ */
@@ -18,7 +18,7 @@
   var D=window.ZUBI_DATA||{journeys:[],syn:{}};
   var J=D.journeys, SYN=D.syn;
   var PHONE='+91 81081 17770', TEL='tel:+918108117770', WA='https://wa.me/918108117770', MAIL='experience@zubilant.co.in';
-  var PLAN='plan-your-journey.html';
+  var PLAN='contact.html';
   var AVATAR='zubi-watching.webp';
 
   /* ── helpers ── */
@@ -347,14 +347,14 @@
     });
     log.appendChild(w); scroll(); w.name.focus();
   }
-  /* Hand-off. Today: prefill plan-your-journey.html (the one journey, by ruling).
+  /* Hand-off. Today: prefill the contact.html enquiry form (one flow, 24 Aug).
      Tomorrow: POST to the Worker once 2.1 #6 names a destination. */
   function sendCallback(d){
     var notes='Call back requested via Zubi · best time: '+d.when+(HERE?' · about: '+HERE.t:'')+' · from: '+path;
     var qs='?via=zubi&name='+encodeURIComponent(d.name)+'&contact='+encodeURIComponent(d.phone)+'&when='+encodeURIComponent(d.when)+'&notes='+encodeURIComponent(notes)+(HERE?'&journey='+encodeURIComponent(HERE.t):'');
     emit('callback',{page:path,journey:HERE?HERE.t:null});
     bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. One last step so this reaches a person; your details are already filled in.</p>');
-    setTimeout(function(){ location.href=PLAN+qs; },900);
+    setTimeout(function(){ location.href=PLAN+qs+'#enquire'; },900);
   }
 
   function respond(r){
@@ -406,7 +406,7 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&root.classList.contains('zbc-open')) close(); });
 
   /* nudge once, 7s in — not on the enquiry page, not after a Zubi hand-off */
-  if(PAGE!=='plan-your-journey'&&!/[?&]via=zubi/.test(location.search)&&!nudgeShown) setTimeout(function(){ if(!opened&&!nudgeShown){ nudge.classList.add('show'); if(!unread) setUnread(1); setTimeout(function(){ nudge.classList.remove('show'); },9000); sset('nudged',true); nudgeShown=true; } },7000);
+  if(PAGE!=='contact'&&!/[?&]via=zubi/.test(location.search)&&!nudgeShown) setTimeout(function(){ if(!opened&&!nudgeShown){ nudge.classList.add('show'); if(!unread) setUnread(1); setTimeout(function(){ nudge.classList.remove('show'); },9000); sset('nudged',true); nudgeShown=true; } },7000);
   /* one proactive message per visit: on a journey page, once the visitor has read 60% of it */
   if(HERE&&!sget('proactive',false)){
     var fired=false;

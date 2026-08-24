@@ -608,7 +608,7 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
           p=c.querySelector('.jbody p'),pr=c.querySelector('.jprice'),href=a?a.getAttribute('href'):'#';
       var tags=[].slice.call(c.querySelectorAll('.jattrs span')).map(function(s){return esc(s.textContent.trim());});
       var trend=c.querySelector('.b-zap');
-      var ask='plan-your-journey.html'+(h?'?journey='+encodeURIComponent(h.textContent.trim()):'');
+      var ask='contact.html'+(h?'?journey='+encodeURIComponent(h.textContent.trim()):'')+'#enquire';
       qv.innerHTML='<button class="qvx" aria-label="Close">&times;</button>'+
         (img?'<img src="'+img.getAttribute('src')+'" alt="">':'')+
         '<div class="qvb"><h3 id="qvt">'+(h?h.innerHTML:'')+'</h3>'+
