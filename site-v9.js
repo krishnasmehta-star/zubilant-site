@@ -644,6 +644,27 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
    back, nothing else changes (board 2.1 #6, doc 39 §2). */
 (function(){
   var EP='https://formsubmit.co/ajax/experience@zubilant.co.in', WA='918108117770', TO='experience@zubilant.co.in';
+  /* r5 validation (reinstated; stage-1 was built from a pre-r4 clone and dropped it) */
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v); }
+  function validPhone(v){
+    var d=v.replace(/[^\d]/g,'');
+    if(/^(0|91)?[6-9]\d{9}$/.test(d)) return true;               /* Indian mobile */
+    if(/^\s*\+/.test(v)&&d.length>=8&&d.length<=15) return true;  /* international */
+    return false;
+  }
+  function contactVerdict(v){
+    var toks=v.split(/[,;\/]|\bor\b/i).map(function(t){return t.trim();}).filter(Boolean),
+        sawAt=false, sawDigits=false;
+    if(!toks.length) toks=[v];
+    for(var i=0;i<toks.length;i++){
+      var t=toks[i];
+      if(t.indexOf('@')>-1){ sawAt=true; if(validEmail(t.replace(/\s+/g,''))) return {ok:true}; }
+      else if(/\d/.test(t)){ sawDigits=true; if(validPhone(t)) return {ok:true}; }
+    }
+    if(!sawAt&&!sawDigits) return {ok:false,msg:'A phone number or email, so a person can reach you.'};
+    if(sawAt&&!sawDigits) return {ok:false,msg:'That email looks incomplete. Check for a typo?'};
+    return {ok:false,msg:'That number looks off. An Indian mobile has 10 digits and starts with 6 to 9.'};
+  }
   function init(){
     document.querySelectorAll('form[action="/api/enquiry"]').forEach(function(f){
       f.setAttribute('novalidate','');
@@ -653,14 +674,34 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
         return e;}
       function err(el,msg){var e=slot(el);if(!e)return;e.textContent=msg;
         el.closest('.field').classList.add('err');el.setAttribute('aria-invalid','true');}
+      if(!f.querySelector('[name="_honey"]')){
+        var hp=document.createElement('input');
+        hp.type='text'; hp.name='_honey'; hp.tabIndex=-1; hp.autocomplete='off';
+        hp.setAttribute('aria-hidden','true');
+        hp.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;opacity:0';
+        f.appendChild(hp);
+      }
       f.addEventListener('input',function(e){var w=e.target.closest('.field');
         if(w){w.classList.remove('err');e.target.removeAttribute('aria-invalid');}});
+      var contactEl=f.querySelector('[name="contact"]');
+      if(contactEl) contactEl.addEventListener('blur',function(){
+        var v=contactEl.value.trim(); if(!v) return;
+        var ver=contactVerdict(v); if(!ver.ok) err(contactEl,ver.msg);
+      });
       f.addEventListener('submit',function(ev){
         ev.preventDefault();
+        if(f.classList.contains('zbusy')) return;            /* double-submit guard */
         var name=f.querySelector('[name="name"]'),contact=f.querySelector('[name="contact"]'),bad=[];
-        if(name&&!name.value.trim()){err(name,'We need a name to reply to.');bad.push(name);}
-        if(contact&&!contact.value.trim()){err(contact,'A phone number or email, so a person can reach you.');bad.push(contact);}
+        if(name){ var nv=name.value.trim();
+          if(!nv){err(name,'We need a name to reply to.');bad.push(name);}
+          else if(nv.length<2||!/[a-zA-Z\u0900-\u097F]/.test(nv)){err(name,'That name looks incomplete.');bad.push(name);}
+        }
+        if(contact){ var cv0=contact.value.trim();
+          if(!cv0){err(contact,'A phone number or email, so a person can reach you.');bad.push(contact);}
+          else { var ver=contactVerdict(cv0); if(!ver.ok){err(contact,ver.msg);bad.push(contact);} }
+        }
         if(bad.length){bad[0].focus();return;}
+        if(f.querySelector('[name="_honey"]').value){ return; } /* bot */
         var pairs=[];
         f.querySelectorAll('.field').forEach(function(w){
           var l=w.querySelector('label'),c=w.querySelector('input,select,textarea');
@@ -669,11 +710,13 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
         });
         var txt='New enquiry via zubilant.co.in\n'+pairs.join('\n');
         var btn=f.querySelector('button[type="submit"]');
+        f.classList.add('zbusy');
         if(btn){btn.disabled=true;btn.dataset.l=btn.innerHTML;btn.textContent='Sending\u2026';}
         var ctrl=('AbortController' in window)?new AbortController():null;
         var t=ctrl?setTimeout(function(){ctrl.abort();},6500):null;
         function done(sent){
           if(t)clearTimeout(t);
+          f.classList.remove('zbusy');
           if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.l;}
           var p=f.querySelector('.fsend');
           if(!p){p=document.createElement('div');p.className='fsend';f.appendChild(p);}
@@ -701,7 +744,6 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
           fd.append('_subject','New enquiry via zubilant.co.in');
           fd.append('_template','table');
           fd.append('_captcha','false');
-          fd.append('_honey','');
           fd.append('page',location.pathname.split('/').pop()||'index.html');
           var cv=contact?contact.value.trim():'';
           if(cv.indexOf('@')>0)fd.append('_replyto',cv);
