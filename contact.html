@@ -88,6 +88,15 @@
 .ffoot span{display:inline-flex;align-items:center;gap:8px}
 .ffoot span::before{content:"\2713";font-weight:700;color:var(--sage600)}
 .faltc{text-align:center;margin-top:26px;font-size:15px;color:rgba(255,255,255,.86)}
+/* r7: visible journey/search context pill under the form heading (PM ruling 24 Aug PM) */
+.jctx{display:flex;justify-content:center;margin-top:14px}
+.jctx>span{display:inline-flex;align-items:center;gap:10px;max-width:100%;padding:9px 12px 9px 16px;
+  background:var(--sand);border:1px solid var(--lineSoft);border-radius:999px;
+  font-size:14.5px;line-height:1.35;color:var(--ink700)}
+.jctx b{color:var(--teal900);font-weight:700}
+.jctx button{flex:0 0 auto;width:22px;height:22px;border:0;border-radius:50%;background:var(--lineSoft);
+  color:var(--ink700);font-size:13px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.jctx button:hover{background:var(--orange500);color:#fff}
 .ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);background:rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column;gap:14px}
 .ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
 .ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
@@ -350,6 +359,29 @@
       if(q.get('q')) notes.push(q.get('q'));
       if(q.get('notes')) notes.push(q.get('notes'));
       if(notes.length) set('f-notes',notes.join('\n'));
+      /* r7: say what we heard, visibly. A pill under the heading names the
+         journey (or the search) this enquiry is about; dismissing it clears
+         the notes line, the URL param and therefore the email subject too. */
+      var pillLabel=q.get('journey')?['Planning: ',q.get('journey'),'journey']
+                   :(q.get('q')?['You asked: ',q.get('q'),'q']:null);
+      var sub=document.querySelector('.fcard2 .fsub');
+      if(pillLabel&&sub&&!document.querySelector('.jctx')){
+        var wrapEl=document.createElement('div'); wrapEl.className='jctx';
+        var inner=document.createElement('span'), bEl=document.createElement('b'),
+            x=document.createElement('button');
+        bEl.textContent=pillLabel[1];
+        x.type='button'; x.setAttribute('aria-label','Remove this from the enquiry'); x.textContent='×';
+        inner.appendChild(document.createTextNode(pillLabel[0])); inner.appendChild(bEl); inner.appendChild(x);
+        wrapEl.appendChild(inner); sub.insertAdjacentElement('afterend',wrapEl);
+        x.addEventListener('click',function(){
+          wrapEl.remove();
+          var n=document.getElementById('f-notes');
+          if(n){var line=(pillLabel[2]==='journey'?'Interested in: ':'')+pillLabel[1];
+            n.value=n.value.split('\n').filter(function(l){return l.trim()!==line.trim();}).join('\n');}
+          try{var u=new URL(location.href); u.searchParams.delete(pillLabel[2]);
+            history.replaceState(null,'',u.pathname+(u.searchParams.toString()?'?'+u.searchParams.toString():'')+u.hash);}catch(e){}
+        });
+      }
     }
     if(q.get('journey')||q.get('q')||q.get('via')==='zubi'||location.hash==='#enquire'){
       var taken=false;

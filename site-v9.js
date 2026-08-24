@@ -741,7 +741,11 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
         }
         try{
           var fd=new FormData(f);
-          fd.append('_subject','New enquiry via zubilant.co.in');
+          /* r7: subject carries the journey so the inbox triages itself; the
+             contact pill strips ?journey= on dismiss, so this stays honest */
+          var jn='';
+          try{jn=new URLSearchParams(location.search).get('journey')||'';}catch(e){}
+          fd.append('_subject','New enquiry via zubilant.co.in'+(jn?': '+jn:''));
           fd.append('_template','table');
           fd.append('_captcha','false');
           fd.append('page',location.pathname.split('/').pop()||'index.html');
