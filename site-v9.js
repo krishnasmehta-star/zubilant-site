@@ -633,69 +633,147 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 
-/* ── ENQUIRY FORMS r2 (22 Aug) ─ validation + delivery.
-   /api/enquiry does not exist yet (board 2.1 #37). Submit tries it; when it
-   fails, the visitor gets a one-tap WhatsApp or email send with their details
-   pre-filled instead of a 404. When the Worker lands, set EP and this whole
-   fallback becomes invisible. */
+/* ── ENQUIRY FORMS r4 (24 Aug) ─ validation + automatic delivery.
+   Delivery chain: 1) POST /api/enquiry (the future Cloudflare Worker, doc 39 §2)
+   → 2) FormSubmit AJAX relay, which emails the enquiry to the Zubilant inbox
+   ($0, no account; needs one-time activation from that inbox) → 3) only if both
+   fail, the one-tap WhatsApp/email panel so no enquiry is ever lost.
+   Validation: name required; contact must contain a real email or a real phone
+   (Indian mobile 10 digits starting 6-9, +91/0 prefixes accepted, or an
+   international number of 8-15 digits). Honeypot field "company_website". */
 (function(){
-  var EP='/api/enquiry', WA='918108117770', TO='experience@zubilant.co.in';
+  var EP='/api/enquiry', RELAY='https://formsubmit.co/ajax/experience@zubilant.co.in',
+      WA='918108117770', TO='experience@zubilant.co.in';
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v); }
+  function validPhone(v){
+    var d=v.replace(/[^\d]/g,'');
+    if(/^(0|91)?[6-9]\d{9}$/.test(d)) return true;              /* Indian mobile */
+    if(/^\s*\+/.test(v)&&d.length>=8&&d.length<=15) return true; /* international */
+    return false;
+  }
+  /* the field may hold "an email", "a phone", or both, separated by comma/slash/"or" */
+  function contactVerdict(v){
+    var toks=v.split(/[,;\/]|\bor\b/i).map(function(t){return t.trim();}).filter(Boolean),
+        sawAt=false, sawDigits=false;
+    if(!toks.length) toks=[v];
+    for(var i=0;i<toks.length;i++){
+      var t=toks[i];
+      if(t.indexOf('@')>-1){ sawAt=true; if(validEmail(t.replace(/\s+/g,''))) return {ok:true}; }
+      else if(/\d/.test(t)){ sawDigits=true; if(validPhone(t)) return {ok:true}; }
+    }
+    if(!sawAt&&!sawDigits) return {ok:false,msg:'A phone number or email, so a person can reach you.'};
+    if(sawAt&&!sawDigits) return {ok:false,msg:'That email looks incomplete. Check for a typo?'};
+    return {ok:false,msg:'That number looks off. An Indian mobile has 10 digits and starts with 6 to 9.'};
+  }
   function init(){
     document.querySelectorAll('form[action="/api/enquiry"]').forEach(function(f){
       f.setAttribute('novalidate','');
+      /* honeypot: bots fill it, humans never see it */
+      if(!f.querySelector('[name="company_website"]')){
+        var hp=document.createElement('input');
+        hp.type='text'; hp.name='company_website'; hp.tabIndex=-1;
+        hp.autocomplete='off'; hp.setAttribute('aria-hidden','true');
+        hp.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;opacity:0';
+        f.appendChild(hp);
+      }
       function slot(el){var w=el.closest('.field');if(!w)return null;
         var e=w.querySelector('.ferr');
         if(!e){e=document.createElement('span');e.className='ferr';w.appendChild(e);}
         return e;}
       function err(el,msg){var e=slot(el);if(!e)return;e.textContent=msg;
         el.closest('.field').classList.add('err');el.setAttribute('aria-invalid','true');}
-      f.addEventListener('input',function(e){var w=e.target.closest('.field');
-        if(w){w.classList.remove('err');e.target.removeAttribute('aria-invalid');}});
+      function clear(el){var w=el.closest('.field');
+        if(w){w.classList.remove('err');} el.removeAttribute('aria-invalid');}
+      var contact=f.querySelector('[name="contact"]'), name=f.querySelector('[name="name"]');
+      f.addEventListener('input',function(e){
+        if(e.target.matches('input,textarea,select')) clear(e.target);
+      });
+      /* gentle check when the visitor leaves the contact field */
+      if(contact) contact.addEventListener('blur',function(){
+        var v=contact.value.trim(); if(!v) return;
+        var ver=contactVerdict(v); if(!ver.ok) err(contact,ver.msg);
+      });
       f.addEventListener('submit',function(ev){
         ev.preventDefault();
-        var name=f.querySelector('[name="name"]'),contact=f.querySelector('[name="contact"]'),bad=[];
-        if(name&&!name.value.trim()){err(name,'We need a name to reply to.');bad.push(name);}
-        if(contact&&!contact.value.trim()){err(contact,'A phone number or email, so a person can reach you.');bad.push(contact);}
+        if(f.classList.contains('zbusy')) return;              /* double-submit guard */
+        var bad=[];
+        if(name){ var nv=name.value.trim();
+          if(!nv){err(name,'We need a name to reply to.');bad.push(name);}
+          else if(nv.length<2||!/[a-zA-Z\u0900-\u097F]/.test(nv)){err(name,'That name looks incomplete.');bad.push(name);}
+        }
+        if(contact){ var cv=contact.value.trim();
+          if(!cv){err(contact,'A phone number or email, so a person can reach you.');bad.push(contact);}
+          else { var ver=contactVerdict(cv); if(!ver.ok){err(contact,ver.msg);bad.push(contact);} }
+        }
         if(bad.length){bad[0].focus();return;}
+        if(f.querySelector('[name="company_website"]').value){ return; } /* bot */
         var pairs=[];
         f.querySelectorAll('.field').forEach(function(w){
           var l=w.querySelector('label'),c=w.querySelector('input,select,textarea');
-          if(!l||!c||!c.value.trim())return;
-          pairs.push(l.childNodes[0].textContent.trim()+': '+c.value.trim());
+          if(!l||!c||!c.value.trim()||c.name==='company_website')return;
+          pairs.push([l.childNodes[0].textContent.trim(),c.value.trim()]);
         });
-        var txt='New enquiry via zubilant.co.in\n'+pairs.join('\n');
+        var txt='New enquiry via zubilant.co.in\n'+pairs.map(function(p){return p[0]+': '+p[1];}).join('\n');
         var btn=f.querySelector('button[type="submit"]');
+        f.classList.add('zbusy');
         if(btn){btn.disabled=true;btn.dataset.l=btn.innerHTML;btn.textContent='Sending\u2026';}
-        var ctrl=('AbortController' in window)?new AbortController():null;
-        var t=ctrl?setTimeout(function(){ctrl.abort();},4000):null;
-        function done(sent){
-          if(t)clearTimeout(t);
-          if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.l;}
-          var p=f.querySelector('.fsend');
+        function unbusy(){ f.classList.remove('zbusy');
+          if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.l;} }
+        function panel(){var p=f.querySelector('.fsend');
           if(!p){p=document.createElement('div');p.className='fsend';f.appendChild(p);}
-          if(sent){
-            p.innerHTML='<h4>Sent. Thank you.</h4>'+
-              '<p class="ink700" style="font-size:15.5px">One person reads it and replies. Nothing is booked until you say so.</p>';
-          }else{
-            p.innerHTML='<h4>Ready to send. One tap.</h4>'+
-              '<p class="ink700" style="font-size:15px">Your details are written out below. Send them the way you prefer and a person replies there.</p>'+
-              '<div class="sum"></div>'+
-              '<div class="btnrow"><a class="btn btn-primary" target="_blank" rel="noopener">Send on WhatsApp <span class="arw" aria-hidden="true">\u2192</span></a>'+
-              '<a class="btn btn-secondary">Send by email</a></div>'+
-              '<button type="button" class="editl">\u2190 Edit my details</button>';
-            p.querySelector('.sum').textContent=txt;
-            p.querySelector('.btn-primary').href='https://wa.me/'+WA+'?text='+encodeURIComponent(txt);
-            p.querySelector('.btn-secondary').href='mailto:'+TO+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(txt);
-            p.querySelector('.editl').addEventListener('click',function(){f.classList.remove('zsend');p.remove();});
-          }
+          return p;}
+        function sentOK(){
+          unbusy();
+          var p=panel();
+          p.innerHTML='<h4>Sent. Thank you.</h4>'+
+            '<p class="ink700" style="font-size:15.5px">One person reads it and calls or writes back. Nothing is booked until you say so.</p>'+
+            '<div class="sum"></div>'+
+            '<p class="ink500" style="font-size:14px">In a hurry? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp.</p>';
+          p.querySelector('.sum').textContent=txt;
           f.classList.add('zsend');
           p.scrollIntoView({block:'nearest'});
         }
-        try{
-          fetch(EP,{method:'POST',body:new FormData(f),signal:ctrl?ctrl.signal:undefined})
-            .then(function(r){if(!r.ok)throw 0;done(true);})
-            .catch(function(){done(false);});
-        }catch(e){done(false);}
+        function sentFail(){
+          unbusy();
+          var p=panel();
+          p.innerHTML='<h4>That didn\u2019t go through.</h4>'+
+            '<p class="ink700" style="font-size:15px">No harm done, your details are safe below. Send them with one tap and a person replies there.</p>'+
+            '<div class="sum"></div>'+
+            '<div class="btnrow"><a class="btn btn-primary" target="_blank" rel="noopener">Send on WhatsApp <span class="arw" aria-hidden="true">\u2192</span></a>'+
+            '<a class="btn btn-secondary">Send by email</a></div>'+
+            '<button type="button" class="editl">\u2190 Edit my details</button>';
+          p.querySelector('.sum').textContent=txt;
+          p.querySelector('.btn-primary').href='https://wa.me/'+WA+'?text='+encodeURIComponent(txt);
+          p.querySelector('.btn-secondary').href='mailto:'+TO+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(txt);
+          p.querySelector('.editl').addEventListener('click',function(){f.classList.remove('zsend');p.remove();});
+          f.classList.add('zsend');
+          p.scrollIntoView({block:'nearest'});
+        }
+        function post(url,payload,ms){
+          var ctrl=('AbortController' in window)?new AbortController():null;
+          var t=ctrl?setTimeout(function(){ctrl.abort();},ms):null;
+          return fetch(url,payload&&ctrl?Object.assign({},payload,{signal:ctrl.signal}):payload)
+            .then(function(r){ if(t)clearTimeout(t); return r; },
+                  function(e){ if(t)clearTimeout(t); throw e; });
+        }
+        /* 1) the future Worker */
+        post(EP,{method:'POST',body:new FormData(f)},3000)
+          .then(function(r){ if(!r.ok) throw 0; sentOK(); })
+          .catch(function(){
+            /* 2) FormSubmit relay → email to the Zubilant inbox */
+            var data={_subject:'Website enquiry'+(function(){
+                        var w=f.querySelector('[name="who"]'); return w&&w.value?': '+w.value:'';})(),
+                      _template:'table',_captcha:'false'};
+            pairs.forEach(function(p){ data[p[0]]=p[1]; });
+            var rp=f.querySelector('[name="contact"]');
+            if(rp&&rp.value.indexOf('@')>-1) data._replyto=rp.value.trim();
+            post(RELAY,{method:'POST',
+                headers:{'Content-Type':'application/json','Accept':'application/json'},
+                body:JSON.stringify(data)},8000)
+              .then(function(r){ return r.json().catch(function(){return {};}).then(function(bd){
+                  if(r.ok&&String(bd.success)!=='false'){ sentOK(); } else { sentFail(); } }); })
+              .catch(function(){ sentFail(); });
+          });
       });
     });
   }
