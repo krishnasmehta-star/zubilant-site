@@ -75,18 +75,19 @@
 .vcard h3{margin-top:16px;font-size:20px;letter-spacing:-.01em}
 .vcard p{margin-top:10px;font-size:15px;line-height:1.55;color:var(--ink700)}
 /* team — polaroid wall */
-.polawall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 28px;margin-top:56px;padding:0 8px}
+.polawall{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:26px 16px;margin-top:44px;padding:0 4px}
 .pola{position:relative;background:#fff;border:1px solid var(--lineSoft);border-radius:6px;
-  padding:12px 12px 16px;box-shadow:0 10px 26px rgba(31,41,38,.14);
+  padding:8px 8px 11px;box-shadow:0 8px 20px rgba(31,41,38,.13);
   transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow var(--t-move)}
-.pola::before{content:"";position:absolute;left:50%;top:-12px;width:92px;height:26px;transform:translateX(-50%) rotate(-3deg);
+.pola::before{content:"";position:absolute;left:50%;top:-9px;width:58px;height:19px;transform:translateX(-50%) rotate(-3deg);
   background:rgba(246,198,168,.55);border:1px solid rgba(243,107,33,.18);border-radius:2px;backdrop-filter:blur(1px)}
 .pola:nth-child(1){transform:rotate(-3.2deg)}
-.pola:nth-child(2){transform:rotate(2.4deg);margin-top:26px}
-.pola:nth-child(3){transform:rotate(-1.8deg);margin-top:8px}
-.pola:nth-child(4){transform:rotate(2.8deg);margin-top:-6px}
-.pola:nth-child(5){transform:rotate(-2.6deg);margin-top:20px}
-.pola:nth-child(6){transform:rotate(3.4deg)}
+.pola:nth-child(2){transform:rotate(2.4deg);margin-top:16px}
+.pola:nth-child(3){transform:rotate(-1.8deg);margin-top:5px}
+.pola:nth-child(4){transform:rotate(2.8deg);margin-top:-5px}
+.pola:nth-child(5){transform:rotate(-2.6deg);margin-top:13px}
+.pola:nth-child(6){transform:rotate(3.4deg);margin-top:3px}
+.pola:nth-child(7){transform:rotate(-2.2deg);margin-top:10px}
 .pola:nth-child(2)::before{transform:translateX(-50%) rotate(2.5deg)}
 .pola:nth-child(4)::before{transform:translateX(-50%) rotate(-2deg)}
 .pola:nth-child(6)::before{transform:translateX(-50%) rotate(3deg)}
@@ -95,15 +96,13 @@
 .pola .pfig img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;transition:transform .6s ease}
 .pola:hover .pfig img{transform:scale(1.06)}
 .pmono{width:100%;height:100%;display:grid;place-items:center;position:relative}
-.pmono b{font-size:56px;font-weight:700;letter-spacing:-.02em}
-.pmono em{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-style:normal;font-size:11.5px;
-  font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.pmono b{font-size:32px;font-weight:700;letter-spacing:-.02em}
 .pmono.m1{background:var(--teal50)}.pmono.m1 b,.pmono.m1 em{color:var(--teal600)}
 .pmono.m2{background:var(--sage100)}.pmono.m2 b,.pmono.m2 em{color:var(--sage600)}
 .pmono.m3{background:var(--sun100)}.pmono.m3 b,.pmono.m3 em{color:var(--orange600)}
-.pcap{padding:14px 6px 2px;text-align:center}
-.pcap b{display:block;font-size:17px;letter-spacing:-.01em;color:var(--teal900)}
-.pcap span{display:block;margin-top:4px;font-size:12.5px;line-height:1.45;color:var(--ink500)}
+.pcap{padding:10px 4px 1px;text-align:center}
+.pcap b{display:block;font-size:13.5px;letter-spacing:-.01em;color:var(--teal900)}
+.pcap span{display:block;margin-top:3px;font-size:10px;line-height:1.4;color:var(--ink500)}
 /* story bird */
 .storywrap{position:relative}
 .storybird{position:absolute;right:6%;top:-14px;width:120px;height:auto;transform:rotate(6deg);pointer-events:none}
@@ -134,7 +133,7 @@
 .em .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 @media (max-width:1080px){
   .lgrid{grid-template-columns:1fr;gap:36px}
-  .polawall{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 20px}
+  .polawall{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 16px}
   .storybird{width:96px;right:4%}
   .fcard{position:static;max-width:520px}
   .vgrid{grid-template-columns:1fr 1fr}
@@ -142,12 +141,12 @@
 }
 @media (max-width:640px){
   .vgrid{grid-template-columns:1fr;margin-top:28px}
-  .polawall{grid-template-columns:1fr 1fr;gap:26px 14px;margin-top:40px;padding:0 2px}
-  .pola{padding:8px 8px 12px}
-  .pola::before{width:64px;height:20px;top:-9px}
-  .pcap b{font-size:14.5px}
-  .pcap span{font-size:11px}
-  .pmono b{font-size:40px}
+  .polawall{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px;margin-top:32px;padding:0}
+  .pola{padding:6px 6px 9px}
+  .pola::before{width:44px;height:15px;top:-7px}
+  .pcap b{font-size:11.5px}
+  .pcap span{font-size:8.5px}
+  .pmono b{font-size:26px}
   .storybird{width:72px;top:-8px}
   .letter p{font-size:16.5px}
   .letter p:first-of-type{font-size:18px}
@@ -282,8 +281,8 @@
       <p class="ink700" style="max-width:42ch">Every claim on this page is checkable three cards down. Open one; the drive times and the pace are printed on it.</p>
     </div>
     <div class="mstats">
-      <div class="mstat"><k>Designing since</k><v><span class="cnt" data-from="2011" data-to="2009" data-fmt="plain">2011</span></v><em>As Stuti Tourism Pvt. Ltd., Mumbai.</em></div>
-      <div class="mstat"><k>Travellers served</k><v><span class="cnt" data-from="399999" data-to="800000" data-fmt="in">3,99,999</span>+</v><em>Families, schools and companies, across India and beyond.</em></div>
+      <div class="mstat"><k>Designing since</k><v><span class="cnt" data-from="2011" data-to="2009" data-fmt="plain">2009</span></v><em>As Stuti Tourism Pvt. Ltd., Mumbai.</em></div>
+      <div class="mstat"><k>Travellers served</k><v><span class="cnt" data-from="399999" data-to="800000" data-fmt="in">8,00,000</span>+</v><em>Families, schools and companies, across India and beyond.</em></div>
       <div class="mstat"><k>Rated</k><v>4.9 on Google</v><em>Reviews quoted verbatim further down this page.</em></div>
     </div>
     <div class="jgrid2">
@@ -330,29 +329,33 @@
     <div class="clhead">
       <div>
         <div class="label ink500">The people</div>
-        <h2 class="mt16">A small team. <span class="acc">Straight from the camera roll.</span></h2>
+        <h2 class="mt16">The people behind <span class="acc">your journeys</span>.</h2>
       </div>
-      <p class="ink700" style="max-width:44ch">No studio headshots, no stock smiles. This is us, and Sachin, in one office in Kandivali West. When you call, one of these people picks up.</p>
+      <p class="ink700" style="max-width:44ch">Straight from the camera roll. When you call, one of these people picks up.</p>
     </div>
     <div class="polawall">
+      <div class="pola">
+        <div class="pfig"><img src="team-krishna.webp" alt="Krishna Mehta" loading="lazy" width="676" height="856" style="object-position:50% 26%"></div>
+        <div class="pcap"><b>Krishna Mehta</b><span>Head of Marketing</span></div>
+      </div>
       <div class="pola">
         <div class="pfig"><img src="team-yogesh.webp" alt="Yogesh Jadhav" loading="lazy" width="745" height="1016"></div>
         <div class="pcap"><b>Yogesh Jadhav</b><span>Vice President &middot; Educational Tourism, Sales &amp; Operations</span></div>
       </div>
       <div class="pola">
-        <div class="pfig"><span class="pmono m1" aria-hidden="true"><b>SM</b><em>Photo on its way</em></span></div>
+        <div class="pfig"><span class="pmono m1" aria-hidden="true"><b>SM</b></span></div>
         <div class="pcap"><b>Sakshi Mungekar</b><span>Manager &middot; Finance, Accounts &amp; Administration</span></div>
+      </div>
+      <div class="pola">
+        <div class="pfig"><span class="pmono m2" aria-hidden="true"><b>SP</b></span></div>
+        <div class="pcap"><b>Sneha Patil</b><span>Manager &middot; Travel Operations &amp; Guest Experience</span></div>
       </div>
       <div class="pola">
         <div class="pfig"><img src="team-nadeem.webp" alt="Nadeem Faroqui" loading="lazy" width="900" height="1600"></div>
         <div class="pcap"><b>Nadeem Faroqui</b><span>Senior Supervisor &middot; Educational Tour Operations</span></div>
       </div>
       <div class="pola">
-        <div class="pfig"><span class="pmono m2" aria-hidden="true"><b>SP</b><em>Photo on its way</em></span></div>
-        <div class="pcap"><b>Sneha Patil</b><span>Manager &middot; Travel Operations &amp; Guest Experience</span></div>
-      </div>
-      <div class="pola">
-        <div class="pfig"><span class="pmono m3" aria-hidden="true"><b>PT</b><em>Photo on its way</em></span></div>
+        <div class="pfig"><span class="pmono m3" aria-hidden="true"><b>PT</b></span></div>
         <div class="pcap"><b>Palak Thakur</b><span>Sales &amp; Client Experience Executive</span></div>
       </div>
       <div class="pola">
