@@ -270,8 +270,8 @@
       <h2>Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
       <p class="fsub">Five fields, two minutes. Budget is not the first question. One person reads it and replies.</p>
       <form class="fgrid" method="post" action="/api/enquiry">
-        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" placeholder="ex: Meera Kulkarni"></div>
-        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" placeholder="ex: 98200 12345"></div>
+        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" maxlength="80" placeholder="ex: Meera Kulkarni"></div>
+        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" maxlength="120" placeholder="ex: 98200 12345"></div>
         <div class="field full"><label id="wholab" for="f-who">Who&rsquo;s travelling <em class="opt">optional</em></label>
           <div class="whorow" role="group" aria-labelledby="wholab">
             <button type="button" class="chip">A family, including grandparents</button>
@@ -284,9 +284,9 @@
           </div>
           <input type="hidden" id="f-who" name="who" value="">
         </div>
-        <div class="field full"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
+        <div class="field full"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" maxlength="120" placeholder="ex: last week of December, 8 nights"></div>
         <div class="field full"><label for="f-notes">Anything we should know <em class="opt">optional</em></label>
-          <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
+          <textarea id="f-notes" name="notes" maxlength="2000" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
         <div class="fsubmit full">
           <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
           <small>Nothing is booked until you say so.</small>
