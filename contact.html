@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-symbol.png">
-<link rel="stylesheet" href="site-v9.css?v=r8">
+<link rel="stylesheet" href="site-v9.css?v=r7">
 
 <link rel="canonical" href="https://zubilant.co.in/contact.html">
 <meta property="og:type" content="website">
@@ -270,8 +270,8 @@
       <h2>Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
       <p class="fsub">Five fields, two minutes. Budget is not the first question. One person reads it and replies.</p>
       <form class="fgrid" method="post" action="/api/enquiry">
-        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" maxlength="80" placeholder="ex: Meera Kulkarni"></div>
-        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" maxlength="120" placeholder="ex: 98200 12345"></div>
+        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" placeholder="ex: Meera Kulkarni"></div>
+        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" placeholder="ex: 98200 12345"></div>
         <div class="field full"><label id="wholab" for="f-who">Who&rsquo;s travelling <em class="opt">optional</em></label>
           <div class="whorow" role="group" aria-labelledby="wholab">
             <button type="button" class="chip">A family, including grandparents</button>
@@ -284,9 +284,9 @@
           </div>
           <input type="hidden" id="f-who" name="who" value="">
         </div>
-        <div class="field full"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" maxlength="120" placeholder="ex: last week of December, 8 nights"></div>
+        <div class="field full"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
         <div class="field full"><label for="f-notes">Anything we should know <em class="opt">optional</em></label>
-          <textarea id="f-notes" name="notes" maxlength="2000" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
+          <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
         <div class="fsubmit full">
           <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
           <small>Nothing is booked until you say so.</small>
@@ -333,24 +333,35 @@
 <script>
 /* Prefill from the query string: ?journey= from the 59 journey pages and the
    Quick view modal, ?q= from the search zero-states, and name/contact/when/
-   who/notes from the Ask Zubi hand-off (via=zubi). One flow, one form. */
+   who/notes from the Ask Zubi hand-off (via=zubi). One flow, one form.
+   EVERY #enquire arrival gets the corrective scroll, params or not: the native
+   hash jump fires before images and GSAP settle the layout, so the landing
+   drifts (Krishna, 24 Aug PM). Re-align at 750/1800/3200ms, anchored to the
+   form card, unless the visitor has started scrolling themselves. */
 (function(){
   try{
-    var q=new URLSearchParams(location.search); if(!q.toString()) return;
+    var q=new URLSearchParams(location.search);
     function set(id,v){var el=document.getElementById(id); if(el&&v&&!el.value) el.value=v;}
-    set('f-name',q.get('name')); set('f-contact',q.get('contact')); set('f-when',q.get('when'));
-    var who=q.get('who');
-    if(who&&window.setWho) window.setWho(who);
-    var notes=[]; if(q.get('journey')) notes.push('Interested in: '+q.get('journey'));
-    if(q.get('q')) notes.push(q.get('q'));
-    if(q.get('notes')) notes.push(q.get('notes'));
-    if(notes.length) set('f-notes',notes.join('\n'));
-    if(q.get('journey')||q.get('q')||q.get('via')==='zubi'){
-      var go=function(){var f=document.getElementById('f-name'); if(!f) return;
-        var r=f.closest('form').getBoundingClientRect();
-        window.scrollTo({top:window.scrollY+r.top-120,behavior:'auto'});
-        (q.get('via')==='zubi'?(document.querySelector('.whorow .chip')||f):f).focus({preventScroll:true});};
-      setTimeout(go,750); setTimeout(go,1800);
+    if(q.toString()){
+      set('f-name',q.get('name')); set('f-contact',q.get('contact')); set('f-when',q.get('when'));
+      var who=q.get('who');
+      if(who&&window.setWho) window.setWho(who);
+      var notes=[]; if(q.get('journey')) notes.push('Interested in: '+q.get('journey'));
+      if(q.get('q')) notes.push(q.get('q'));
+      if(q.get('notes')) notes.push(q.get('notes'));
+      if(notes.length) set('f-notes',notes.join('\n'));
+    }
+    if(q.get('journey')||q.get('q')||q.get('via')==='zubi'||location.hash==='#enquire'){
+      var taken=false;
+      ['wheel','touchstart'].forEach(function(ev){ addEventListener(ev,function(){taken=true;},{passive:true,once:true}); });
+      var go=function(){ if(taken) return;
+        var f=document.getElementById('f-name'); if(!f) return;
+        var card=f.closest('.fcard2')||f.closest('form');
+        var r=card.getBoundingClientRect();
+        window.scrollTo({top:window.scrollY+r.top-92,behavior:'auto'});
+        if(!card.contains(document.activeElement))
+          (q.get('via')==='zubi'?(document.querySelector('.whorow .chip')||f):f).focus({preventScroll:true});};
+      setTimeout(go,750); setTimeout(go,1800); setTimeout(go,3200);
     }
   }catch(e){}
 })();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-symbol.png">
-<link rel="stylesheet" href="site-v9.css?v=r8">
+<link rel="stylesheet" href="site-v9.css?v=r7">
 <style>
 /* corporate page r2: scoped layout only, tokens from site-v9 */
 .chero .trust{margin-top:34px}
@@ -434,14 +434,14 @@
       <p class="ink700 mt8" style="font-size:15px">Two minutes. One person reads it and replies with a costed plan.</p>
     </div>
     <form class="fgrid" method="post" action="/api/enquiry">
-      <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" maxlength="80"></div>
-      <div class="field"><label for="f-company">Company <em class="opt">optional</em></label><input type="text" id="f-company" name="company" autocomplete="organization" maxlength="120"></div>
-      <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" maxlength="120"></div>
+      <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="f-company">Company <em class="opt">optional</em></label><input type="text" id="f-company" name="company" autocomplete="organization"></div>
+      <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
       <div class="field"><label for="f-type">Type of trip</label><select id="f-type" name="type"><option>Offsite</option><option>Incentive tour</option><option>Outbound training program</option><option>Workation</option><option>Conference or event</option><option>Not sure yet</option></select></div>
-      <div class="field"><label for="f-size">Rough headcount <em class="opt">optional</em></label><input type="text" id="f-size" name="headcount" maxlength="60" placeholder="ex: 40 to 50 people"></div>
-      <div class="field"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" maxlength="120" placeholder="ex: last week of November, 3 nights"></div>
+      <div class="field"><label for="f-size">Rough headcount <em class="opt">optional</em></label><input type="text" id="f-size" name="headcount" placeholder="ex: 40 to 50 people"></div>
+      <div class="field"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of November, 3 nights"></div>
       <div class="field full"><label for="f-notes">Anything we should know <em class="opt">optional</em></label>
-        <textarea id="f-notes" name="notes" maxlength="2000" placeholder="What the trip is for, a destination in mind, dietary needs, a budget range if you have one."></textarea></div>
+        <textarea id="f-notes" name="notes" placeholder="What the trip is for, a destination in mind, dietary needs, a budget range if you have one."></textarea></div>
       <div class="formfoot full">
         <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
         <span class="ink500" style="font-size:14px">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp.</span>
