@@ -1227,7 +1227,10 @@ body.navopen .navmenu{display:flex}
    navigate. Styles live here, not inline, so the panel is themeable. */
 .intent .zubipoke{all:unset;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .intent .zubipoke:focus-visible{outline:3px solid var(--orange500);outline-offset:6px;border-radius:12px}
-.intent form .zubi{right:34px;bottom:56px}
+/* Anchored to the form, not the card, so he stays put when results expand.
+   z-index 1 puts him BEHIND the Find button, which is the original intent
+   ("pops up from behind the Find CTA") rather than sitting on top of it. */
+.intent form .zubi{right:30px;bottom:64px;z-index:1}
 .iqrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;justify-content:center}
 .iqchip{border:1px solid var(--lineSoft);background:var(--teal50);border-radius:999px;padding:7px 14px;
   font-family:inherit;font-size:14px;font-weight:600;color:var(--ink700);cursor:pointer;
