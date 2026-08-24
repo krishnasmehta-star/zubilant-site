@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-symbol.png">
-<link rel="stylesheet" href="site-v9.css?v=r6">
+<link rel="stylesheet" href="site-v9.css?v=r7">
 
 <link rel="canonical" href="https://zubilant.co.in/contact.html">
 <meta property="og:type" content="website">
@@ -60,11 +60,34 @@
 .cclose::before{content:"";position:absolute;right:-12%;top:-40%;width:54%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(243,107,33,.22),transparent 65%);pointer-events:none}
 .cclose .btn-primary::after{background:var(--orange500)}.cclose .btn-primary::before{background:var(--orange600)}.cclose .btn-primary{box-shadow:0 6px 18px rgba(243,107,33,.32)}
 .cclose h2{color:#fff}.cclose .acc{color:var(--sun)}.cclose .lead,.cclose p{color:rgba(255,255,255,.86)}
-.fband{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start}
-.fband .formcard{margin-top:0;padding:36px 38px 38px;position:relative;z-index:1;color:var(--ink900)}
-.fband .formcard p{color:var(--ink700)}
-.fband .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.fband .ctaticks{margin-top:28px}
+.fwrap{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.fwrap .label{text-align:center;color:var(--sun);margin-bottom:22px}
+.fcard2{position:relative;background:var(--paper);border:1px solid var(--lineSoft);border-radius:20px;
+  padding:48px 52px 40px;color:var(--ink900);
+  box-shadow:0 18px 48px rgba(243,107,33,.30),0 4px 14px rgba(0,20,22,.30)}
+.fcard2 .zpeek{position:absolute;top:-30px;right:28px;width:58px;pointer-events:none;
+  filter:drop-shadow(0 4px 10px rgba(22,33,31,.18))}
+.fcard2 h2{font-size:30px;text-align:center;letter-spacing:-.015em;color:var(--ink900)}
+.fcard2 .fsub{text-align:center;color:var(--ink700);margin-top:10px;font-size:16.5px}
+.fcard2 .fgrid{margin-top:34px;gap:22px 20px}
+.fcard2 .field label{font-size:14.5px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink900)}
+.fcard2 .field label .opt{letter-spacing:.06em}
+.fcard2 .field input,.fcard2 .field textarea{background:var(--sand);border:1.5px solid transparent;border-radius:12px;
+  min-height:54px;font-size:16.5px;transition:background var(--t-colour),border-color var(--t-colour),box-shadow var(--t-colour)}
+.fcard2 .field input:hover,.fcard2 .field textarea:hover{background:var(--paper);border-color:var(--lineStrong)}
+.fcard2 .field input:focus,.fcard2 .field textarea:focus{outline:none;background:var(--paper);border-color:var(--teal600);
+  box-shadow:0 0 0 4px var(--teal100)}
+.fcard2 .field.err input,.fcard2 .field.err textarea{background:var(--paper);border-color:#C43C1B;box-shadow:none}
+.whorow{display:flex;flex-wrap:wrap;gap:10px}
+.whorow .chip{padding:10px 18px;min-height:42px;font-size:14px}
+.fsubmit{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:8px}
+.fsubmit .btn{min-height:56px;padding:16px 46px;font-size:17px}
+.fsubmit small{font-size:14px;color:var(--ink500)}
+.ffoot{display:flex;justify-content:center;gap:10px 28px;flex-wrap:wrap;margin-top:30px;padding-top:22px;
+  border-top:1px solid var(--lineSoft);font-size:14.5px;color:var(--ink700)}
+.ffoot span{display:inline-flex;align-items:center;gap:8px}
+.ffoot span::before{content:"\2713";font-weight:700;color:var(--sage600)}
+.faltc{text-align:center;margin-top:26px;font-size:15px;color:rgba(255,255,255,.86)}
 .ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);background:rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column;gap:14px}
 .ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
 .ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
@@ -73,7 +96,7 @@
   .kways{grid-template-columns:1fr 1fr}
   .cgrid{grid-template-columns:1fr;gap:24px}
   .omap{min-height:300px}
-  .fband{grid-template-columns:1fr;gap:32px}
+  .fcard2{padding:36px 28px 32px}
   #after .routeband{grid-template-columns:1fr}
   #after .routeband div{border-right:0;border-bottom:1px solid var(--sage200)}
   #after .routeband div:last-child{border-bottom:0}
@@ -85,7 +108,10 @@
   .ocard{padding:24px 20px}
   .ofacts{grid-template-columns:1fr}
   .omap{min-height:260px}
-  .fband .formcard{padding:24px 20px 26px}
+  .fcard2{padding:30px 18px 28px}
+  .fcard2 h2{font-size:24px}
+  .fcard2 .zpeek{right:18px}
+  .fsubmit .btn{width:100%}
 }
 </style>
 <link rel="stylesheet" href="zubi-chat.css">
@@ -237,33 +263,43 @@
 </script>
 
 <section id="enquire" class="cclose">
-  <div class="wrap fband">
-    <div>
-      <div class="label" style="color:var(--sun)">Write to us</div>
-      <h2 class="mt16">Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
-      <p class="lead mt16" style="max-width:44ch">Five fields, two minutes. Budget is not the first question. One person reads it and replies.</p>
-      <ul class="ctaticks">
-        <li>No payment to enquire</li>
-        <li>A person replies, not a ticket</li>
-        <li>Private journeys, your dates</li>
-        <li>India or abroad</li>
-      </ul>
-      <p class="mt24" style="font-size:15px">Prefer to talk? <a class="tlink" style="color:#fff" href="tel:+918108117770">+91 81081 17770</a>, also on <a class="tlink" style="color:#fff" href="https://wa.me/918108117770" rel="noopener">WhatsApp</a>. Or <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
-    </div>
-    <div class="formcard">
+  <div class="wrap fwrap">
+    <div class="label">Write to us</div>
+    <div class="fcard2">
+      <img class="zpeek" src="zubi-watching.webp" alt="" width="58" height="58" aria-hidden="true">
+      <h2>Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
+      <p class="fsub">Five fields, two minutes. Budget is not the first question. One person reads it and replies.</p>
       <form class="fgrid" method="post" action="/api/enquiry">
-        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
-        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
-        <div class="field"><label for="f-who">Who&rsquo;s travelling</label><select id="f-who" name="who"><option>A family, including grandparents</option><option>A family with young children</option><option>Friends</option><option>A couple</option><option>A school or college group</option><option>A company team</option><option>Travelling for a parent</option></select></div>
-        <div class="field"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
+        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name" placeholder="ex: Meera Kulkarni"></div>
+        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel" placeholder="ex: 98200 12345"></div>
+        <div class="field full"><label id="wholab" for="f-who">Who&rsquo;s travelling <em class="opt">optional</em></label>
+          <div class="whorow" role="group" aria-labelledby="wholab">
+            <button type="button" class="chip">A family, including grandparents</button>
+            <button type="button" class="chip">A family with young children</button>
+            <button type="button" class="chip">Friends</button>
+            <button type="button" class="chip">A couple</button>
+            <button type="button" class="chip">A school or college group</button>
+            <button type="button" class="chip">A company team</button>
+            <button type="button" class="chip">Travelling for a parent</button>
+          </div>
+          <input type="hidden" id="f-who" name="who" value="">
+        </div>
+        <div class="field full"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
         <div class="field full"><label for="f-notes">Anything we should know <em class="opt">optional</em></label>
           <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
-        <div class="formfoot full">
+        <div class="fsubmit full">
           <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
-          <span class="ink500" style="font-size:14px">Nothing is booked until you say so.</span>
+          <small>Nothing is booked until you say so.</small>
         </div>
       </form>
+      <div class="ffoot">
+        <span>No payment to enquire</span>
+        <span>A person replies, not a ticket</span>
+        <span>Private journeys, your dates</span>
+        <span>India or abroad</span>
+      </div>
     </div>
+    <p class="faltc">Prefer to talk? <a class="tlink" style="color:#fff" href="tel:+918108117770">+91 81081 17770</a>, also on <a class="tlink" style="color:#fff" href="https://wa.me/918108117770" rel="noopener">WhatsApp</a>. Or <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
   </div>
 </section>
 </main>
@@ -276,6 +312,21 @@
   function land(){ setTimeout(function(){ f.focus({preventScroll:true}); }, reduce?0:650); }
   document.querySelectorAll('a[href="#enquire"]').forEach(function(a){ a.addEventListener('click',land); });
   if(location.hash==='#enquire') land();
+  /* Who's travelling: homepage-style chips, single select, feeds the hidden input.
+     window.setWho lets the prefill script select a chip by its label. */
+  var who=document.getElementById('f-who'), chips=document.querySelectorAll('.whorow .chip');
+  function pick(c){
+    chips.forEach(function(x){ x.removeAttribute('aria-selected'); });
+    if(c){ c.setAttribute('aria-selected','true'); who.value=c.textContent.trim(); }
+    else who.value='';
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){ pick(c.getAttribute('aria-selected')==='true'?null:c); });
+  });
+  window.setWho=function(v){
+    var m=null; chips.forEach(function(c){ if(c.textContent.trim()===v) m=c; });
+    if(m) pick(m); return !!m;
+  };
 })();
 </script>
 
@@ -288,8 +339,8 @@
     var q=new URLSearchParams(location.search); if(!q.toString()) return;
     function set(id,v){var el=document.getElementById(id); if(el&&v&&!el.value) el.value=v;}
     set('f-name',q.get('name')); set('f-contact',q.get('contact')); set('f-when',q.get('when'));
-    var who=q.get('who'), sel=document.getElementById('f-who');
-    if(who&&sel){for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===who){sel.selectedIndex=i;break;}}}
+    var who=q.get('who');
+    if(who&&window.setWho) window.setWho(who);
     var notes=[]; if(q.get('journey')) notes.push('Interested in: '+q.get('journey'));
     if(q.get('q')) notes.push(q.get('q'));
     if(q.get('notes')) notes.push(q.get('notes'));
@@ -298,7 +349,7 @@
       var go=function(){var f=document.getElementById('f-name'); if(!f) return;
         var r=f.closest('form').getBoundingClientRect();
         window.scrollTo({top:window.scrollY+r.top-120,behavior:'auto'});
-        (q.get('via')==='zubi'?document.getElementById('f-who'):f).focus({preventScroll:true});};
+        (q.get('via')==='zubi'?(document.querySelector('.whorow .chip')||f):f).focus({preventScroll:true});};
       setTimeout(go,750); setTimeout(go,1800);
     }
   }catch(e){}
@@ -355,7 +406,7 @@
 </footer>
 <script defer src="gsap.min.js"></script>
 <script defer src="ScrollTrigger.min.js"></script>
-<script src="site-v9.js?v=r6"></script>
+<script src="site-v9.js?v=r7"></script>
 <script>
 /* STEP OUTSIDE v2 — fluid reveal. A low-res "ink" canvas accumulates the
    pointer trail; each frame it is re-drawn blurred, faded and drifting

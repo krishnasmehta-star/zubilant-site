@@ -440,7 +440,7 @@
 (function(){
   var nav=document.getElementById('nav'), bar=document.getElementById('sbar'),
       ground=document.querySelector('.ground'),
-      fields=Array.prototype.slice.call(document.querySelectorAll('.field'));
+      fields=Array.prototype.slice.call(document.querySelectorAll('.field')).filter(function(el){return !el.closest('form');}); /* wash never touches form fields (.field landmine, Part 0.12) */
   var hero=document.querySelector('.hero');
   function onScroll(){
     var y=window.scrollY||document.documentElement.scrollTop;
