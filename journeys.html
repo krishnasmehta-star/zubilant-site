@@ -603,7 +603,7 @@ function passes(card,g,skip){
 }
 
 /* ─────────── Ask Zubi ─────────── */
-var SYN={taj:'golden triangle agra',agra:'golden triangle',pyramids:'egypt nile',balloon:'cappadocia turkey',
+var SYN={taj:'agra',pyramids:'egypt nile',balloon:'cappadocia turkey',
 balloons:'cappadocia turkey',darshan:'spiritual-and-pilgrimage tirupati',corbett:'jim corbett nainital',
 parents:'seniors senior-citizen-friendly',parent:'seniors senior-citizen-friendly',mother:'seniors senior-citizen-friendly',
 father:'seniors senior-citizen-friendly',grandparents:'multi-generational senior-citizen-friendly',
@@ -633,14 +633,47 @@ function parseQ(q){
   if(n){o.nights=+n[1];o.said.push(n[1]+' nights');}
   else if(/\ba week\b/.test(s)){o.nights=7;o.said.push('about a week');}
   var toks=s.replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){
-    return w.length>2&&STOP.indexOf(w)<0&&!/^\d+$/.test(w);});
+    /* r2: the budget and duration words are already read out by o.said; leaving
+       them in made the readback print "80k · under ₹80,000". */
+    return w.length>2&&STOP.indexOf(w)<0&&!/^\d+$/.test(w)&&!/^\d+k$/.test(w)
+      &&!/^(under|below|less|than|upto|within|max|budget|around|nights?|nites?|days?|week|weeks|weekend|fortnight|lakh|lac|thousand)$/.test(w);});
   var ex=[];toks.forEach(function(w){ex.push(w);if(SYN[w])ex=ex.concat(SYN[w].split(' '));});
+  /* r2: one group per word the visitor typed, its synonyms folded in. A word
+     the catalogue has never heard of ("mahal") is dropped rather than allowed
+     to raise the bar; of the rest, a journey must answer most. Identical rule
+     to the homepage box, so the two agree on what a sentence means. */
+  function grx(w){return new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i');}
+  var gs=toks.map(function(w){
+    var g=[grx(w)]; if(SYN[w]) SYN[w].split(' ').forEach(function(x){g.push(grx(x));});
+    return g;
+  }).filter(function(g){
+    return cards.some(function(c){
+      var t=c.dataset.title||'',b=c.dataset.blob||'';
+      return g.some(function(r){return r.test(t)||r.test(b);});
+    });
+  });
+  o.groups=gs; o.need=gs.length?Math.max(1,Math.ceil(gs.length*0.6)):0;
+  o.dead=(toks.length>0&&gs.length===0);
+  /* r2: match on word boundaries. Plain indexOf let "agra" match Pray-agra-j
+     and "ski" match Hel-ski-nki, so a search returned journeys that had
+     nothing to do with the words typed. Same fix as the homepage box. */
+  o.rx=ex.map(function(w){return new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i');});
   o.tokens=ex;o.plain=toks;return o;
 }
 function score(c,q){
-  var s=0,t=(c.dataset.title||'').toLowerCase(),b=c.dataset.blob||'';
-  q.tokens.forEach(function(w){if(t.indexOf(w)>-1)s+=3;else if(b.indexOf(w)>-1)s+=2;});
-  if(q.budget){var p=+c.dataset.p;if(p>0&&p<=q.budget)s+=2;else if(p>q.budget)s-=6;}
+  var s=0,t=(c.dataset.title||'').toLowerCase(),b=c.dataset.blob||'',hits=0;
+  (q.groups||[]).forEach(function(g){
+    var best=0;
+    g.forEach(function(r){ if(r.test(t)) best=Math.max(best,3); else if(r.test(b)) best=Math.max(best,2); });
+    if(best){hits++;s+=best;}
+  });
+  /* r2: "beach under 80k" used to return Ladakh — the budget bonus alone put
+     every affordable journey into the pool and the top-up-to-six padding
+     showed them. A journey must answer most of what was actually asked. */
+  if(q.need&&hits<q.need)return -1;
+  /* r2: "under 60k" is a promise, not a preference. An over-budget journey is
+     excluded outright rather than penalised and floated back up by keywords. */
+  if(q.budget){var p=+c.dataset.p;if(p>q.budget)return -1;if(p>0)s+=2;}
   if(q.nights){var d=Math.abs((+c.dataset.n)-q.nights);if(d<=1)s+=2;else if(d>4)s-=2;}
   return s;
 }
@@ -651,12 +684,15 @@ function render(resetPage){
   if(resetPage!==false)shown=PAGE;
   var act=active(),g=groupsOf(act);
   var list=cards.filter(function(c){return passes(c,g);});
-  if(query&&query.tokens.length){
+  /* r2: a line that is only a budget or a duration ("under 40k", "4 nights")
+     used to be ignored entirely because it produced no keywords. */
+  if(query&&query.dead&&!query.budget&&!query.nights){list=[];}
+  else if(query&&(query.groups.length||query.budget||query.nights)){
     var sc=list.map(function(c){return{c:c,s:score(c,query)};}).filter(function(x){return x.s>0;});
     sc.sort(function(a,b){return b.s-a.s||(+a.c.dataset.i)-(+b.c.dataset.i);});
     var top=sc.length?sc[0].s:0,cut=Math.max(3,top*0.55);
     var keep=sc.filter(function(x){return x.s>=cut;});
-    if(keep.length<3)keep=sc.slice(0,Math.min(6,sc.length));
+    if(keep.length<3)keep=sc.slice(0,Math.min(6,sc.length)); /* all of sc is now genuinely relevant */
     list=keep.map(function(x){return x.c;});
   }
   var sort=document.getElementById('jsort').value;
