@@ -60,29 +60,20 @@
 .cclose::before{content:"";position:absolute;right:-12%;top:-40%;width:54%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(243,107,33,.22),transparent 65%);pointer-events:none}
 .cclose .btn-primary::after{background:var(--orange500)}.cclose .btn-primary::before{background:var(--orange600)}.cclose .btn-primary{box-shadow:0 6px 18px rgba(243,107,33,.32)}
 .cclose h2{color:#fff}.cclose .acc{color:var(--sun)}.cclose .lead,.cclose p{color:rgba(255,255,255,.86)}
-.ctaband{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:56px;align-items:center}
+.fband{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start}
+.fband .formcard{margin-top:0;padding:36px 38px 38px;position:relative;z-index:1;color:var(--ink900)}
+.fband .formcard p{color:var(--ink700)}
+.fband .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.fband .ctaticks{margin-top:28px}
 .ctaticks{list-style:none;margin:0;padding:28px 30px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-card);background:rgba(255,255,255,.07);position:relative;display:flex;flex-direction:column;gap:14px}
 .ctaticks li{position:relative;padding-left:30px;font-size:16.5px;line-height:1.45;color:#fff}
 .ctaticks li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--sun)}
 .ctaticks li::after{content:"";position:absolute;left:4px;top:10px;width:6px;height:3px;border-left:2px solid var(--teal900);border-bottom:2px solid var(--teal900);transform:rotate(-45deg)}
-/* enquiry modal (same pattern as corporate.html) */
-.embd{position:fixed;inset:0;z-index:1000;background:rgba(0,20,22,.62);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity 200ms ease}
-.embd[hidden]{display:none}
-.embd.show{opacity:1}
-.em{position:relative;background:var(--paper);border-radius:18px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:36px 40px 40px;box-shadow:var(--e3);transform:translateY(14px);transition:transform 220ms cubic-bezier(.2,.7,.3,1)}
-.embd.show .em{transform:none}
-.emhead{margin-bottom:24px;padding-right:40px}
-.emhead h3{font-size:26px;line-height:1.2}
-.emx{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:999px;border:0;background:var(--sand);font-size:20px;line-height:1;cursor:pointer}
-.emx:hover{background:var(--teal50)}
-.em .fgrid{gap:18px}
-.em .field input,.em .field select,.em .field textarea{font-size:16px;min-height:48px}
-.em .formfoot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 @media (max-width:1080px){
   .kways{grid-template-columns:1fr 1fr}
   .cgrid{grid-template-columns:1fr;gap:24px}
   .omap{min-height:300px}
-  .ctaband{grid-template-columns:1fr;gap:28px}
+  .fband{grid-template-columns:1fr;gap:32px}
   #after .routeband{grid-template-columns:1fr}
   #after .routeband div{border-right:0;border-bottom:1px solid var(--sage200)}
   #after .routeband div:last-child{border-bottom:0}
@@ -94,9 +85,7 @@
   .ocard{padding:24px 20px}
   .ofacts{grid-template-columns:1fr}
   .omap{min-height:260px}
-  .em{padding:26px 20px 28px}
-  .em .fgrid{grid-template-columns:1fr}
-  .embd{padding:12px}
+  .fband .formcard{padding:24px 20px 26px}
 }
 </style>
 <link rel="stylesheet" href="zubi-chat.css">
@@ -129,7 +118,7 @@
     <p class="sub">The phone is answered by someone who designs journeys. Call, WhatsApp or write, whichever you prefer.</p>
     <div class="btnrow">
       <a class="btn btn-primary" href="tel:+918108117770">Call +91 81081 17770 <span class="arw" aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn-onphoto" href="#enquire" data-open-enquiry>Write to us</a>
+      <a class="btn btn-onphoto" href="#enquire">Write to us</a>
     </div>
     <div class="trust">
       <div><k>Designing since</k><v>2009</v></div>
@@ -174,7 +163,7 @@
         <div class="label ink500">What happens next</div>
         <h2 class="mt16">No payment, no obligation, <span class="acc">no queue</span>.</h2>
       </div>
-      <a class="btn btn-primary" href="#enquire" data-open-enquiry>Tell us who&rsquo;s travelling <span class="arw" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-primary" href="#enquire">Tell us who&rsquo;s travelling <span class="arw" aria-hidden="true">&rarr;</span></a>
     </div>
     <div class="routeband">
       <div><k>Step 1</k><v>You tell us who&rsquo;s travelling</v><em>Ages, roughly when, and anything we should know. Two minutes.</em></div>
@@ -248,71 +237,45 @@
 </script>
 
 <section id="enquire" class="cclose">
-  <div class="wrap ctaband">
+  <div class="wrap fband">
     <div>
-      <div class="label" style="color:var(--sun)">Or write to us</div>
+      <div class="label" style="color:var(--sun)">Write to us</div>
       <h2 class="mt16">Tell us who&rsquo;s travelling. <span class="acc">We&rsquo;ll shape something.</span></h2>
-      <p class="lead mt16" style="max-width:44ch">Five fields. Budget is not the first question. One person reads it and replies.</p>
-      <div class="btnrow">
-        <a class="btn btn-primary" href="#enquire" data-open-enquiry>Send an enquiry <span class="arw" aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn-onphoto" href="https://wa.me/918108117770" target="_blank" rel="noopener">WhatsApp instead</a>
-      </div>
-      <p class="mt24" style="font-size:15px">Or call <a class="tlink" style="color:#fff" href="tel:+918108117770">+91 81081 17770</a>, or email <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
+      <p class="lead mt16" style="max-width:44ch">Five fields, two minutes. Budget is not the first question. One person reads it and replies.</p>
+      <ul class="ctaticks">
+        <li>No payment to enquire</li>
+        <li>A person replies, not a ticket</li>
+        <li>Private journeys, your dates</li>
+        <li>India or abroad</li>
+      </ul>
+      <p class="mt24" style="font-size:15px">Prefer to talk? <a class="tlink" style="color:#fff" href="tel:+918108117770">+91 81081 17770</a>, also on <a class="tlink" style="color:#fff" href="https://wa.me/918108117770" rel="noopener">WhatsApp</a>. Or <a class="tlink" style="color:#fff" href="mailto:experience@zubilant.co.in">experience@zubilant.co.in</a>.</p>
     </div>
-    <ul class="ctaticks">
-      <li>No payment to enquire</li>
-      <li>A person replies, not a ticket</li>
-      <li>Private journeys, your dates</li>
-      <li>India or abroad</li>
-    </ul>
+    <div class="formcard">
+      <form class="fgrid" method="post" action="/api/enquiry">
+        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
+        <div class="field"><label for="f-who">Who&rsquo;s travelling</label><select id="f-who" name="who"><option>A family, including grandparents</option><option>A family with young children</option><option>Friends</option><option>A couple</option><option>A school or college group</option><option>A company team</option><option>Travelling for a parent</option></select></div>
+        <div class="field"><label for="f-when">Roughly when <em class="opt">optional</em></label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
+        <div class="field full"><label for="f-notes">Anything we should know <em class="opt">optional</em></label>
+          <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
+        <div class="formfoot full">
+          <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
+          <span class="ink500" style="font-size:14px">Nothing is booked until you say so.</span>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
 </main>
 
-<div class="embd" id="embd" role="dialog" aria-modal="true" aria-labelledby="emt" hidden>
-  <div class="em">
-    <button class="emx" type="button" aria-label="Close">&times;</button>
-    <div class="emhead">
-      <div class="label ink500">Write to us</div>
-      <h3 id="emt" class="mt8">Tell us who&rsquo;s travelling.</h3>
-      <p class="ink700 mt8" style="font-size:15px">Five fields. No obligation, no payment, no call centre.</p>
-    </div>
-    <form class="fgrid" method="post" action="/api/enquiry">
-      <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" required autocomplete="name"></div>
-      <div class="field"><label for="f-contact">Phone or email</label><input type="text" id="f-contact" name="contact" required autocomplete="tel"></div>
-      <div class="field"><label for="f-who">Who&rsquo;s travelling</label><select id="f-who" name="who"><option>A family, including grandparents</option><option>A family with young children</option><option>Friends</option><option>A couple</option><option>A school or college group</option><option>A company team</option><option>Travelling for a parent</option></select></div>
-      <div class="field"><label for="f-when">Roughly when</label><input type="text" id="f-when" name="when" placeholder="ex: last week of December, 8 nights"></div>
-      <div class="field full"><label for="f-notes">Anything we should know</label>
-        <textarea id="f-notes" name="notes" placeholder="Ages, mobility, dietary needs, a place someone has always wanted to see."></textarea></div>
-      <div class="formfoot full">
-        <button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>
-        <span class="ink500" style="font-size:14px">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on WhatsApp.</span>
-      </div>
-    </form>
-  </div>
-</div>
 <script>
+/* CTAs scroll to the inline form; focus the first field when the scroll lands. */
 (function(){
-  var bd=document.getElementById('embd'); if(!bd) return;
-  var last=null;
-  function open(){
-    last=document.activeElement;
-    bd.hidden=false; requestAnimationFrame(function(){ bd.classList.add('show'); });
-    document.body.style.overflow='hidden';
-    var f=bd.querySelector('#f-name'); if(f) f.focus();
-  }
-  function close(){
-    bd.classList.remove('show'); document.body.style.overflow='';
-    setTimeout(function(){ bd.hidden=true; },220);
-    if(last&&last.focus) last.focus();
-  }
-  document.addEventListener('click',function(e){
-    var a=e.target.closest('[data-open-enquiry]');
-    if(a){ e.preventDefault(); open(); return; }
-    if(e.target===bd||e.target.closest('.emx')) close();
-  });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!bd.hidden) close(); });
-  if(location.hash==='#enquire') open();
+  var f=document.getElementById('f-name'); if(!f) return;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function land(){ setTimeout(function(){ f.focus({preventScroll:true}); }, reduce?0:650); }
+  document.querySelectorAll('a[href="#enquire"]').forEach(function(a){ a.addEventListener('click',land); });
+  if(location.hash==='#enquire') land();
 })();
 </script>
 

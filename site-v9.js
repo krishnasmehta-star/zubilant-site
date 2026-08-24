@@ -632,3 +632,72 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
+
+/* ── ENQUIRY FORMS r2 (22 Aug) ─ validation + delivery.
+   /api/enquiry does not exist yet (board 2.1 #37). Submit tries it; when it
+   fails, the visitor gets a one-tap WhatsApp or email send with their details
+   pre-filled instead of a 404. When the Worker lands, set EP and this whole
+   fallback becomes invisible. */
+(function(){
+  var EP='/api/enquiry', WA='918108117770', TO='experience@zubilant.co.in';
+  function init(){
+    document.querySelectorAll('form[action="/api/enquiry"]').forEach(function(f){
+      f.setAttribute('novalidate','');
+      function slot(el){var w=el.closest('.field');if(!w)return null;
+        var e=w.querySelector('.ferr');
+        if(!e){e=document.createElement('span');e.className='ferr';w.appendChild(e);}
+        return e;}
+      function err(el,msg){var e=slot(el);if(!e)return;e.textContent=msg;
+        el.closest('.field').classList.add('err');el.setAttribute('aria-invalid','true');}
+      f.addEventListener('input',function(e){var w=e.target.closest('.field');
+        if(w){w.classList.remove('err');e.target.removeAttribute('aria-invalid');}});
+      f.addEventListener('submit',function(ev){
+        ev.preventDefault();
+        var name=f.querySelector('[name="name"]'),contact=f.querySelector('[name="contact"]'),bad=[];
+        if(name&&!name.value.trim()){err(name,'We need a name to reply to.');bad.push(name);}
+        if(contact&&!contact.value.trim()){err(contact,'A phone number or email, so a person can reach you.');bad.push(contact);}
+        if(bad.length){bad[0].focus();return;}
+        var pairs=[];
+        f.querySelectorAll('.field').forEach(function(w){
+          var l=w.querySelector('label'),c=w.querySelector('input,select,textarea');
+          if(!l||!c||!c.value.trim())return;
+          pairs.push(l.childNodes[0].textContent.trim()+': '+c.value.trim());
+        });
+        var txt='New enquiry via zubilant.co.in\n'+pairs.join('\n');
+        var btn=f.querySelector('button[type="submit"]');
+        if(btn){btn.disabled=true;btn.dataset.l=btn.innerHTML;btn.textContent='Sending\u2026';}
+        var ctrl=('AbortController' in window)?new AbortController():null;
+        var t=ctrl?setTimeout(function(){ctrl.abort();},4000):null;
+        function done(sent){
+          if(t)clearTimeout(t);
+          if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.l;}
+          var p=f.querySelector('.fsend');
+          if(!p){p=document.createElement('div');p.className='fsend';f.appendChild(p);}
+          if(sent){
+            p.innerHTML='<h4>Sent. Thank you.</h4>'+
+              '<p class="ink700" style="font-size:15.5px">One person reads it and replies. Nothing is booked until you say so.</p>';
+          }else{
+            p.innerHTML='<h4>Ready to send. One tap.</h4>'+
+              '<p class="ink700" style="font-size:15px">Your details are written out below. Send them the way you prefer and a person replies there.</p>'+
+              '<div class="sum"></div>'+
+              '<div class="btnrow"><a class="btn btn-primary" target="_blank" rel="noopener">Send on WhatsApp <span class="arw" aria-hidden="true">\u2192</span></a>'+
+              '<a class="btn btn-secondary">Send by email</a></div>'+
+              '<button type="button" class="editl">\u2190 Edit my details</button>';
+            p.querySelector('.sum').textContent=txt;
+            p.querySelector('.btn-primary').href='https://wa.me/'+WA+'?text='+encodeURIComponent(txt);
+            p.querySelector('.btn-secondary').href='mailto:'+TO+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(txt);
+            p.querySelector('.editl').addEventListener('click',function(){f.classList.remove('zsend');p.remove();});
+          }
+          f.classList.add('zsend');
+          p.scrollIntoView({block:'nearest'});
+        }
+        try{
+          fetch(EP,{method:'POST',body:new FormData(f),signal:ctrl?ctrl.signal:undefined})
+            .then(function(r){if(!r.ok)throw 0;done(true);})
+            .catch(function(){done(false);});
+        }catch(e){done(false);}
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();

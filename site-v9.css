@@ -1269,3 +1269,20 @@ body.navopen .navmenu{display:flex}
   .zsrhead{gap:6px}.zsrhead a{font-size:14px}
   .itrust{font-size:13px}
 }
+
+/* ── ENQUIRY FORM EXPERIENCE r2 (22 Aug) ─ shared by contact inline form,
+   corporate modal and plan-your-journey. Errors, optional tags, and the
+   interim delivery panel used until /api/enquiry exists (board 2.1 #37). */
+.field label .opt{font-style:normal;font-weight:600;font-size:11px;letter-spacing:.08em;color:var(--ink500);text-transform:lowercase;margin-left:6px}
+.ferr{display:none;font-size:13.5px;font-weight:600;color:#C43C1B;line-height:1.4}
+.field.err .ferr{display:block}
+.field.err input,.field.err textarea{border-color:#C43C1B}
+.field.err input:hover,.field.err textarea:hover{border-color:#C43C1B}
+.fgrid .fsend{grid-column:1/-1;display:none;flex-direction:column;gap:16px}
+.fgrid.zsend>*:not(.fsend){display:none!important}
+.fgrid.zsend .fsend{display:flex}
+.fsend h4{font-size:22px;line-height:1.25;letter-spacing:-.01em}
+.fsend .sum{background:var(--sand);border:1px solid var(--lineSoft);border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.65;white-space:pre-wrap;color:var(--ink700)}
+.fsend .btnrow{margin-top:0}
+.fsend .editl{align-self:flex-start;background:none;border:0;padding:0;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--teal600);cursor:pointer}
+.fsend .editl:hover{color:var(--orange500)}
