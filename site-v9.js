@@ -635,6 +635,111 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 
+/* ── JOURNEY ENQUIRY IN PLACE (27 Aug, workflow-polish r1) ────────────────
+   Krishna, 27 Aug: "we need not add an extra click." A journey page's CTAs
+   used to navigate the visitor to contact.html and make them re-read a form
+   they had already asked for. Now the same form opens over the journey they
+   are reading, with the journey named, and submits without a page load.
+
+   One destination is unchanged (24 Aug one-flow ruling): this IS the contact
+   form, same markup language, same action, same pipeline. contact.html stays
+   the destination for anyone who navigates there directly, and stays the
+   no-JS fallback -- the CTAs keep their real hrefs, so if this block never
+   runs the visitor simply lands on contact.html as before.
+
+   Self-injecting, like Quick view: one shared file serves all 59 journey
+   pages. Runs BEFORE the enquiry-forms block below so that block's init()
+   finds the modal's form and enhances it (validation, maxlengths, delivery,
+   rescue). Do not move this block below it. */
+(function(){
+  var page=(location.pathname.split('/').pop()||'');
+  if(!/^j-.+\.html$/.test(page)) return;              /* journey detail pages only */
+  if(document.querySelector('form[action="/api/enquiry"]')) return;  /* page has its own */
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var SEL='a[href*="contact.html"][href*="#enquire"]';
+  var bd=null, last=null;
+
+  function journeyTitle(){
+    var a=document.querySelector(SEL); if(!a) return '';
+    var m=/[?&]journey=([^&#]*)/.exec(a.getAttribute('href')||'');
+    if(m){ try{ return decodeURIComponent(m[1].replace(/\+/g,' ')); }catch(e){ return ''; } }
+    var h1=document.querySelector('h1');
+    return h1?h1.textContent.trim():'';
+  }
+
+  function build(){
+    var t=journeyTitle();
+    bd=document.createElement('div');
+    bd.className='embd'; bd.id='jembd';
+    bd.setAttribute('role','dialog'); bd.setAttribute('aria-modal','true'); bd.setAttribute('aria-labelledby','jemt');
+    bd.hidden=true;
+    bd.innerHTML='<div class="em">'+
+      '<button class="emx" type="button" aria-label="Close">&times;</button>'+
+      '<div class="emhead">'+
+        '<div class="label ink500">Get a free quote</div>'+
+        '<h3 id="jemt" class="mt8">Tell us who&rsquo;s travelling.</h3>'+
+        (t?'<div class="empill">Planning: <b>'+esc(t)+'</b></div>':'')+
+        '<p class="ink700 mt8" style="font-size:15px">Four fields, two minutes. Budget is not the first question. One person reads it and replies.</p>'+
+      '</div>'+
+      '<form class="fgrid" method="post" action="/api/enquiry">'+
+        '<div class="field"><label for="jf-name">Your name</label><input type="text" id="jf-name" name="name" required autocomplete="name" maxlength="80" placeholder="ex: Meera Kulkarni"></div>'+
+        '<div class="field"><label for="jf-contact">Phone or email</label><input type="text" id="jf-contact" name="contact" required autocomplete="tel" maxlength="120" placeholder="ex: 98200 12345"></div>'+
+        '<div class="field full"><label for="jf-when">Roughly when <em class="opt">optional</em></label><input type="text" id="jf-when" name="when" maxlength="120" placeholder="ex: last week of December, 8 nights"></div>'+
+        '<div class="field full"><label for="jf-notes">Anything we should know <em class="opt">optional</em></label>'+
+          '<textarea id="jf-notes" name="notes" maxlength="2000" placeholder="Ages, mobility, dietary needs, how many of you are travelling."></textarea></div>'+
+        '<div class="emfoot full"><button type="submit" class="btn btn-primary">Send enquiry <span class="arw" aria-hidden="true">&rarr;</span></button>'+
+        '<small>Nothing is booked until you say so.</small></div>'+
+      '</form>'+
+      '<p class="emalt">Prefer to talk? <a class="tlink" href="tel:+918108117770">+91 81081 17770</a>, also on <a class="tlink" href="https://wa.me/918108117770" target="_blank" rel="noopener">WhatsApp</a>.</p>'+
+    '</div>';
+    document.body.appendChild(bd);
+    /* the journey rides on the form, not the URL: the enquiry block reads
+       f.dataset.journey for the email subject and the rescue summary */
+    var f=bd.querySelector('form');
+    if(t){ f.setAttribute('data-journey',t); }
+  }
+
+  function open(){
+    if(!bd) return;
+    last=document.activeElement;
+    bd.hidden=false;
+    requestAnimationFrame(function(){ bd.classList.add('show'); });
+    document.body.style.overflow='hidden';
+    var f=bd.querySelector('#jf-name'); if(f) f.focus();
+    if(window.dataLayer)window.dataLayer.push({event:'enquiry_open_inplace',page:page});
+  }
+  function close(){
+    if(!bd) return;
+    bd.classList.remove('show'); document.body.style.overflow='';
+    setTimeout(function(){ bd.hidden=true; },220);
+    if(last&&last.focus) last.focus();
+  }
+
+  function init(){
+    build();
+    document.addEventListener('click',function(e){
+      var a=e.target.closest?e.target.closest(SEL):null;
+      if(a){ e.preventDefault(); open(); return; }
+      if(!bd||bd.hidden) return;
+      if(e.target===bd||(e.target.closest&&e.target.closest('.emx'))) close();
+    });
+    document.addEventListener('keydown',function(e){
+      if(!bd||bd.hidden) return;
+      if(e.key==='Escape'){ close(); return; }
+      if(e.key==='Tab'){
+        var els=bd.querySelectorAll('button,input,select,textarea,a[href]'), n=els.length;
+        if(!n) return;
+        var first=els[0], lastEl=els[n-1];
+        if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); lastEl.focus(); }
+        else if(!e.shiftKey&&document.activeElement===lastEl){ e.preventDefault(); first.focus(); }
+      }
+    });
+    if(location.hash==='#enquire') open();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+
 /* ── ENQUIRY FORMS r3 (24 Aug) ─ validation + direct email delivery.
    Stage-1 backend, $0 (Krishna, 24 Aug PM): FormSubmit's AJAX endpoint relays
    the enquiry as an email to experience@zubilant.co.in. The first-ever send
@@ -710,6 +815,10 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
           if(!l||!c||!c.value.trim())return;
           pairs.push(l.childNodes[0].textContent.trim()+': '+c.value.trim());
         });
+        /* 27 Aug: the in-place journey modal carries its journey on the form,
+           not in the URL, so both the summary and the subject read it there. */
+        var dj=f.getAttribute('data-journey')||'';
+        if(dj) pairs.unshift('Journey: '+dj);
         var txt='New enquiry via zubilant.co.in\n'+pairs.join('\n');
         var btn=f.querySelector('button[type="submit"]');
         f.classList.add('zbusy');
@@ -745,8 +854,9 @@ window.ZREC=['j-rajasthan-first-timers.html','j-golden-triangle-delhi-agra-jaipu
           var fd=new FormData(f);
           /* r7: subject carries the journey so the inbox triages itself; the
              contact pill strips ?journey= on dismiss, so this stays honest */
-          var jn='';
-          try{jn=new URLSearchParams(location.search).get('journey')||'';}catch(e){}
+          var jn=dj;
+          if(!jn){try{jn=new URLSearchParams(location.search).get('journey')||'';}catch(e){}}
+          if(dj) fd.append('journey',dj);
           fd.append('_subject','New enquiry via zubilant.co.in'+(jn?': '+jn:''));
           fd.append('_template','table');
           fd.append('_captcha','false');

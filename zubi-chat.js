@@ -5,12 +5,16 @@
    from two sources and nothing else —
      1. window.ZUBI_DATA  (zubi-data.js, generated from journeys.html canon)
      2. the CONFIRMED facts block below (every line traceable to the board)
-   Anything outside those two routes to a human: the callback hand-off.
+   Anything outside those two routes to a human: the callback request.
 
-   Callback hand-off: per the 24 Aug one-flow ruling every CTA leads to the
-   contact.html enquiry form, so Zubi prefills that page via the query string.
-   When 2.1 #6 (where enquiries land) is answered, swap sendCallback() for a
-   fetch() to the Worker. Nothing else needs to change.
+   Callback, r7 (27 Aug): Zubi SENDS it. It used to collect a name, a number
+   and a time, then bounce the visitor to contact.html to press Send a second
+   time on details they had already given -- a dead click, and the point at
+   which a warm lead goes cold. It now POSTs to the same FormSubmit relay the
+   site's enquiry forms use, confirms in the chat, and falls back to a
+   prefilled WhatsApp message in-widget if the relay is down, so nothing is
+   ever lost. Same validation rules as site-v9.js by design.
+   Stage 2: swap EP for the Cloudflare Worker; nothing else changes.
    ═══════════════════════════════════════════════════════════════ */
 (function(){
   'use strict';
@@ -19,6 +23,7 @@
   var J=D.journeys, SYN=D.syn;
   var PHONE='+91 81081 17770', TEL='tel:+918108117770', WA='https://wa.me/918108117770', MAIL='experience@zubilant.co.in';
   var PLAN='contact.html';
+  var EP='https://formsubmit.co/ajax/experience@zubilant.co.in';
   var AVATAR='zubi-watching.webp';
 
   /* ── helpers ── */
@@ -331,6 +336,14 @@
     log.appendChild(w); scroll(); save(); }
   function clearChips(){ var old=log.querySelectorAll('.zbc-chips'); for(var i=0;i<old.length;i++) old[i].remove(); save(); }
 
+  /* Mirrors site-v9.js's r5 validator: one standard for a phone number
+     sitewide, so Zubi never accepts what the form would reject. */
+  function validPhone(v){
+    var d=String(v).replace(/[^\d]/g,'');
+    if(/^(0|91)?[6-9]\d{9}$/.test(d)) return true;               /* Indian mobile */
+    if(/^\s*\+/.test(v)&&d.length>=8&&d.length<=15) return true;  /* international */
+    return false;
+  }
   function callbackForm(){
     var w=document.createElement('form'); w.className='zbc-form'; w.noValidate=true;
     w.innerHTML='<label for="zbc-n">Your name</label><input id="zbc-n" name="name" type="text" autocomplete="name" required>'+
@@ -341,20 +354,62 @@
     w.addEventListener('submit',function(e){
       e.preventDefault();
       var n=w.name.value.trim(), p=w.phone.value.trim(), t=w.when.value;
-      if(!n||p.replace(/\D/g,'').length<8){ w.classList.add('zbc-bad'); return; }
+      if(n.length<2||!validPhone(p)){ w.classList.add('zbc-bad'); return; }
       w.classList.remove('zbc-bad');
-      sendCallback({name:n,phone:p,when:t});
+      if(w.classList.contains('zbc-busy')) return;      /* double-submit guard */
+      w.classList.add('zbc-busy');
+      var go=w.querySelector('.zbc-go'); if(go){ go.disabled=true; go.textContent='Sending\u2026'; }
+      sendCallback({name:n,phone:p,when:t},w);
     });
     log.appendChild(w); scroll(); w.name.focus();
   }
-  /* Hand-off. Today: prefill the contact.html enquiry form (one flow, 24 Aug).
-     Tomorrow: POST to the Worker once 2.1 #6 names a destination. */
-  function sendCallback(d){
-    var notes='Call back requested via Zubi · best time: '+d.when+(HERE?' · about: '+HERE.t:'')+' · from: '+path;
-    var qs='?via=zubi&name='+encodeURIComponent(d.name)+'&contact='+encodeURIComponent(d.phone)+'&when='+encodeURIComponent(d.when)+'&notes='+encodeURIComponent(notes)+(HERE?'&journey='+encodeURIComponent(HERE.t):'');
+  /* Send it. No hand-off, no second Send button: Zubi already has the name,
+     the number and the time, so it POSTs them to the same relay the site's
+     enquiry forms use and confirms in the chat. If the relay is down the
+     visitor gets a prefilled WhatsApp message here, not a lost lead. */
+  function sendCallback(d,w){
+    var notes='Call back requested via Zubi \u00b7 best time: '+d.when+(HERE?' \u00b7 about: '+HERE.t:'')+' \u00b7 from: '+path;
+    var txt='Call back request via Zubilant.co.in\nName: '+d.name+'\nPhone: '+d.phone+'\nBest time: '+d.when+(HERE?'\nJourney: '+HERE.t:'');
+    var first=esc(d.name.split(' ')[0]);
     emit('callback',{page:path,journey:HERE?HERE.t:null});
-    bot('<p>Thanks, '+esc(d.name.split(' ')[0])+'. One last step so this reaches a person; your details are already filled in.</p>');
-    setTimeout(function(){ location.href=PLAN+qs+'#enquire'; },900);
+
+    var pending=bot('<p>One moment, '+first+', sending this to the team\u2026</p>');
+    var settled=false;
+    function done(sent){
+      if(settled) return; settled=true;
+      if(pending&&pending.remove) pending.remove();
+      if(sent){
+        if(w&&w.remove) w.remove();                     /* one request, not two */
+        bot('<p>Done, '+first+'. Someone from Zubilant will call you on <b>'+esc(d.phone)+'</b>, '+esc(d.when).toLowerCase()+'. No call centre, no script.</p>');
+        chips(['Show me journeys','What\u2019s included?']);
+      }else{
+        if(w){ w.classList.remove('zbc-busy');
+          var g=w.querySelector('.zbc-go'); if(g){ g.disabled=false; g.textContent='Request my call back'; } }
+        bot('<p>That did not send, and I would rather tell you than lose it. One tap gets these exact details to a person.</p>');
+        links([[WA+'?text='+encodeURIComponent(txt),'Send on WhatsApp'],[TEL,'Call '+PHONE]]);
+      }
+      if(window.dataLayer)window.dataLayer.push({event:sent?'zubi_callback_sent':'zubi_callback_rescue',page:path});
+      save();
+    }
+
+    try{
+      var fd=new FormData();
+      fd.append('name',d.name);
+      fd.append('contact',d.phone);
+      fd.append('when',d.when);
+      fd.append('notes',notes);
+      if(HERE) fd.append('journey',HERE.t);
+      fd.append('page',path);
+      fd.append('_subject','Call back request via Zubi'+(HERE?': '+HERE.t:''));
+      fd.append('_template','table');
+      fd.append('_captcha','false');
+      var ctrl=('AbortController' in window)?new AbortController():null;
+      if(ctrl) setTimeout(function(){ try{ctrl.abort();}catch(e){} },6500);
+      fetch(EP,{method:'POST',body:fd,headers:{'Accept':'application/json'},signal:ctrl?ctrl.signal:undefined})
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(j){ done(!!(j&&(j.success===true||j.success==='true'))); })
+        .catch(function(){ done(false); });
+    }catch(e){ done(false); }
   }
 
   function respond(r){

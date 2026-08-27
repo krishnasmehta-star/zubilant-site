@@ -158,3 +158,11 @@ body.zbar-off .zbar{transform:translateY(105%)!important}
   .zdraw,.zbar{transition:none}
   .zsave:hover,.zrvc:hover{transform:none}
 }
+
+/* 27 Aug, workflow-polish r1: ONE sticky bar, not two. The journey template's
+   own .stickybar (z-index 140) and this .zbar (z-index 900) both pin to the
+   bottom at <=1080, so the older one has been sitting invisible underneath
+   since the CRO r1 batch shipped. .zbar wins on merit -- it carries price,
+   quote and WhatsApp -- so the template's bar stands down wherever .zbar is
+   mounted, and returns by itself if cro-v1 is ever removed. */
+body.zhasbar .stickybar{display:none!important}

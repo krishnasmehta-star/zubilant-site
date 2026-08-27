@@ -215,3 +215,5 @@
   .zbc-root,.zbc-launch,.zbc-panel,.zbc-msg,.zbc-jcard,.zbc-chip,.zbc-nudge,.zbc-li,.zbc-start{animation:none!important;transition:none!important}
 }
 @media print{.zbc-root{display:none!important}}
+
+.zbc-form.zbc-busy .zbc-go{opacity:.7;cursor:default}
