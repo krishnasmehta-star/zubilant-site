@@ -148,13 +148,13 @@
   var ZREC=[
     {href:'j-ladakh-by-road.html',img:'j-ladakh.webp',meta:'Ladakh · Moderate · 9 nights',title:'Ladakh by Road',
      desc:'Nine days over the high passes to Nubra and Pangong, at a pace that lets everyone sleep well at altitude: oxygen in every vehicle, doctors’ numbers in every driver’s phone.',
-     from:'From ₹70,000 per person'},
+     from:'From ₹69,999 per person'},
     {href:'j-kashmir-tulip-season.html',img:'j-kashmir.webp',meta:'Kashmir · Gentle · 6 nights',title:'Kashmir in Tulip Season',
      desc:'Six nights across Srinagar, Gulmarg and Pahalgam in the fortnight the tulips are actually out, with a houseboat night your children will talk about for years.',
      from:'Price pending'},
     {href:'j-kerala-backwaters-slowly.html',img:'j-kerala.webp',meta:'Kerala · Gentle · 7 nights',title:'Kerala Backwaters, Slowly',
      desc:'Seven unhurried nights from Kochi through Alleppey to Kumarakom and the hills: a houseboat, a spice garden, and afternoons with nothing in them, on purpose.',
-     from:'From ₹58,000 per person'}
+     from:'From ₹57,999 per person'}
   ];
   var minis=Array.prototype.slice.call(document.querySelectorAll('.zmini'));
   if(minis.length){
@@ -540,19 +540,21 @@
    an entrance/reveal tween gets forced visible after the page has been
    visible for 3 seconds. Animations are an enhancement, never a dependency. */
 (function(){
+  var SELS='.hero h1,.hero .sub,.hero .eyebrow,.hero .trust,.hero .btnrow,main h2,main .lead,main .pcard,main .card,.mstat,.zrec,.jgrid,.daylist li,.intent';
   function rescue(){
-    try{
-      var sels='.hero h1,.hero .sub,.hero .eyebrow,main h2,main .lead,main .pcard,main .card,.mstat,.zrec,.jgrid,.daylist li,.intent';
-      document.querySelectorAll(sels).forEach(function(el){
-        var c=getComputedStyle(el);
-        if(parseFloat(c.opacity)<0.15){
-          el.style.opacity='1';
-          el.style.transform='none';
-          el.style.visibility='visible';
-        }
-      });
-    }catch(e){}
-  }
+  try{
+    document.querySelectorAll(SELS).forEach(function(el){
+      if(el.matches&&el.matches(':hover'))return;
+      var c=getComputedStyle(el),ty=0,m=c.transform;
+      if(m&&m!=='none'){var p=m.match(/matrix\(([^)]+)\)/);if(p){ty=parseFloat(p[1].split(',')[5])||0;}}
+      if(parseFloat(c.opacity)<0.99||Math.abs(ty)>0.5){
+        if(window.gsap)gsap.killTweensOf(el);
+        el.style.removeProperty('opacity');el.style.removeProperty('transform');el.style.removeProperty('visibility');
+      }
+    });
+  }catch(e){}
+    }
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)setTimeout(rescue,900);});
   var armed=false;
   function arm(){
     if(armed||document.hidden) return;

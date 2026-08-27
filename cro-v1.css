@@ -1,0 +1,160 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZUBILANT · cro-v1.css — conversion layer, 24 Aug 2026.
+   Own file on purpose: reviewable in one diff, revertable in one delete,
+   and it never collides with site-v9.css's 15 phone blocks.
+   Tokens only from site-v9.css :root. Nothing from board-v7.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1 · SAVE / SHORTLIST ─────────────────────────────────────── */
+.zsave{position:absolute;right:8px;top:8px;z-index:4;width:36px;height:36px;border-radius:999px;border:0;
+  background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(22,33,31,.18);display:flex;align-items:center;
+  justify-content:center;cursor:pointer;padding:0;transition:transform var(--t-move),background var(--t-colour)}
+.zsave svg{width:18px;height:18px;fill:none;stroke:var(--ink700);stroke-width:1.8}
+.zsave:hover{transform:scale(1.09);background:#fff}
+/* Visual 36px, hit area 44px — Master Brief D9 without a heavy button on a 248px card. */
+.zsave::after{content:"";position:absolute;inset:-4px;border-radius:999px}
+.znavsave{position:relative}
+.znavsave::after{content:"";position:absolute;left:0;right:0;top:50%;height:44px;transform:translateY(-50%)}
+.zsave[aria-pressed="true"] svg{fill:var(--orange500);stroke:var(--orange500)}
+.jfig{position:relative}
+
+.zsavebar{position:relative}
+.znavsave{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--lineStrong);background:var(--paper);
+  border-radius:999px;min-height:38px;padding:6px 14px;font-family:inherit;font-size:14px;font-weight:700;
+  color:var(--ink900);cursor:pointer;transition:border-color var(--t-colour),color var(--t-colour)}
+.znavsave svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9}
+.znavsave:hover{border-color:var(--orange500);color:var(--orange600)}
+.znavsave b{background:var(--orange700);color:#fff;border-radius:999px;min-width:19px;height:19px;
+  display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;padding:0 5px}
+@media(max-width:1080px){.znavsave span{display:none}.znavsave{padding:6px 11px}}
+
+/* ── 2 · DRAWER (shortlist) ───────────────────────────────────── */
+.zdrawbd{position:fixed;inset:0;background:rgba(0,20,22,.55);z-index:1200;display:none;backdrop-filter:blur(2px)}
+.zdrawbd.show{display:block}
+.zdraw{position:fixed;right:0;top:0;bottom:0;width:min(420px,92vw);background:var(--paper);z-index:1201;
+  transform:translateX(102%);transition:transform 320ms cubic-bezier(.2,.7,.3,1);display:flex;flex-direction:column;
+  box-shadow:var(--e3)}
+.zdrawbd.show+.zdraw,.zdraw.show{transform:none}
+.zdraw header{padding:20px 22px 14px;border-bottom:1px solid var(--lineSoft);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.zdraw header h3{font-size:21px;letter-spacing:-.01em}
+.zdraw .zdx{width:34px;height:34px;border-radius:999px;border:0;background:var(--sand);cursor:pointer;font-size:19px;line-height:1;color:var(--ink700)}
+.zdraw .zdx:hover{background:var(--orange500);color:#fff}
+.zdraw .zdlist{flex:1;overflow:auto;padding:14px 22px 8px;display:flex;flex-direction:column;gap:12px}
+.zdrow{display:grid;grid-template-columns:74px 1fr auto;gap:12px;align-items:center}
+.zdrow img{width:74px;height:56px;object-fit:cover;border-radius:10px}
+.zdrow a{font-size:14.5px;font-weight:700;line-height:1.3;text-decoration:none}
+.zdrow a:hover{color:var(--orange600)}
+.zdrow i{display:block;font-style:normal;font-size:12.5px;color:var(--ink500);font-weight:600;margin-top:2px}
+.zdrow button{border:0;background:none;cursor:pointer;color:var(--ink500);font-size:17px;line-height:1;padding:4px}
+.zdrow button:hover{color:var(--orange600)}
+.zdempty{padding:26px 4px;color:var(--ink700);font-size:15px}
+.zdraw footer{padding:16px 22px 22px;border-top:1px solid var(--lineSoft);display:flex;flex-direction:column;gap:9px}
+.zdraw footer .btn{width:100%;justify-content:center}
+.zmicro{font-size:12.5px;color:var(--ink500);line-height:1.45;text-align:center}
+
+/* ── 3 · STICKY PHONE CONVERSION BAR (journey pages) ──────────── */
+.zbar{position:fixed;left:0;right:0;bottom:0;z-index:900;display:none;gap:10px;align-items:center;
+  padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);
+  backdrop-filter:blur(8px);border-top:1px solid var(--lineSoft);box-shadow:0 -4px 18px rgba(22,33,31,.10);
+  transform:translateY(105%);transition:transform 260ms cubic-bezier(.2,.7,.3,1)}
+.zbar.on{transform:none}
+.zbar .zbp{flex:1;min-width:0;line-height:1.2}
+.zbar .zbp k{display:block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink500)}
+.zbar .zbp b{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.zbar .zbp i{font-style:normal;font-size:11.5px;color:var(--ink500);font-weight:600}
+.zbar .btn{min-height:44px;padding:10px 18px;font-size:15px;white-space:nowrap}
+.zbar .zbwa{width:44px;height:44px;border-radius:999px;background:#25D366;display:flex;align-items:center;
+  justify-content:center;flex:0 0 44px}
+.zbar .zbwa svg{width:23px;height:23px;fill:#fff}
+@media(max-width:900px){
+  body.zhasbar .zbar{display:flex}
+  /* keep the last of the footer reachable above the bar */
+  body.zhasbar footer{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+}
+body.zbar-off .zbar{transform:translateY(105%)!important}
+
+/* ── 4 · EXIT-INTENT / OFFER MODAL ────────────────────────────── */
+.zxbd{position:fixed;inset:0;background:rgba(0,20,22,.66);z-index:1300;display:none;align-items:center;
+  justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.zxbd.show{display:flex}
+.zx:focus{outline:none}
+.zx{background:var(--paper);border-radius:20px;width:100%;max-width:560px;max-height:92vh;overflow:auto;
+  position:relative;box-shadow:var(--e3)}
+.zx .zxtop{background:linear-gradient(135deg,var(--teal900),var(--teal700));color:#fff;padding:28px 30px 24px;
+  border-radius:20px 20px 0 0;position:relative;overflow:hidden}
+.zx .zxtop::after{content:"";position:absolute;right:-70px;top:-80px;width:250px;height:250px;border-radius:50%;
+  background:radial-gradient(circle,rgba(243,107,33,.55),rgba(243,107,33,0) 68%)}
+.zx .zxtop .zxe{position:relative;z-index:2;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFC49B}
+.zx .zxtop h3{position:relative;z-index:2;font-size:30px;line-height:1.12;letter-spacing:-.02em;margin-top:8px;color:#fff}
+.zx .zxtop p{position:relative;z-index:2;font-size:15px;line-height:1.55;margin-top:10px;color:rgba(255,255,255,.86)}
+.zx .zxb{padding:22px 30px 28px}
+.zx .zxf{display:flex;flex-direction:column;gap:10px}
+.zx .zxf input{width:100%;border:1.5px solid var(--lineStrong);border-radius:var(--r-input);padding:13px 15px;
+  font-family:inherit;font-size:16px;color:var(--ink900);background:var(--paper);min-height:48px}
+.zx .zxf input:focus{outline:2px solid var(--orange500);outline-offset:1px;border-color:var(--orange500)}
+.zx .zxf .btn{width:100%;justify-content:center;margin-top:2px}
+.zx .zxerr{display:none;font-size:13.5px;font-weight:600;color:#C43C1B}
+.zx.err .zxerr{display:block}
+.zxfoot{margin-top:14px;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
+.zxfoot .zno{background:none;border:0;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink500);cursor:pointer;padding:4px}
+.zxfoot .zno:hover{color:var(--orange600)}
+.zxx{position:absolute;right:12px;top:12px;z-index:6;width:34px;height:34px;border-radius:999px;border:0;
+  background:rgba(255,255,255,.2);color:#fff;font-size:19px;line-height:1;cursor:pointer}
+.zxx:hover{background:var(--orange500)}
+/* 44px hit area on a 34px control — Crazy Egg's mobile tap-target rule */
+.zxx::after{content:"";position:absolute;inset:-5px;border-radius:999px}
+.zx .zxf .btn,.zxfoot .zno{min-height:44px}
+.zxtrust{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--lineSoft);font-size:12.5px;color:var(--ink500);font-weight:600}
+@media(max-width:560px){
+  .zx .zxtop{padding:24px 22px 20px}.zx .zxtop h3{font-size:25px}.zx .zxb{padding:20px 22px 24px}
+  /* a portion of the viewport, never the whole screen — Google's
+     intrusive-interstitial guidance and Crazy Egg's mobile rule */
+  .zx{max-height:86vh}
+  .zxbd{align-items:flex-end;padding:0}
+  .zx{border-radius:20px 20px 0 0}
+  .zx .zxtop{border-radius:20px 20px 0 0}
+}
+
+/* ── 5 · RISK-REVERSAL MICROCOPY ──────────────────────────────── */
+.zrr{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px;font-size:12.8px;font-weight:600;
+  color:var(--ink500);line-height:1.4}
+.zrr span{display:inline-flex;align-items:center;gap:5px}
+.zrr svg{width:13px;height:13px;fill:none;stroke:var(--sage600);stroke-width:2.4;flex:0 0 13px}
+.hero .zrr,.zxtop .zrr{color:rgba(255,255,255,.8)}
+.hero .zrr svg{stroke:#9BD5A6}
+
+/* ── 6 · SEASON / HONEST URGENCY ──────────────────────────────── */
+.zseason{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 12px;font-size:12.5px;
+  font-weight:700;background:var(--moss100);color:#2C6B4F;line-height:1.3}
+.zseason.soon{background:var(--sun100);color:#8A5A11}
+.zseason svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2}
+/* On a card the chip sits inside .jattrs, not over the photograph: .jfig already
+   carries .jbadge (top-left), .jqv (bottom-left) and now .zsave (top-right), and a
+   fourth overlay would collide with one of them at 248px, the minimum card width. */
+.jcard .zseason{font-size:11.5px;padding:3px 9px;gap:5px;align-self:center}
+.jcard .zseason svg{width:12px;height:12px}
+.jside .zseason{margin-top:12px}
+
+/* ── 7 · RECENTLY VIEWED RAIL ─────────────────────────────────── */
+.zrv{padding:0 0 var(--sec-pad)}
+.zrv .zrvhead{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.zrv h2{font-size:30px;letter-spacing:-.015em}
+.zrv .zrvclear{background:none;border:0;font-family:inherit;font-size:14px;font-weight:700;color:var(--teal600);cursor:pointer}
+.zrv .zrvclear:hover{color:var(--orange500)}
+.zrvrail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,1fr);gap:16px;overflow-x:auto;
+  scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
+.zrvc{scroll-snap-align:start;background:var(--paper);border-radius:var(--r-card);overflow:hidden;
+  border:1px solid var(--lineSoft);text-decoration:none;display:block;transition:transform var(--t-move),box-shadow var(--t-move)}
+.zrvc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(243,107,33,.22)}
+.zrvc img{width:100%;height:132px;object-fit:cover}
+.zrvc div{padding:12px 14px 14px}
+.zrvc h4{font-size:16px;line-height:1.25;letter-spacing:-.008em}
+.zrvc i{display:block;font-style:normal;font-size:13px;color:var(--ink500);font-weight:600;margin-top:5px}
+@media(max-width:640px){.zrvrail{grid-auto-columns:minmax(200px,1fr)}.zrv h2{font-size:25px}}
+
+/* Reduced motion — respect it everywhere in this layer */
+@media(prefers-reduced-motion:reduce){
+  .zdraw,.zbar{transition:none}
+  .zsave:hover,.zrvc:hover{transform:none}
+}

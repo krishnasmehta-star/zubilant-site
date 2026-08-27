@@ -11,7 +11,7 @@
   --teal900:#00272B; --teal700:#00545C; --teal600:#006C76;
   --teal300:#7FC4CA; --teal200:#BFE3E7; --teal100:#DCEFF1; --teal50:#F0F8F9;
   --sage600:#4F7A52; --sage200:#D6E4D2; --sage100:#E7EFE4;
-  --orange500:#F36B21; --orange600:#E85F14;
+  --orange500:#F36B21; --orange600:#E85F14;--orange700:#B84A0C;
   --ink900:#16211F; --ink700:#3E4C4B; --ink500:#5C6968;
   --lineSoft:#E2E6E5; --lineStrong:#C9D0CE;
   --success:#2E7D5B; --error:#B3261E;
@@ -665,7 +665,7 @@ footer .flogo img{height:40px;width:auto}
 .mapregions button{background:var(--paper);border:1.5px solid var(--lineStrong);border-radius:999px;
   padding:9px 22px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink700);
   cursor:pointer;transition:border-color var(--t-colour),box-shadow var(--t-move),color var(--t-colour)}
-.mapregions button:hover,.mapregions button[aria-selected="true"]{border-color:var(--orange500);
+.mapregions button:hover,.mapregions button[aria-pressed="true"]{border-color:var(--orange500);
   color:var(--ink900);box-shadow:0 6px 18px rgba(243,107,33,.24)}
 .mapcard{display:block;background:var(--paper);border:1px solid var(--lineSoft);border-radius:var(--r-card);
   overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--e1);
@@ -881,7 +881,7 @@ main{position:relative}
   .herotags{display:flex;gap:10px;flex-wrap:wrap}
   .htag{display:inline-flex;align-items:center;min-height:36px;padding:7px 16px;border-radius:999px;
     font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
-  .htag.pop{background:var(--sun100);color:var(--orange600);border:1px solid rgba(240,169,59,.55);gap:8px}
+  .htag.pop{background:var(--sun100);color:var(--orange700);border:1px solid rgba(240,169,59,.55);gap:8px}
   .htag.pop::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange500)}
   .htag.cat{background:var(--teal50);color:var(--teal700);border:1px solid var(--teal200);
     transition:background var(--t-colour),color var(--t-colour)}
@@ -1180,7 +1180,7 @@ body.navopen .navmenu{display:flex}
 /* jbadge: was defined only in journeys.html; cards also render on corporate + journey detail pages */
 .jbadge{position:absolute;top:8px;left:8px;z-index:3;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .b-trend{background:var(--sun100);color:#8A4A12}
-.b-zap{background:var(--orange500);color:#fff;letter-spacing:.04em}
+.b-zap{background:var(--orange700);color:#fff;letter-spacing:.04em}
 .b-rise{background:var(--sky100);color:#0B5A63}
 
 /* ── Quick view, shared (r15): the journeys-index .jqv/.qv treatment, available on
