@@ -11,7 +11,8 @@
    Modules
      1  track()          event layer — GA4 reads it the day an ID exists
      2  shortlist        save-for-later, localStorage only, no backend
-     3  recently viewed  a rail on index/journeys, localStorage only
+     3  recently viewed  standard journey cards above the footer block
+                       on index/journeys, localStorage only
      4  sticky bar       phone-only conversion bar on journey pages
      5  season badge     honest urgency from real travel windows
      6  risk reversal    microcopy at conversion points
@@ -56,6 +57,8 @@ function ss(k,d){try{var v=sessionStorage.getItem(k);return v?JSON.parse(v):d;}c
 function sset(k,v){try{sessionStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function el(t,c,h){var n=document.createElement(t);if(c)n.className=c;if(h!=null)n.innerHTML=h;return n;}
 function txt(n){return n?(n.textContent||'').trim():'';}
+function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function inr(n){return '\u20B9'+String(n).replace(/\B(?=(\d\d)+(\d)(?!\d))/g,',');}
 var PAGE=(location.pathname.split('/').pop()||'index.html');
 
 /* ── 1 · EVENT LAYER ───────────────────────────────────────────
@@ -178,7 +181,31 @@ function injectNavPill(){
   nr.insertBefore(b,nr.firstChild);
 }
 
-/* ── 3 · RECENTLY VIEWED ───────────────────────────────────────── */
+/* ── 3 · RECENTLY VIEWED ─────────────────────────────────────────
+   Krishna, 1 Sep: "The Step outside is also a footer. Pick up where you
+   left off - should be above the footer in the standard card format."
+
+   So: the section is inserted immediately BEFORE the Step Outside band,
+   which puts it above the whole footer block — .stepout and <footer> are
+   one continuous teal100 unit and read as one thing. It also restores the
+   `.stepout + footer` adjacency rule the old insert point silently broke.
+   Deliberately OUTSIDE <main>: the homepage journey pipe and its stop dots
+   are measured off #main, and a section added inside it moves them.
+
+   Cards are the site's standard `.jcard`, built from ZUBI_DATA (generated
+   from journeys.html canon), falling back to what recordView captured off
+   the page itself. Nothing here is invented. Hearts and season chips
+   attach themselves because these are real .jcards. ── */
+var RECENT_MAX=3;   /* one clean row at desktop, matching .jgrid2 related-trips.
+                       Change this one number to show more. */
+
+var RVI={
+  star:'<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4 4.2 13.4l.7-4.3-3.1-3 4.3-.6z"/></svg>',
+  moon:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 9.2A5.4 5.4 0 0 1 6.8 3a5.6 5.6 0 1 0 6.2 6.2Z"/></svg>',
+  pin:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14.5S13 10.4 13 6.6A5 5 0 0 0 3 6.6C3 10.4 8 14.5 8 14.5Z"/><circle cx="8" cy="6.5" r="1.9"/></svg>',
+  pace:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 11.5a6.4 6.4 0 1 1 12 0"/><path d="M8 11.5 11 6.9"/></svg>'
+};
+
 function recordView(){
   if(PAGE.indexOf('j-')!==0)return;
   var price=txt($('.jside .price'))||txt($('.pval'));
@@ -189,23 +216,88 @@ function recordView(){
   var r=ls(LS.recent,[]).filter(function(x){return x.href!==d.href;});
   r.unshift(d); lset(LS.recent,r.slice(0,8));
 }
+
+function canonFor(href){
+  var D=window.ZUBI_DATA&&window.ZUBI_DATA.journeys;
+  if(!D)return null;
+  for(var i=0;i<D.length;i++){if(D[i].h===href)return D[i];}
+  return null;
+}
+
+/* The standard journey card, same markup as journeys.html ships. */
+function recentCard(x){
+  var j=canonFor(x.href);
+  var title=(j&&j.t)||x.title||'';
+  var img=(j&&j.g)||x.img||'';
+  if(!title)return null;
+  var alt=(j&&j.r)?title+', '+j.r+'.':title;
+  var attrs='';
+  if(j){
+    if(j.n)attrs+='<span>'+RVI.moon+' '+esc(j.n)+' nights</span>';
+    if(j.r)attrs+='<span>'+RVI.pin+' '+esc(j.r)+'</span>';
+    if(j.pace)attrs+='<span>'+RVI.pace+' '+esc(j.pace)+'</span>';
+  }
+  var price=(j&&j.p)?'From <strong>'+inr(j.p)+'</strong><i>per person*</i>'
+                    :(x.price?'<strong>'+esc(x.price)+'</strong>':'');
+  var c=el('article','jcard zrvcard');
+  c.setAttribute('data-title',title);
+  c.innerHTML='<a class="jhit" href="'+esc(x.href)+'" aria-label="'+esc(title)+'"></a>'+
+    '<div class="jfig">'+(img?'<img src="'+esc(img)+'" alt="'+esc(alt)+'" loading="lazy" width="800" height="600">':'')+'</div>'+
+    '<div class="jbody">'+
+      '<div class="jrate">'+RVI.star+'<b>4.9</b><span>Zubilant on Google</span></div>'+
+      '<h3>'+esc(title)+'</h3>'+
+      (attrs?'<div class="jattrs">'+attrs+'</div>':'')+
+      ((j&&j.d)?'<p>'+esc(j.d)+'</p>':'')+
+      '<div class="jfoot"><span class="jprice">'+price+'</span>'+
+        '<span class="jgo">View journey <b aria-hidden="true">&rarr;</b></span></div>'+
+    '</div>';
+  return c;
+}
+
 function renderRecent(){
   if(PAGE!=='index.html'&&PAGE!=='journeys.html'&&PAGE!=='')return;
   var r=ls(LS.recent,[]); if(r.length<2)return;
-  var foot=$('footer'); if(!foot)return;
+  var step=$('#stepout'), foot=$('footer');
+  if(!step&&!foot)return;
+
   var sec=el('section','zrv tint-clay');
+  sec.setAttribute('aria-label','Journeys you looked at');
   sec.innerHTML='<div class="wrap"><div class="zrvhead"><h2>Pick up where you left off</h2>'+
-    '<button class="zrvclear" type="button">Clear</button></div><div class="zrvrail"></div></div>';
-  var rail=$('.zrvrail',sec);
-  r.slice(0,8).forEach(function(x){
-    var a=el('a','zrvc','<img src="'+x.img+'" alt="" loading="lazy"><div><h4>'+x.title+'</h4><i>'+(x.price||'')+'</i></div>');
-    a.href=x.href;
-    a.addEventListener('click',function(){track('recent_click',{journey:x.title});});
-    rail.appendChild(a);
+    '<button class="zrvclear" type="button">Clear</button></div><div class="zrvgrid"></div></div>';
+  var grid=$('.zrvgrid',sec);
+
+  r.slice(0,RECENT_MAX).forEach(function(x){
+    if(!x||!x.href)return;
+    var c=recentCard(x); if(!c)return;
+    c.addEventListener('click',function(){track('recent_click',{journey:x.title});});
+    grid.appendChild(c);
   });
-  $('.zrvclear',sec).addEventListener('click',function(){lset(LS.recent,[]);sec.remove();track('recent_clear',{});});
-  foot.parentNode.insertBefore(sec,foot);
-  track('recent_shown',{count:r.length});
+  if(!grid.children.length)return;
+
+  $('.zrvclear',sec).addEventListener('click',function(){
+    lset(LS.recent,[]); sec.remove(); refreshST(); track('recent_clear',{});
+  });
+
+  if(step)step.parentNode.insertBefore(sec,step);
+  else foot.parentNode.insertBefore(sec,foot);
+
+  try{injectSaves(sec);}catch(e){}
+  /* Brand rule: any injected DOM is followed by a ScrollTrigger refresh.
+     This now matters — the section sits ABOVE the Step Outside band, whose
+     reveal is scroll-scrubbed, so every trigger below it has moved. */
+  refreshST();
+  track('recent_shown',{count:grid.children.length});
+}
+
+function refreshST(){
+  try{
+    if(window.ScrollTrigger&&window.ScrollTrigger.refresh){
+      requestAnimationFrame(function(){window.ScrollTrigger.refresh();});
+      window.addEventListener('load',function(){
+        try{window.ScrollTrigger.refresh();}catch(e){}
+      },{once:true});
+    }
+  }catch(e){}
 }
 
 /* ── 5 · SEASON — honest urgency ─────────────────────────────── */
